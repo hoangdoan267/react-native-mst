@@ -29,17 +29,23 @@ export const presets = {
   /**
    * Large headers.
    */
-  header: { ...BASE, fontSize: 24, fontWeight: "bold" } as TextStyle,
+  header: { ...BASE, fontSize: 26, fontWeight: "bold", marginBottom: 16 } as TextStyle,
 
   /**
    * Field labels that appear on forms above the inputs.
    */
-  fieldLabel: { ...BASE, fontSize: 13, color: color.dim } as TextStyle,
+  fieldLabel: { ...BASE, fontSize: 15, color: color.dim } as TextStyle,
 
   /**
    * A smaller piece of secondard information.
    */
-  secondary: { ...BASE, fontSize: 9, color: color.dim } as TextStyle,
+  secondary: { ...BASE, fontSize: 15, color: color.dim } as TextStyle,
+
+  darkSubtile: { ...BASE, fontSize: 14, color: color.palette.black },
+
+  link: { ...BASE, fontSize: 14, color: color.palette.green, fontWeight: "600" },
+
+  errorText: { ...BASE, fontSize: 12, color: color.error, marginVertical: 5 },
 }
 
 /**

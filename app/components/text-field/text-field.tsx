@@ -1,99 +1,95 @@
-import React from "react"
-import { StyleProp, TextInput, TextInputProps, TextStyle, View, ViewStyle } from "react-native"
-import { color, spacing, typography } from "../../theme"
-import { translate, TxKeyPath } from "../../i18n"
-import { Text } from "../text/text"
+import React, { useState } from "react"
+import {
+  Image,
+  ImageStyle,
+  StyleProp,
+  TextInputProps,
+  TextStyle,
+  TouchableOpacity,
+  View,
+  ViewStyle,
+} from "react-native"
+import { observer } from "mobx-react-lite"
+import { color, typography } from "../../theme"
+import { Text } from "../"
 import { flatten } from "ramda"
+import { TextInput } from "react-native-gesture-handler"
 
-// the base styling for the container
 const CONTAINER: ViewStyle = {
-  paddingVertical: spacing[3],
+  justifyContent: "center",
+
+  marginBottom: 20,
+  marginTop: 10,
 }
 
-// the base styling for the TextInput
-const INPUT: TextStyle = {
+const TEXT: TextStyle = {
   fontFamily: typography.primary,
-  color: color.text,
-  minHeight: 44,
   fontSize: 18,
-  backgroundColor: color.palette.white,
+  color: color.text,
+  flex: 1,
 }
 
-// currently we have no presets, but that changes quickly when you build your app.
-const PRESETS: { [name: string]: ViewStyle } = {
-  default: {},
+const LABEL: TextStyle = {
+  // marginBottom: 12,
 }
 
-export interface TextFieldProps extends TextInputProps {
-  /**
-   * The placeholder i18n key.
-   */
-  placeholderTx?: TxKeyPath
+const INPUT: ViewStyle = {
+  flexDirection: "row",
+  borderBottomColor: color.dim,
+  borderBottomWidth: 1,
+  paddingVertical: 12,
+}
 
-  /**
-   * The Placeholder text if no placeholderTx is provided.
-   */
-  placeholder?: string
+const IconStyle: ImageStyle = {
+  width: 19.93,
+  height: 18.92,
+  marginLeft: 10,
+}
 
+export interface TextFieldProps {
   /**
-   * The label i18n key.
-   */
-  labelTx?: TxKeyPath
-
-  /**
-   * The label text if no labelTx is provided.
-   */
-  label?: string
-
-  /**
-   * Optional container style overrides useful for margins & padding.
+   * An optional style override useful for padding & margin.
    */
   style?: StyleProp<ViewStyle>
-
-  /**
-   * Optional style overrides for the input.
-   */
-  inputStyle?: StyleProp<TextStyle>
-
-  /**
-   * Various look & feels.
-   */
-  preset?: keyof typeof PRESETS
-
-  forwardedRef?: any
+  type?: "text" | "textarea" | "password"
+  label: string
+  inputProps?: TextInputProps
+  errorText: string
 }
 
 /**
- * A component which has a label and an input together.
+ * Describe your component here
  */
-export function TextField(props: TextFieldProps) {
-  const {
-    placeholderTx,
-    placeholder,
-    labelTx,
-    label,
-    preset = "default",
-    style: styleOverride,
-    inputStyle: inputStyleOverride,
-    forwardedRef,
-    ...rest
-  } = props
+export const TextField = observer(function TextField(props: TextFieldProps) {
+  const { style, label, inputProps, type = "text", errorText } = props
+  const styles = flatten([CONTAINER, style])
 
-  const containerStyles = flatten([CONTAINER, PRESETS[preset], styleOverride])
-  const inputStyles = flatten([INPUT, inputStyleOverride])
-  const actualPlaceholder = placeholderTx ? translate(placeholderTx) : placeholder
+  const [showPassword, setShowPassword] = useState<boolean>(false)
+
+  const renderShowPasswordButton = (): JSX.Element => {
+    if (type === "password") {
+      return (
+        <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
+          <Image source={require("../../../assets/showpassword.png")} style={IconStyle} />
+        </TouchableOpacity>
+      )
+    }
+  }
 
   return (
-    <View style={containerStyles}>
-      <Text preset="fieldLabel" tx={labelTx} text={label} />
-      <TextInput
-        placeholder={actualPlaceholder}
-        placeholderTextColor={color.palette.lighterGrey}
-        underlineColorAndroid={color.transparent}
-        {...rest}
-        style={inputStyles}
-        ref={forwardedRef}
-      />
+    <View style={styles}>
+      <Text style={LABEL} preset="fieldLabel" text={label} />
+      <View style={INPUT}>
+        <TextInput
+          autoCorrect={false}
+          autoCapitalize={"none"}
+          {...inputProps}
+          style={TEXT}
+          secureTextEntry={type === "password" && !showPassword}
+        />
+        {renderShowPasswordButton()}
+      </View>
+      {errorText && <Text preset="errorText" text={errorText} />}
     </View>
   )
-}
+})
