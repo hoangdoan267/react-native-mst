@@ -1,4 +1,6 @@
-import { Instance, SnapshotOut, types } from "mobx-state-tree"
+import { getParent, Instance, SnapshotOut, types } from "mobx-state-tree"
+import { RootNavigation } from "../../navigators"
+import { RootStoreModel } from "../root-store/root-store"
 import { UserModel } from "../user/user"
 const timeout = (ms: number) => {
   return new Promise((resolve) => setTimeout(resolve, ms))
@@ -21,6 +23,8 @@ export const UserStoreModel = types
       self.user.name = email
       await timeout(1000)
       self.endLogin()
+      // await getParent<typeof RootStoreModel>(self).characterStore.getCharacters()
+      RootNavigation.navigate("welcome")
     },
     endLogin: () => {
       self.loading = false
