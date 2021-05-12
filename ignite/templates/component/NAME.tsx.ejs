@@ -4,16 +4,9 @@ import { observer } from "mobx-react-lite"
 import { color, typography } from "../../theme"
 import { Text } from "../"
 import { flatten } from "ramda"
+import {styles} from "./<%= props.pascalCaseName %>.styles"
 
-const CONTAINER: ViewStyle = {
-  justifyContent: "center",
-}
 
-const TEXT: TextStyle = {
-  fontFamily: typography.primary,
-  fontSize: 14,
-  color: color.primary,
-}
 
 export interface <%= props.pascalCaseName %>Props {
   /**
@@ -26,12 +19,11 @@ export interface <%= props.pascalCaseName %>Props {
  * Describe your component here
  */
 export const <%= props.pascalCaseName %> = observer(function <%= props.pascalCaseName %>(props: <%= props.pascalCaseName %>Props) {
-  const { style } = props
-  const styles = flatten([CONTAINER, style])
+
 
   return (
-    <View style={styles}>
-      <Text style={TEXT}>Hello</Text>
+    <View>
+      <Text></Text>
     </View>
   )
 })
