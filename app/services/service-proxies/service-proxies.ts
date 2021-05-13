@@ -7,2989 +7,3449 @@
 //----------------------
 // ReSharper disable InconsistentNaming
 
-import * as moment from 'moment';
+import * as moment from "moment"
 
 export class UserServiceProxy {
-    private http: { fetch(url: RequestInfo, init?: RequestInit): Promise<Response> };
-    private baseUrl: string;
-    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+  private http: { fetch(url: RequestInfo, init?: RequestInit): Promise<Response> }
+  private baseUrl: string
+  protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined
 
-    constructor(baseUrl?: string, http?: { fetch(url: RequestInfo, init?: RequestInit): Promise<Response> }) {
-        this.http = http ? http : <any>window;
-        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "http://52.74.51.47/rest";
+  constructor(
+    baseUrl?: string,
+    http?: { fetch(url: RequestInfo, init?: RequestInit): Promise<Response> },
+  ) {
+    this.http = http ? http : <any>window
+    this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "http://52.74.51.47/rest"
+  }
+
+  /**
+   * change password
+   * @param body (optional)
+   * @return Refresh Token Successfully
+   */
+  changePassword(body: ChangePasswordRequest | undefined): Promise<ChangePasswordResponse> {
+    let url_ = this.baseUrl + "/api/v1/kbfina/user/changePassword"
+    url_ = url_.replace(/[?&]$/, "")
+
+    const content_ = JSON.stringify(body)
+
+    let options_ = <RequestInit>{
+      body: content_,
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        Accept: "application/json",
+      },
     }
 
-    /**
-     * change password
-     * @param body (optional) 
-     * @return Refresh Token Successfully
-     */
-    changePassword(body: ChangePasswordRequest | undefined): Promise<ChangePasswordResponse> {
-        let url_ = this.baseUrl + "/api/v1/kbfina/user/changePassword";
-        url_ = url_.replace(/[?&]$/, "");
+    return this.http.fetch(url_, options_).then((_response: Response) => {
+      return this.processChangePassword(_response)
+    })
+  }
 
-        const content_ = JSON.stringify(body);
+  protected processChangePassword(response: Response): Promise<ChangePasswordResponse> {
+    const status = response.status
+    let _headers: any = {}
+    if (response.headers && response.headers.forEach) {
+      response.headers.forEach((v: any, k: any) => (_headers[k] = v))
+    }
+    if (status === 200) {
+      return response.text().then((_responseText) => {
+        let result200: any = null
+        result200 =
+          _responseText === ""
+            ? null
+            : <ChangePasswordResponse>JSON.parse(_responseText, this.jsonParseReviver)
+        return result200
+      })
+    } else if (status === 400) {
+      return response.text().then((_responseText) => {
+        let result400: any = null
+        result400 =
+          _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver)
+        return throwException("Invalid input param", status, _responseText, _headers, result400)
+      })
+    } else if (status === 401) {
+      return response.text().then((_responseText) => {
+        let result401: any = null
+        result401 =
+          _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver)
+        return throwException("Unauthorized", status, _responseText, _headers, result401)
+      })
+    } else if (status === 403) {
+      return response.text().then((_responseText) => {
+        let result403: any = null
+        result403 =
+          _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver)
+        return throwException("Unauthorized", status, _responseText, _headers, result403)
+      })
+    } else if (status === 500) {
+      return response.text().then((_responseText) => {
+        let result500: any = null
+        result500 =
+          _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver)
+        return throwException("Internal Server Error", status, _responseText, _headers, result500)
+      })
+    } else if (status !== 200 && status !== 204) {
+      return response.text().then((_responseText) => {
+        return throwException(
+          "An unexpected server error occurred.",
+          status,
+          _responseText,
+          _headers,
+        )
+      })
+    }
+    return Promise.resolve<ChangePasswordResponse>(<any>null)
+  }
 
-        let options_ = <RequestInit>{
-            body: content_,
-            method: "POST",
-            headers: {
-                "Content-Type": "application/x-www-form-urlencoded",
-                "Accept": "application/json"
-            }
-        };
+  /**
+   * reset password
+   * @param body (optional)
+   * @return Refresh Token Successfully
+   */
+  resetPassword(body: ResetPasswordRequest | undefined): Promise<ResetPasswordResponse> {
+    let url_ = this.baseUrl + "/api/v1/kbfina/user/resetPassword"
+    url_ = url_.replace(/[?&]$/, "")
 
-        return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processChangePassword(_response);
-        });
+    const content_ = JSON.stringify(body)
+
+    let options_ = <RequestInit>{
+      body: content_,
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        Accept: "application/json",
+      },
     }
 
-    protected processChangePassword(response: Response): Promise<ChangePasswordResponse> {
-        const status = response.status;
-        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
-        if (status === 200) {
-            return response.text().then((_responseText) => {
-            let result200: any = null;
-            result200 = _responseText === "" ? null : <ChangePasswordResponse>JSON.parse(_responseText, this.jsonParseReviver);
-            return result200;
-            });
-        } else if (status === 400) {
-            return response.text().then((_responseText) => {
-            let result400: any = null;
-            result400 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
-            return throwException("Invalid input param", status, _responseText, _headers, result400);
-            });
-        } else if (status === 401) {
-            return response.text().then((_responseText) => {
-            let result401: any = null;
-            result401 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
-            return throwException("Unauthorized", status, _responseText, _headers, result401);
-            });
-        } else if (status === 403) {
-            return response.text().then((_responseText) => {
-            let result403: any = null;
-            result403 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
-            return throwException("Unauthorized", status, _responseText, _headers, result403);
-            });
-        } else if (status === 500) {
-            return response.text().then((_responseText) => {
-            let result500: any = null;
-            result500 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
-            return throwException("Internal Server Error", status, _responseText, _headers, result500);
-            });
-        } else if (status !== 200 && status !== 204) {
-            return response.text().then((_responseText) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            });
-        }
-        return Promise.resolve<ChangePasswordResponse>(<any>null);
+    return this.http.fetch(url_, options_).then((_response: Response) => {
+      return this.processResetPassword(_response)
+    })
+  }
+
+  protected processResetPassword(response: Response): Promise<ResetPasswordResponse> {
+    const status = response.status
+    let _headers: any = {}
+    if (response.headers && response.headers.forEach) {
+      response.headers.forEach((v: any, k: any) => (_headers[k] = v))
+    }
+    if (status === 200) {
+      return response.text().then((_responseText) => {
+        let result200: any = null
+        result200 =
+          _responseText === ""
+            ? null
+            : <ResetPasswordResponse>JSON.parse(_responseText, this.jsonParseReviver)
+        return result200
+      })
+    } else if (status === 400) {
+      return response.text().then((_responseText) => {
+        let result400: any = null
+        result400 =
+          _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver)
+        return throwException("Invalid input param", status, _responseText, _headers, result400)
+      })
+    } else if (status === 401) {
+      return response.text().then((_responseText) => {
+        let result401: any = null
+        result401 =
+          _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver)
+        return throwException("Unauthorized", status, _responseText, _headers, result401)
+      })
+    } else if (status === 403) {
+      return response.text().then((_responseText) => {
+        let result403: any = null
+        result403 =
+          _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver)
+        return throwException("Unauthorized", status, _responseText, _headers, result403)
+      })
+    } else if (status === 500) {
+      return response.text().then((_responseText) => {
+        let result500: any = null
+        result500 =
+          _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver)
+        return throwException("Internal Server Error", status, _responseText, _headers, result500)
+      })
+    } else if (status !== 200 && status !== 204) {
+      return response.text().then((_responseText) => {
+        return throwException(
+          "An unexpected server error occurred.",
+          status,
+          _responseText,
+          _headers,
+        )
+      })
+    }
+    return Promise.resolve<ResetPasswordResponse>(<any>null)
+  }
+
+  /**
+   * Trigger to send otp to verify Otp
+   * @param body (optional)
+   * @return Refresh Token Successfully
+   */
+  sendOtp(body: SendOtpRequest | undefined): Promise<SendOtpResponse> {
+    let url_ = this.baseUrl + "/api/v1/kbfina/user/sendOtp"
+    url_ = url_.replace(/[?&]$/, "")
+
+    const content_ = JSON.stringify(body)
+
+    let options_ = <RequestInit>{
+      body: content_,
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        Accept: "application/json",
+      },
     }
 
-    /**
-     * reset password
-     * @param body (optional) 
-     * @return Refresh Token Successfully
-     */
-    resetPassword(body: ResetPasswordRequest | undefined): Promise<ResetPasswordResponse> {
-        let url_ = this.baseUrl + "/api/v1/kbfina/user/resetPassword";
-        url_ = url_.replace(/[?&]$/, "");
+    return this.http.fetch(url_, options_).then((_response: Response) => {
+      return this.processSendOtp(_response)
+    })
+  }
 
-        const content_ = JSON.stringify(body);
+  protected processSendOtp(response: Response): Promise<SendOtpResponse> {
+    const status = response.status
+    let _headers: any = {}
+    if (response.headers && response.headers.forEach) {
+      response.headers.forEach((v: any, k: any) => (_headers[k] = v))
+    }
+    if (status === 200) {
+      return response.text().then((_responseText) => {
+        let result200: any = null
+        result200 =
+          _responseText === ""
+            ? null
+            : <SendOtpResponse>JSON.parse(_responseText, this.jsonParseReviver)
+        return result200
+      })
+    } else if (status === 400) {
+      return response.text().then((_responseText) => {
+        let result400: any = null
+        result400 =
+          _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver)
+        return throwException("Invalid input param", status, _responseText, _headers, result400)
+      })
+    } else if (status === 401) {
+      return response.text().then((_responseText) => {
+        let result401: any = null
+        result401 =
+          _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver)
+        return throwException("Unauthorized", status, _responseText, _headers, result401)
+      })
+    } else if (status === 403) {
+      return response.text().then((_responseText) => {
+        let result403: any = null
+        result403 =
+          _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver)
+        return throwException("Unauthorized", status, _responseText, _headers, result403)
+      })
+    } else if (status === 500) {
+      return response.text().then((_responseText) => {
+        let result500: any = null
+        result500 =
+          _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver)
+        return throwException("Internal Server Error", status, _responseText, _headers, result500)
+      })
+    } else if (status !== 200 && status !== 204) {
+      return response.text().then((_responseText) => {
+        return throwException(
+          "An unexpected server error occurred.",
+          status,
+          _responseText,
+          _headers,
+        )
+      })
+    }
+    return Promise.resolve<SendOtpResponse>(<any>null)
+  }
 
-        let options_ = <RequestInit>{
-            body: content_,
-            method: "POST",
-            headers: {
-                "Content-Type": "application/x-www-form-urlencoded",
-                "Accept": "application/json"
-            }
-        };
+  /**
+   * Verify otp
+   * @param body (optional)
+   * @return verify success
+   */
+  verifyOtp(body: VerifyOtpRequest | undefined): Promise<VerifyOtpResponse> {
+    let url_ = this.baseUrl + "/api/v1/kbfina/user/verifyOtp"
+    url_ = url_.replace(/[?&]$/, "")
 
-        return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processResetPassword(_response);
-        });
+    const content_ = JSON.stringify(body)
+
+    let options_ = <RequestInit>{
+      body: content_,
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        Accept: "application/json",
+      },
     }
 
-    protected processResetPassword(response: Response): Promise<ResetPasswordResponse> {
-        const status = response.status;
-        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
-        if (status === 200) {
-            return response.text().then((_responseText) => {
-            let result200: any = null;
-            result200 = _responseText === "" ? null : <ResetPasswordResponse>JSON.parse(_responseText, this.jsonParseReviver);
-            return result200;
-            });
-        } else if (status === 400) {
-            return response.text().then((_responseText) => {
-            let result400: any = null;
-            result400 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
-            return throwException("Invalid input param", status, _responseText, _headers, result400);
-            });
-        } else if (status === 401) {
-            return response.text().then((_responseText) => {
-            let result401: any = null;
-            result401 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
-            return throwException("Unauthorized", status, _responseText, _headers, result401);
-            });
-        } else if (status === 403) {
-            return response.text().then((_responseText) => {
-            let result403: any = null;
-            result403 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
-            return throwException("Unauthorized", status, _responseText, _headers, result403);
-            });
-        } else if (status === 500) {
-            return response.text().then((_responseText) => {
-            let result500: any = null;
-            result500 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
-            return throwException("Internal Server Error", status, _responseText, _headers, result500);
-            });
-        } else if (status !== 200 && status !== 204) {
-            return response.text().then((_responseText) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            });
-        }
-        return Promise.resolve<ResetPasswordResponse>(<any>null);
+    return this.http.fetch(url_, options_).then((_response: Response) => {
+      return this.processVerifyOtp(_response)
+    })
+  }
+
+  protected processVerifyOtp(response: Response): Promise<VerifyOtpResponse> {
+    const status = response.status
+    let _headers: any = {}
+    if (response.headers && response.headers.forEach) {
+      response.headers.forEach((v: any, k: any) => (_headers[k] = v))
+    }
+    if (status === 200) {
+      return response.text().then((_responseText) => {
+        let result200: any = null
+        result200 =
+          _responseText === ""
+            ? null
+            : <VerifyOtpResponse>JSON.parse(_responseText, this.jsonParseReviver)
+        return result200
+      })
+    } else if (status === 400) {
+      return response.text().then((_responseText) => {
+        let result400: any = null
+        result400 =
+          _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver)
+        return throwException("Invalid input param", status, _responseText, _headers, result400)
+      })
+    } else if (status === 401) {
+      return response.text().then((_responseText) => {
+        let result401: any = null
+        result401 =
+          _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver)
+        return throwException("Unauthorized", status, _responseText, _headers, result401)
+      })
+    } else if (status === 403) {
+      return response.text().then((_responseText) => {
+        let result403: any = null
+        result403 =
+          _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver)
+        return throwException("Unauthorized", status, _responseText, _headers, result403)
+      })
+    } else if (status === 500) {
+      return response.text().then((_responseText) => {
+        let result500: any = null
+        result500 =
+          _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver)
+        return throwException("Internal Server Error", status, _responseText, _headers, result500)
+      })
+    } else if (status !== 200 && status !== 204) {
+      return response.text().then((_responseText) => {
+        return throwException(
+          "An unexpected server error occurred.",
+          status,
+          _responseText,
+          _headers,
+        )
+      })
+    }
+    return Promise.resolve<VerifyOtpResponse>(<any>null)
+  }
+
+  /**
+   * Login to get access token
+   * @param body (optional)
+   * @return Authenticate Successfully
+   */
+  login(body: Body | undefined): Promise<LoginResponse> {
+    let url_ = this.baseUrl + "/api/v1/kbfina/user/login"
+    url_ = url_.replace(/[?&]$/, "")
+
+    const content_ = JSON.stringify(body)
+
+    let options_ = <RequestInit>{
+      body: content_,
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        Accept: "application/json",
+      },
     }
 
-    /**
-     * Trigger to send otp to verify Otp
-     * @param body (optional) 
-     * @return Refresh Token Successfully
-     */
-    sendOtp(body: SendOtpRequest | undefined): Promise<SendOtpResponse> {
-        let url_ = this.baseUrl + "/api/v1/kbfina/user/sendOtp";
-        url_ = url_.replace(/[?&]$/, "");
+    return this.http.fetch(url_, options_).then((_response: Response) => {
+      return this.processLogin(_response)
+    })
+  }
 
-        const content_ = JSON.stringify(body);
+  protected processLogin(response: Response): Promise<LoginResponse> {
+    const status = response.status
+    let _headers: any = {}
+    if (response.headers && response.headers.forEach) {
+      response.headers.forEach((v: any, k: any) => (_headers[k] = v))
+    }
+    if (status === 200) {
+      return response.text().then((_responseText) => {
+        let result200: any = null
+        result200 =
+          _responseText === ""
+            ? null
+            : <LoginResponse>JSON.parse(_responseText, this.jsonParseReviver)
+        return result200
+      })
+    } else if (status === 400) {
+      return response.text().then((_responseText) => {
+        let result400: any = null
+        result400 =
+          _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver)
+        return throwException("Invalid input param", status, _responseText, _headers, result400)
+      })
+    } else if (status === 401) {
+      return response.text().then((_responseText) => {
+        let result401: any = null
+        result401 =
+          _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver)
+        return throwException("Unauthorized", status, _responseText, _headers, result401)
+      })
+    } else if (status === 403) {
+      return response.text().then((_responseText) => {
+        let result403: any = null
+        result403 =
+          _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver)
+        return throwException("Unauthorized", status, _responseText, _headers, result403)
+      })
+    } else if (status === 500) {
+      return response.text().then((_responseText) => {
+        let result500: any = null
+        result500 =
+          _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver)
+        return throwException("Internal Server Error", status, _responseText, _headers, result500)
+      })
+    } else if (status !== 200 && status !== 204) {
+      return response.text().then((_responseText) => {
+        return throwException(
+          "An unexpected server error occurred.",
+          status,
+          _responseText,
+          _headers,
+        )
+      })
+    }
+    return Promise.resolve<LoginResponse>(<any>null)
+  }
 
-        let options_ = <RequestInit>{
-            body: content_,
-            method: "POST",
-            headers: {
-                "Content-Type": "application/x-www-form-urlencoded",
-                "Accept": "application/json"
-            }
-        };
+  /**
+   * Renew Access Token
+   * @param body (optional)
+   * @return Refresh Token Successfully
+   */
+  refreshToken(body: Body2 | undefined): Promise<RefreshTokenResponse> {
+    let url_ = this.baseUrl + "/api/v1/kbfina/user/refreshToken"
+    url_ = url_.replace(/[?&]$/, "")
 
-        return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processSendOtp(_response);
-        });
+    const content_ = JSON.stringify(body)
+
+    let options_ = <RequestInit>{
+      body: content_,
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        Accept: "application/json",
+      },
     }
 
-    protected processSendOtp(response: Response): Promise<SendOtpResponse> {
-        const status = response.status;
-        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
-        if (status === 200) {
-            return response.text().then((_responseText) => {
-            let result200: any = null;
-            result200 = _responseText === "" ? null : <SendOtpResponse>JSON.parse(_responseText, this.jsonParseReviver);
-            return result200;
-            });
-        } else if (status === 400) {
-            return response.text().then((_responseText) => {
-            let result400: any = null;
-            result400 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
-            return throwException("Invalid input param", status, _responseText, _headers, result400);
-            });
-        } else if (status === 401) {
-            return response.text().then((_responseText) => {
-            let result401: any = null;
-            result401 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
-            return throwException("Unauthorized", status, _responseText, _headers, result401);
-            });
-        } else if (status === 403) {
-            return response.text().then((_responseText) => {
-            let result403: any = null;
-            result403 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
-            return throwException("Unauthorized", status, _responseText, _headers, result403);
-            });
-        } else if (status === 500) {
-            return response.text().then((_responseText) => {
-            let result500: any = null;
-            result500 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
-            return throwException("Internal Server Error", status, _responseText, _headers, result500);
-            });
-        } else if (status !== 200 && status !== 204) {
-            return response.text().then((_responseText) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            });
-        }
-        return Promise.resolve<SendOtpResponse>(<any>null);
+    return this.http.fetch(url_, options_).then((_response: Response) => {
+      return this.processRefreshToken(_response)
+    })
+  }
+
+  protected processRefreshToken(response: Response): Promise<RefreshTokenResponse> {
+    const status = response.status
+    let _headers: any = {}
+    if (response.headers && response.headers.forEach) {
+      response.headers.forEach((v: any, k: any) => (_headers[k] = v))
+    }
+    if (status === 200) {
+      return response.text().then((_responseText) => {
+        let result200: any = null
+        result200 =
+          _responseText === ""
+            ? null
+            : <RefreshTokenResponse>JSON.parse(_responseText, this.jsonParseReviver)
+        return result200
+      })
+    } else if (status === 400) {
+      return response.text().then((_responseText) => {
+        let result400: any = null
+        result400 =
+          _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver)
+        return throwException("Invalid input param", status, _responseText, _headers, result400)
+      })
+    } else if (status === 401) {
+      return response.text().then((_responseText) => {
+        let result401: any = null
+        result401 =
+          _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver)
+        return throwException("Unauthorized", status, _responseText, _headers, result401)
+      })
+    } else if (status === 403) {
+      return response.text().then((_responseText) => {
+        let result403: any = null
+        result403 =
+          _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver)
+        return throwException("Unauthorized", status, _responseText, _headers, result403)
+      })
+    } else if (status === 500) {
+      return response.text().then((_responseText) => {
+        let result500: any = null
+        result500 =
+          _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver)
+        return throwException("Internal Server Error", status, _responseText, _headers, result500)
+      })
+    } else if (status !== 200 && status !== 204) {
+      return response.text().then((_responseText) => {
+        return throwException(
+          "An unexpected server error occurred.",
+          status,
+          _responseText,
+          _headers,
+        )
+      })
+    }
+    return Promise.resolve<RefreshTokenResponse>(<any>null)
+  }
+
+  /**
+   * Invalidate your refresh token
+   * @param body (optional)
+   * @return Successfully
+   */
+  revokeToken(body: Body3 | undefined): Promise<any> {
+    let url_ = this.baseUrl + "/api/v1/kbfina/user/revokeToken"
+    url_ = url_.replace(/[?&]$/, "")
+
+    const content_ = JSON.stringify(body)
+
+    let options_ = <RequestInit>{
+      body: content_,
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        Accept: "application/json",
+      },
     }
 
-    /**
-     * Verify otp
-     * @param body (optional) 
-     * @return verify success
-     */
-    verifyOtp(body: VerifyOtpRequest | undefined): Promise<VerifyOtpResponse> {
-        let url_ = this.baseUrl + "/api/v1/kbfina/user/verifyOtp";
-        url_ = url_.replace(/[?&]$/, "");
+    return this.http.fetch(url_, options_).then((_response: Response) => {
+      return this.processRevokeToken(_response)
+    })
+  }
 
-        const content_ = JSON.stringify(body);
+  protected processRevokeToken(response: Response): Promise<any> {
+    const status = response.status
+    let _headers: any = {}
+    if (response.headers && response.headers.forEach) {
+      response.headers.forEach((v: any, k: any) => (_headers[k] = v))
+    }
+    if (status === 200) {
+      return response.text().then((_responseText) => {
+        let result200: any = null
+        result200 =
+          _responseText === "" ? null : <any>JSON.parse(_responseText, this.jsonParseReviver)
+        return result200
+      })
+    } else if (status === 400) {
+      return response.text().then((_responseText) => {
+        let result400: any = null
+        result400 =
+          _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver)
+        return throwException("Invalid input param", status, _responseText, _headers, result400)
+      })
+    } else if (status === 401) {
+      return response.text().then((_responseText) => {
+        let result401: any = null
+        result401 =
+          _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver)
+        return throwException("Unauthorized", status, _responseText, _headers, result401)
+      })
+    } else if (status === 403) {
+      return response.text().then((_responseText) => {
+        let result403: any = null
+        result403 =
+          _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver)
+        return throwException("Unauthorized", status, _responseText, _headers, result403)
+      })
+    } else if (status === 500) {
+      return response.text().then((_responseText) => {
+        let result500: any = null
+        result500 =
+          _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver)
+        return throwException("Internal Server Error", status, _responseText, _headers, result500)
+      })
+    } else if (status !== 200 && status !== 204) {
+      return response.text().then((_responseText) => {
+        return throwException(
+          "An unexpected server error occurred.",
+          status,
+          _responseText,
+          _headers,
+        )
+      })
+    }
+    return Promise.resolve<any>(<any>null)
+  }
 
-        let options_ = <RequestInit>{
-            body: content_,
-            method: "POST",
-            headers: {
-                "Content-Type": "application/x-www-form-urlencoded",
-                "Accept": "application/json"
-            }
-        };
+  /**
+   * Register new account
+   * @param body Register Object
+   * @return Successfully
+   */
+  register(body: UserRegistrationRequest): Promise<UserInfoResponse> {
+    let url_ = this.baseUrl + "/api/v1/kbfina/user/register"
+    url_ = url_.replace(/[?&]$/, "")
 
-        return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processVerifyOtp(_response);
-        });
+    const content_ = JSON.stringify(body)
+
+    let options_ = <RequestInit>{
+      body: content_,
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
     }
 
-    protected processVerifyOtp(response: Response): Promise<VerifyOtpResponse> {
-        const status = response.status;
-        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
-        if (status === 200) {
-            return response.text().then((_responseText) => {
-            let result200: any = null;
-            result200 = _responseText === "" ? null : <VerifyOtpResponse>JSON.parse(_responseText, this.jsonParseReviver);
-            return result200;
-            });
-        } else if (status === 400) {
-            return response.text().then((_responseText) => {
-            let result400: any = null;
-            result400 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
-            return throwException("Invalid input param", status, _responseText, _headers, result400);
-            });
-        } else if (status === 401) {
-            return response.text().then((_responseText) => {
-            let result401: any = null;
-            result401 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
-            return throwException("Unauthorized", status, _responseText, _headers, result401);
-            });
-        } else if (status === 403) {
-            return response.text().then((_responseText) => {
-            let result403: any = null;
-            result403 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
-            return throwException("Unauthorized", status, _responseText, _headers, result403);
-            });
-        } else if (status === 500) {
-            return response.text().then((_responseText) => {
-            let result500: any = null;
-            result500 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
-            return throwException("Internal Server Error", status, _responseText, _headers, result500);
-            });
-        } else if (status !== 200 && status !== 204) {
-            return response.text().then((_responseText) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            });
-        }
-        return Promise.resolve<VerifyOtpResponse>(<any>null);
+    return this.http.fetch(url_, options_).then((_response: Response) => {
+      return this.processRegister(_response)
+    })
+  }
+
+  protected processRegister(response: Response): Promise<UserInfoResponse> {
+    const status = response.status
+    let _headers: any = {}
+    if (response.headers && response.headers.forEach) {
+      response.headers.forEach((v: any, k: any) => (_headers[k] = v))
+    }
+    if (status === 200) {
+      return response.text().then((_responseText) => {
+        let result200: any = null
+        result200 =
+          _responseText === ""
+            ? null
+            : <UserInfoResponse>JSON.parse(_responseText, this.jsonParseReviver)
+        return result200
+      })
+    } else if (status === 400) {
+      return response.text().then((_responseText) => {
+        let result400: any = null
+        result400 =
+          _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver)
+        return throwException("Invalid input param", status, _responseText, _headers, result400)
+      })
+    } else if (status === 401) {
+      return response.text().then((_responseText) => {
+        let result401: any = null
+        result401 =
+          _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver)
+        return throwException("Unauthorized", status, _responseText, _headers, result401)
+      })
+    } else if (status === 403) {
+      return response.text().then((_responseText) => {
+        let result403: any = null
+        result403 =
+          _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver)
+        return throwException("Unauthorized", status, _responseText, _headers, result403)
+      })
+    } else if (status === 500) {
+      return response.text().then((_responseText) => {
+        let result500: any = null
+        result500 =
+          _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver)
+        return throwException("Internal Server Error", status, _responseText, _headers, result500)
+      })
+    } else if (status !== 200 && status !== 204) {
+      return response.text().then((_responseText) => {
+        return throwException(
+          "An unexpected server error occurred.",
+          status,
+          _responseText,
+          _headers,
+        )
+      })
+    }
+    return Promise.resolve<UserInfoResponse>(<any>null)
+  }
+
+  /**
+   * Query Linked account
+   * @param userId userId return from login api
+   * @return Successfully
+   */
+  linkAccountGet(userId: string): Promise<LinkAccountResponse[]> {
+    let url_ = this.baseUrl + "/api/v1/kbfina/user/{userId}/linkAccount"
+    if (userId === undefined || userId === null)
+      throw new Error("The parameter 'userId' must be defined.")
+    url_ = url_.replace("{userId}", encodeURIComponent("" + userId))
+    url_ = url_.replace(/[?&]$/, "")
+
+    let options_ = <RequestInit>{
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+      },
     }
 
-    /**
-     * Login to get access token
-     * @param body (optional) 
-     * @return Authenticate Successfully
-     */
-    login(body: Body | undefined): Promise<LoginResponse> {
-        let url_ = this.baseUrl + "/api/v1/kbfina/user/login";
-        url_ = url_.replace(/[?&]$/, "");
+    return this.http.fetch(url_, options_).then((_response: Response) => {
+      return this.processLinkAccountGet(_response)
+    })
+  }
 
-        const content_ = JSON.stringify(body);
+  protected processLinkAccountGet(response: Response): Promise<LinkAccountResponse[]> {
+    const status = response.status
+    let _headers: any = {}
+    if (response.headers && response.headers.forEach) {
+      response.headers.forEach((v: any, k: any) => (_headers[k] = v))
+    }
+    if (status === 200) {
+      return response.text().then((_responseText) => {
+        let result200: any = null
+        result200 =
+          _responseText === ""
+            ? null
+            : <LinkAccountResponse[]>JSON.parse(_responseText, this.jsonParseReviver)
+        return result200
+      })
+    } else if (status === 400) {
+      return response.text().then((_responseText) => {
+        let result400: any = null
+        result400 =
+          _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver)
+        return throwException("Invalid input param", status, _responseText, _headers, result400)
+      })
+    } else if (status === 401) {
+      return response.text().then((_responseText) => {
+        let result401: any = null
+        result401 =
+          _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver)
+        return throwException("Unauthorized", status, _responseText, _headers, result401)
+      })
+    } else if (status === 403) {
+      return response.text().then((_responseText) => {
+        let result403: any = null
+        result403 =
+          _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver)
+        return throwException("Unauthorized", status, _responseText, _headers, result403)
+      })
+    } else if (status === 500) {
+      return response.text().then((_responseText) => {
+        let result500: any = null
+        result500 =
+          _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver)
+        return throwException("Internal Server Error", status, _responseText, _headers, result500)
+      })
+    } else if (status !== 200 && status !== 204) {
+      return response.text().then((_responseText) => {
+        return throwException(
+          "An unexpected server error occurred.",
+          status,
+          _responseText,
+          _headers,
+        )
+      })
+    }
+    return Promise.resolve<LinkAccountResponse[]>(<any>null)
+  }
 
-        let options_ = <RequestInit>{
-            body: content_,
-            method: "POST",
-            headers: {
-                "Content-Type": "application/x-www-form-urlencoded",
-                "Accept": "application/json"
-            }
-        };
+  /**
+   * Link KBFINA account to institution account
+   * @param userId userId return from login api
+   * @param body Register Object
+   * @return Successfully
+   */
+  linkAccountPost(userId: string, body: LinkAccountRequest): Promise<any> {
+    let url_ = this.baseUrl + "/api/v1/kbfina/user/{userId}/linkAccount"
+    if (userId === undefined || userId === null)
+      throw new Error("The parameter 'userId' must be defined.")
+    url_ = url_.replace("{userId}", encodeURIComponent("" + userId))
+    url_ = url_.replace(/[?&]$/, "")
 
-        return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processLogin(_response);
-        });
+    const content_ = JSON.stringify(body)
+
+    let options_ = <RequestInit>{
+      body: content_,
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
     }
 
-    protected processLogin(response: Response): Promise<LoginResponse> {
-        const status = response.status;
-        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
-        if (status === 200) {
-            return response.text().then((_responseText) => {
-            let result200: any = null;
-            result200 = _responseText === "" ? null : <LoginResponse>JSON.parse(_responseText, this.jsonParseReviver);
-            return result200;
-            });
-        } else if (status === 400) {
-            return response.text().then((_responseText) => {
-            let result400: any = null;
-            result400 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
-            return throwException("Invalid input param", status, _responseText, _headers, result400);
-            });
-        } else if (status === 401) {
-            return response.text().then((_responseText) => {
-            let result401: any = null;
-            result401 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
-            return throwException("Unauthorized", status, _responseText, _headers, result401);
-            });
-        } else if (status === 403) {
-            return response.text().then((_responseText) => {
-            let result403: any = null;
-            result403 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
-            return throwException("Unauthorized", status, _responseText, _headers, result403);
-            });
-        } else if (status === 500) {
-            return response.text().then((_responseText) => {
-            let result500: any = null;
-            result500 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
-            return throwException("Internal Server Error", status, _responseText, _headers, result500);
-            });
-        } else if (status !== 200 && status !== 204) {
-            return response.text().then((_responseText) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            });
-        }
-        return Promise.resolve<LoginResponse>(<any>null);
+    return this.http.fetch(url_, options_).then((_response: Response) => {
+      return this.processLinkAccountPost(_response)
+    })
+  }
+
+  protected processLinkAccountPost(response: Response): Promise<any> {
+    const status = response.status
+    let _headers: any = {}
+    if (response.headers && response.headers.forEach) {
+      response.headers.forEach((v: any, k: any) => (_headers[k] = v))
+    }
+    if (status === 200) {
+      return response.text().then((_responseText) => {
+        let result200: any = null
+        result200 =
+          _responseText === "" ? null : <any>JSON.parse(_responseText, this.jsonParseReviver)
+        return result200
+      })
+    } else if (status === 400) {
+      return response.text().then((_responseText) => {
+        let result400: any = null
+        result400 =
+          _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver)
+        return throwException("Invalid input param", status, _responseText, _headers, result400)
+      })
+    } else if (status === 401) {
+      return response.text().then((_responseText) => {
+        let result401: any = null
+        result401 =
+          _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver)
+        return throwException("Unauthorized", status, _responseText, _headers, result401)
+      })
+    } else if (status === 403) {
+      return response.text().then((_responseText) => {
+        let result403: any = null
+        result403 =
+          _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver)
+        return throwException("Unauthorized", status, _responseText, _headers, result403)
+      })
+    } else if (status === 500) {
+      return response.text().then((_responseText) => {
+        let result500: any = null
+        result500 =
+          _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver)
+        return throwException("Internal Server Error", status, _responseText, _headers, result500)
+      })
+    } else if (status !== 200 && status !== 204) {
+      return response.text().then((_responseText) => {
+        return throwException(
+          "An unexpected server error occurred.",
+          status,
+          _responseText,
+          _headers,
+        )
+      })
+    }
+    return Promise.resolve<any>(<any>null)
+  }
+
+  /**
+   * tra cứu trạng thái sinh trắc học của  thiết bị
+   * @return Successfully
+   */
+  biometricGet(publicKey: string): Promise<Anonymous[]> {
+    let url_ = this.baseUrl + "/api/v1/kbfina/user/biometric?"
+    if (publicKey === undefined || publicKey === null)
+      throw new Error("The parameter 'publicKey' must be defined and cannot be null.")
+    else url_ += "publicKey=" + encodeURIComponent("" + publicKey) + "&"
+    url_ = url_.replace(/[?&]$/, "")
+
+    let options_ = <RequestInit>{
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+      },
     }
 
-    /**
-     * Renew Access Token
-     * @param body (optional) 
-     * @return Refresh Token Successfully
-     */
-    refreshToken(body: Body2 | undefined): Promise<RefreshTokenResponse> {
-        let url_ = this.baseUrl + "/api/v1/kbfina/user/refreshToken";
-        url_ = url_.replace(/[?&]$/, "");
+    return this.http.fetch(url_, options_).then((_response: Response) => {
+      return this.processBiometricGet(_response)
+    })
+  }
 
-        const content_ = JSON.stringify(body);
+  protected processBiometricGet(response: Response): Promise<Anonymous[]> {
+    const status = response.status
+    let _headers: any = {}
+    if (response.headers && response.headers.forEach) {
+      response.headers.forEach((v: any, k: any) => (_headers[k] = v))
+    }
+    if (status === 200) {
+      return response.text().then((_responseText) => {
+        let result200: any = null
+        result200 =
+          _responseText === ""
+            ? null
+            : <Anonymous[]>JSON.parse(_responseText, this.jsonParseReviver)
+        return result200
+      })
+    } else if (status !== 200 && status !== 204) {
+      return response.text().then((_responseText) => {
+        return throwException(
+          "An unexpected server error occurred.",
+          status,
+          _responseText,
+          _headers,
+        )
+      })
+    }
+    return Promise.resolve<Anonymous[]>(<any>null)
+  }
 
-        let options_ = <RequestInit>{
-            body: content_,
-            method: "POST",
-            headers: {
-                "Content-Type": "application/x-www-form-urlencoded",
-                "Accept": "application/json"
-            }
-        };
+  /**
+   * đăng kí đăng nhập bằng sinh trắc học
+   * @param body (optional) Đăng kí biometric
+   * @return OK
+   */
+  biometricPost(body: Body4 | undefined): Promise<Anonymous2[]> {
+    let url_ = this.baseUrl + "/api/v1/kbfina/user/biometric"
+    url_ = url_.replace(/[?&]$/, "")
 
-        return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processRefreshToken(_response);
-        });
+    const content_ = JSON.stringify(body)
+
+    let options_ = <RequestInit>{
+      body: content_,
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
     }
 
-    protected processRefreshToken(response: Response): Promise<RefreshTokenResponse> {
-        const status = response.status;
-        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
-        if (status === 200) {
-            return response.text().then((_responseText) => {
-            let result200: any = null;
-            result200 = _responseText === "" ? null : <RefreshTokenResponse>JSON.parse(_responseText, this.jsonParseReviver);
-            return result200;
-            });
-        } else if (status === 400) {
-            return response.text().then((_responseText) => {
-            let result400: any = null;
-            result400 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
-            return throwException("Invalid input param", status, _responseText, _headers, result400);
-            });
-        } else if (status === 401) {
-            return response.text().then((_responseText) => {
-            let result401: any = null;
-            result401 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
-            return throwException("Unauthorized", status, _responseText, _headers, result401);
-            });
-        } else if (status === 403) {
-            return response.text().then((_responseText) => {
-            let result403: any = null;
-            result403 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
-            return throwException("Unauthorized", status, _responseText, _headers, result403);
-            });
-        } else if (status === 500) {
-            return response.text().then((_responseText) => {
-            let result500: any = null;
-            result500 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
-            return throwException("Internal Server Error", status, _responseText, _headers, result500);
-            });
-        } else if (status !== 200 && status !== 204) {
-            return response.text().then((_responseText) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            });
-        }
-        return Promise.resolve<RefreshTokenResponse>(<any>null);
+    return this.http.fetch(url_, options_).then((_response: Response) => {
+      return this.processBiometricPost(_response)
+    })
+  }
+
+  protected processBiometricPost(response: Response): Promise<Anonymous2[]> {
+    const status = response.status
+    let _headers: any = {}
+    if (response.headers && response.headers.forEach) {
+      response.headers.forEach((v: any, k: any) => (_headers[k] = v))
+    }
+    if (status === 200) {
+      return response.text().then((_responseText) => {
+        let result200: any = null
+        result200 =
+          _responseText === ""
+            ? null
+            : <Anonymous2[]>JSON.parse(_responseText, this.jsonParseReviver)
+        return result200
+      })
+    } else if (status !== 200 && status !== 204) {
+      return response.text().then((_responseText) => {
+        return throwException(
+          "An unexpected server error occurred.",
+          status,
+          _responseText,
+          _headers,
+        )
+      })
+    }
+    return Promise.resolve<Anonymous2[]>(<any>null)
+  }
+
+  /**
+   * huỷ đăng kí đăng nhập bằng sinh trắc học
+   * @return OK
+   */
+  biometricDelete(): Promise<any[]> {
+    let url_ = this.baseUrl + "/api/v1/kbfina/user/biometric"
+    url_ = url_.replace(/[?&]$/, "")
+
+    let options_ = <RequestInit>{
+      method: "DELETE",
+      headers: {
+        Accept: "application/json",
+      },
     }
 
-    /**
-     * Invalidate your refresh token
-     * @param body (optional) 
-     * @return Successfully
-     */
-    revokeToken(body: Body3 | undefined): Promise<any> {
-        let url_ = this.baseUrl + "/api/v1/kbfina/user/revokeToken";
-        url_ = url_.replace(/[?&]$/, "");
+    return this.http.fetch(url_, options_).then((_response: Response) => {
+      return this.processBiometricDelete(_response)
+    })
+  }
 
-        const content_ = JSON.stringify(body);
+  protected processBiometricDelete(response: Response): Promise<any[]> {
+    const status = response.status
+    let _headers: any = {}
+    if (response.headers && response.headers.forEach) {
+      response.headers.forEach((v: any, k: any) => (_headers[k] = v))
+    }
+    if (status === 200) {
+      return response.text().then((_responseText) => {
+        let result200: any = null
+        result200 =
+          _responseText === "" ? null : <any[]>JSON.parse(_responseText, this.jsonParseReviver)
+        return result200
+      })
+    } else if (status !== 200 && status !== 204) {
+      return response.text().then((_responseText) => {
+        return throwException(
+          "An unexpected server error occurred.",
+          status,
+          _responseText,
+          _headers,
+        )
+      })
+    }
+    return Promise.resolve<any[]>(<any>null)
+  }
 
-        let options_ = <RequestInit>{
-            body: content_,
-            method: "POST",
-            headers: {
-                "Content-Type": "application/x-www-form-urlencoded",
-                "Accept": "application/json"
-            }
-        };
+  /**
+   * update ekyc information
+   * @param body Register Object
+   * @return Successfully
+   * @deprecated
+   */
+  ekycPut(body: EkycResponse): Promise<EkycResponse> {
+    let url_ = this.baseUrl + "/api/v1/kbfina/user/ekyc"
+    url_ = url_.replace(/[?&]$/, "")
 
-        return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processRevokeToken(_response);
-        });
+    const content_ = JSON.stringify(body)
+
+    let options_ = <RequestInit>{
+      body: content_,
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
     }
 
-    protected processRevokeToken(response: Response): Promise<any> {
-        const status = response.status;
-        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
-        if (status === 200) {
-            return response.text().then((_responseText) => {
-            let result200: any = null;
-            result200 = _responseText === "" ? null : <any>JSON.parse(_responseText, this.jsonParseReviver);
-            return result200;
-            });
-        } else if (status === 400) {
-            return response.text().then((_responseText) => {
-            let result400: any = null;
-            result400 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
-            return throwException("Invalid input param", status, _responseText, _headers, result400);
-            });
-        } else if (status === 401) {
-            return response.text().then((_responseText) => {
-            let result401: any = null;
-            result401 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
-            return throwException("Unauthorized", status, _responseText, _headers, result401);
-            });
-        } else if (status === 403) {
-            return response.text().then((_responseText) => {
-            let result403: any = null;
-            result403 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
-            return throwException("Unauthorized", status, _responseText, _headers, result403);
-            });
-        } else if (status === 500) {
-            return response.text().then((_responseText) => {
-            let result500: any = null;
-            result500 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
-            return throwException("Internal Server Error", status, _responseText, _headers, result500);
-            });
-        } else if (status !== 200 && status !== 204) {
-            return response.text().then((_responseText) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            });
-        }
-        return Promise.resolve<any>(<any>null);
+    return this.http.fetch(url_, options_).then((_response: Response) => {
+      return this.processEkycPut(_response)
+    })
+  }
+
+  protected processEkycPut(response: Response): Promise<EkycResponse> {
+    const status = response.status
+    let _headers: any = {}
+    if (response.headers && response.headers.forEach) {
+      response.headers.forEach((v: any, k: any) => (_headers[k] = v))
+    }
+    if (status === 200) {
+      return response.text().then((_responseText) => {
+        let result200: any = null
+        result200 =
+          _responseText === ""
+            ? null
+            : <EkycResponse>JSON.parse(_responseText, this.jsonParseReviver)
+        return result200
+      })
+    } else if (status === 400) {
+      return response.text().then((_responseText) => {
+        let result400: any = null
+        result400 =
+          _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver)
+        return throwException("Invalid input param", status, _responseText, _headers, result400)
+      })
+    } else if (status === 401) {
+      return response.text().then((_responseText) => {
+        let result401: any = null
+        result401 =
+          _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver)
+        return throwException("Unauthorized", status, _responseText, _headers, result401)
+      })
+    } else if (status === 403) {
+      return response.text().then((_responseText) => {
+        let result403: any = null
+        result403 =
+          _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver)
+        return throwException("Unauthorized", status, _responseText, _headers, result403)
+      })
+    } else if (status === 500) {
+      return response.text().then((_responseText) => {
+        let result500: any = null
+        result500 =
+          _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver)
+        return throwException("Internal Server Error", status, _responseText, _headers, result500)
+      })
+    } else if (status !== 200 && status !== 204) {
+      return response.text().then((_responseText) => {
+        return throwException(
+          "An unexpected server error occurred.",
+          status,
+          _responseText,
+          _headers,
+        )
+      })
+    }
+    return Promise.resolve<EkycResponse>(<any>null)
+  }
+
+  /**
+   * get ekyc information
+   * @return Successfully
+   * @deprecated
+   */
+  ekycGet(): Promise<EkycResponse> {
+    let url_ = this.baseUrl + "/api/v1/kbfina/user/ekyc"
+    url_ = url_.replace(/[?&]$/, "")
+
+    let options_ = <RequestInit>{
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+      },
     }
 
-    /**
-     * Register new account
-     * @param body Register Object
-     * @return Successfully
-     */
-    register(body: UserRegistrationRequest): Promise<UserInfoResponse> {
-        let url_ = this.baseUrl + "/api/v1/kbfina/user/register";
-        url_ = url_.replace(/[?&]$/, "");
+    return this.http.fetch(url_, options_).then((_response: Response) => {
+      return this.processEkycGet(_response)
+    })
+  }
 
-        const content_ = JSON.stringify(body);
+  protected processEkycGet(response: Response): Promise<EkycResponse> {
+    const status = response.status
+    let _headers: any = {}
+    if (response.headers && response.headers.forEach) {
+      response.headers.forEach((v: any, k: any) => (_headers[k] = v))
+    }
+    if (status === 200) {
+      return response.text().then((_responseText) => {
+        let result200: any = null
+        result200 =
+          _responseText === ""
+            ? null
+            : <EkycResponse>JSON.parse(_responseText, this.jsonParseReviver)
+        return result200
+      })
+    } else if (status === 400) {
+      return response.text().then((_responseText) => {
+        let result400: any = null
+        result400 =
+          _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver)
+        return throwException("Invalid input param", status, _responseText, _headers, result400)
+      })
+    } else if (status === 401) {
+      return response.text().then((_responseText) => {
+        let result401: any = null
+        result401 =
+          _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver)
+        return throwException("Unauthorized", status, _responseText, _headers, result401)
+      })
+    } else if (status === 403) {
+      return response.text().then((_responseText) => {
+        let result403: any = null
+        result403 =
+          _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver)
+        return throwException("Unauthorized", status, _responseText, _headers, result403)
+      })
+    } else if (status === 500) {
+      return response.text().then((_responseText) => {
+        let result500: any = null
+        result500 =
+          _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver)
+        return throwException("Internal Server Error", status, _responseText, _headers, result500)
+      })
+    } else if (status !== 200 && status !== 204) {
+      return response.text().then((_responseText) => {
+        return throwException(
+          "An unexpected server error occurred.",
+          status,
+          _responseText,
+          _headers,
+        )
+      })
+    }
+    return Promise.resolve<EkycResponse>(<any>null)
+  }
 
-        let options_ = <RequestInit>{
-            body: content_,
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Accept": "application/json"
-            }
-        };
+  /**
+   * get presigned url to upload to S3
+   * @param body Register Object
+   * @return Successfully
+   * @deprecated
+   */
+  ekycPost(body: EkycRequest): Promise<EkycResponse> {
+    let url_ = this.baseUrl + "/api/v1/kbfina/user/ekyc"
+    url_ = url_.replace(/[?&]$/, "")
 
-        return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processRegister(_response);
-        });
+    const content_ = JSON.stringify(body)
+
+    let options_ = <RequestInit>{
+      body: content_,
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
     }
 
-    protected processRegister(response: Response): Promise<UserInfoResponse> {
-        const status = response.status;
-        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
-        if (status === 200) {
-            return response.text().then((_responseText) => {
-            let result200: any = null;
-            result200 = _responseText === "" ? null : <UserInfoResponse>JSON.parse(_responseText, this.jsonParseReviver);
-            return result200;
-            });
-        } else if (status === 400) {
-            return response.text().then((_responseText) => {
-            let result400: any = null;
-            result400 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
-            return throwException("Invalid input param", status, _responseText, _headers, result400);
-            });
-        } else if (status === 401) {
-            return response.text().then((_responseText) => {
-            let result401: any = null;
-            result401 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
-            return throwException("Unauthorized", status, _responseText, _headers, result401);
-            });
-        } else if (status === 403) {
-            return response.text().then((_responseText) => {
-            let result403: any = null;
-            result403 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
-            return throwException("Unauthorized", status, _responseText, _headers, result403);
-            });
-        } else if (status === 500) {
-            return response.text().then((_responseText) => {
-            let result500: any = null;
-            result500 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
-            return throwException("Internal Server Error", status, _responseText, _headers, result500);
-            });
-        } else if (status !== 200 && status !== 204) {
-            return response.text().then((_responseText) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            });
-        }
-        return Promise.resolve<UserInfoResponse>(<any>null);
+    return this.http.fetch(url_, options_).then((_response: Response) => {
+      return this.processEkycPost(_response)
+    })
+  }
+
+  protected processEkycPost(response: Response): Promise<EkycResponse> {
+    const status = response.status
+    let _headers: any = {}
+    if (response.headers && response.headers.forEach) {
+      response.headers.forEach((v: any, k: any) => (_headers[k] = v))
     }
-
-    /**
-     * Query Linked account
-     * @param userId userId return from login api
-     * @return Successfully
-     */
-    linkAccountGet(userId: string): Promise<LinkAccountResponse[]> {
-        let url_ = this.baseUrl + "/api/v1/kbfina/user/{userId}/linkAccount";
-        if (userId === undefined || userId === null)
-            throw new Error("The parameter 'userId' must be defined.");
-        url_ = url_.replace("{userId}", encodeURIComponent("" + userId));
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ = <RequestInit>{
-            method: "GET",
-            headers: {
-                "Accept": "application/json"
-            }
-        };
-
-        return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processLinkAccountGet(_response);
-        });
+    if (status === 200) {
+      return response.text().then((_responseText) => {
+        let result200: any = null
+        result200 =
+          _responseText === ""
+            ? null
+            : <EkycResponse>JSON.parse(_responseText, this.jsonParseReviver)
+        return result200
+      })
+    } else if (status === 400) {
+      return response.text().then((_responseText) => {
+        let result400: any = null
+        result400 =
+          _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver)
+        return throwException("Invalid input param", status, _responseText, _headers, result400)
+      })
+    } else if (status === 401) {
+      return response.text().then((_responseText) => {
+        let result401: any = null
+        result401 =
+          _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver)
+        return throwException("Unauthorized", status, _responseText, _headers, result401)
+      })
+    } else if (status === 403) {
+      return response.text().then((_responseText) => {
+        let result403: any = null
+        result403 =
+          _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver)
+        return throwException("Unauthorized", status, _responseText, _headers, result403)
+      })
+    } else if (status === 500) {
+      return response.text().then((_responseText) => {
+        let result500: any = null
+        result500 =
+          _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver)
+        return throwException("Internal Server Error", status, _responseText, _headers, result500)
+      })
+    } else if (status !== 200 && status !== 204) {
+      return response.text().then((_responseText) => {
+        return throwException(
+          "An unexpected server error occurred.",
+          status,
+          _responseText,
+          _headers,
+        )
+      })
     }
-
-    protected processLinkAccountGet(response: Response): Promise<LinkAccountResponse[]> {
-        const status = response.status;
-        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
-        if (status === 200) {
-            return response.text().then((_responseText) => {
-            let result200: any = null;
-            result200 = _responseText === "" ? null : <LinkAccountResponse[]>JSON.parse(_responseText, this.jsonParseReviver);
-            return result200;
-            });
-        } else if (status === 400) {
-            return response.text().then((_responseText) => {
-            let result400: any = null;
-            result400 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
-            return throwException("Invalid input param", status, _responseText, _headers, result400);
-            });
-        } else if (status === 401) {
-            return response.text().then((_responseText) => {
-            let result401: any = null;
-            result401 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
-            return throwException("Unauthorized", status, _responseText, _headers, result401);
-            });
-        } else if (status === 403) {
-            return response.text().then((_responseText) => {
-            let result403: any = null;
-            result403 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
-            return throwException("Unauthorized", status, _responseText, _headers, result403);
-            });
-        } else if (status === 500) {
-            return response.text().then((_responseText) => {
-            let result500: any = null;
-            result500 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
-            return throwException("Internal Server Error", status, _responseText, _headers, result500);
-            });
-        } else if (status !== 200 && status !== 204) {
-            return response.text().then((_responseText) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            });
-        }
-        return Promise.resolve<LinkAccountResponse[]>(<any>null);
-    }
-
-    /**
-     * Link KBFINA account to institution account
-     * @param userId userId return from login api
-     * @param body Register Object
-     * @return Successfully
-     */
-    linkAccountPost(userId: string, body: LinkAccountRequest): Promise<any> {
-        let url_ = this.baseUrl + "/api/v1/kbfina/user/{userId}/linkAccount";
-        if (userId === undefined || userId === null)
-            throw new Error("The parameter 'userId' must be defined.");
-        url_ = url_.replace("{userId}", encodeURIComponent("" + userId));
-        url_ = url_.replace(/[?&]$/, "");
-
-        const content_ = JSON.stringify(body);
-
-        let options_ = <RequestInit>{
-            body: content_,
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Accept": "application/json"
-            }
-        };
-
-        return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processLinkAccountPost(_response);
-        });
-    }
-
-    protected processLinkAccountPost(response: Response): Promise<any> {
-        const status = response.status;
-        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
-        if (status === 200) {
-            return response.text().then((_responseText) => {
-            let result200: any = null;
-            result200 = _responseText === "" ? null : <any>JSON.parse(_responseText, this.jsonParseReviver);
-            return result200;
-            });
-        } else if (status === 400) {
-            return response.text().then((_responseText) => {
-            let result400: any = null;
-            result400 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
-            return throwException("Invalid input param", status, _responseText, _headers, result400);
-            });
-        } else if (status === 401) {
-            return response.text().then((_responseText) => {
-            let result401: any = null;
-            result401 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
-            return throwException("Unauthorized", status, _responseText, _headers, result401);
-            });
-        } else if (status === 403) {
-            return response.text().then((_responseText) => {
-            let result403: any = null;
-            result403 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
-            return throwException("Unauthorized", status, _responseText, _headers, result403);
-            });
-        } else if (status === 500) {
-            return response.text().then((_responseText) => {
-            let result500: any = null;
-            result500 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
-            return throwException("Internal Server Error", status, _responseText, _headers, result500);
-            });
-        } else if (status !== 200 && status !== 204) {
-            return response.text().then((_responseText) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            });
-        }
-        return Promise.resolve<any>(<any>null);
-    }
-
-    /**
-     * tra cứu trạng thái sinh trắc học của  thiết bị
-     * @return Successfully
-     */
-    biometricGet(publicKey: string): Promise<Anonymous[]> {
-        let url_ = this.baseUrl + "/api/v1/kbfina/user/biometric?";
-        if (publicKey === undefined || publicKey === null)
-            throw new Error("The parameter 'publicKey' must be defined and cannot be null.");
-        else
-            url_ += "publicKey=" + encodeURIComponent("" + publicKey) + "&";
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ = <RequestInit>{
-            method: "GET",
-            headers: {
-                "Accept": "application/json"
-            }
-        };
-
-        return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processBiometricGet(_response);
-        });
-    }
-
-    protected processBiometricGet(response: Response): Promise<Anonymous[]> {
-        const status = response.status;
-        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
-        if (status === 200) {
-            return response.text().then((_responseText) => {
-            let result200: any = null;
-            result200 = _responseText === "" ? null : <Anonymous[]>JSON.parse(_responseText, this.jsonParseReviver);
-            return result200;
-            });
-        } else if (status !== 200 && status !== 204) {
-            return response.text().then((_responseText) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            });
-        }
-        return Promise.resolve<Anonymous[]>(<any>null);
-    }
-
-    /**
-     * đăng kí đăng nhập bằng sinh trắc học
-     * @param body (optional) Đăng kí biometric
-     * @return OK
-     */
-    biometricPost(body: Body4 | undefined): Promise<Anonymous2[]> {
-        let url_ = this.baseUrl + "/api/v1/kbfina/user/biometric";
-        url_ = url_.replace(/[?&]$/, "");
-
-        const content_ = JSON.stringify(body);
-
-        let options_ = <RequestInit>{
-            body: content_,
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Accept": "application/json"
-            }
-        };
-
-        return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processBiometricPost(_response);
-        });
-    }
-
-    protected processBiometricPost(response: Response): Promise<Anonymous2[]> {
-        const status = response.status;
-        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
-        if (status === 200) {
-            return response.text().then((_responseText) => {
-            let result200: any = null;
-            result200 = _responseText === "" ? null : <Anonymous2[]>JSON.parse(_responseText, this.jsonParseReviver);
-            return result200;
-            });
-        } else if (status !== 200 && status !== 204) {
-            return response.text().then((_responseText) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            });
-        }
-        return Promise.resolve<Anonymous2[]>(<any>null);
-    }
-
-    /**
-     * huỷ đăng kí đăng nhập bằng sinh trắc học
-     * @return OK
-     */
-    biometricDelete(): Promise<any[]> {
-        let url_ = this.baseUrl + "/api/v1/kbfina/user/biometric";
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ = <RequestInit>{
-            method: "DELETE",
-            headers: {
-                "Accept": "application/json"
-            }
-        };
-
-        return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processBiometricDelete(_response);
-        });
-    }
-
-    protected processBiometricDelete(response: Response): Promise<any[]> {
-        const status = response.status;
-        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
-        if (status === 200) {
-            return response.text().then((_responseText) => {
-            let result200: any = null;
-            result200 = _responseText === "" ? null : <any[]>JSON.parse(_responseText, this.jsonParseReviver);
-            return result200;
-            });
-        } else if (status !== 200 && status !== 204) {
-            return response.text().then((_responseText) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            });
-        }
-        return Promise.resolve<any[]>(<any>null);
-    }
-
-    /**
-     * update ekyc information
-     * @param body Register Object
-     * @return Successfully
-     * @deprecated
-     */
-    ekycPut(body: EkycResponse): Promise<EkycResponse> {
-        let url_ = this.baseUrl + "/api/v1/kbfina/user/ekyc";
-        url_ = url_.replace(/[?&]$/, "");
-
-        const content_ = JSON.stringify(body);
-
-        let options_ = <RequestInit>{
-            body: content_,
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json",
-                "Accept": "application/json"
-            }
-        };
-
-        return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processEkycPut(_response);
-        });
-    }
-
-    protected processEkycPut(response: Response): Promise<EkycResponse> {
-        const status = response.status;
-        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
-        if (status === 200) {
-            return response.text().then((_responseText) => {
-            let result200: any = null;
-            result200 = _responseText === "" ? null : <EkycResponse>JSON.parse(_responseText, this.jsonParseReviver);
-            return result200;
-            });
-        } else if (status === 400) {
-            return response.text().then((_responseText) => {
-            let result400: any = null;
-            result400 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
-            return throwException("Invalid input param", status, _responseText, _headers, result400);
-            });
-        } else if (status === 401) {
-            return response.text().then((_responseText) => {
-            let result401: any = null;
-            result401 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
-            return throwException("Unauthorized", status, _responseText, _headers, result401);
-            });
-        } else if (status === 403) {
-            return response.text().then((_responseText) => {
-            let result403: any = null;
-            result403 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
-            return throwException("Unauthorized", status, _responseText, _headers, result403);
-            });
-        } else if (status === 500) {
-            return response.text().then((_responseText) => {
-            let result500: any = null;
-            result500 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
-            return throwException("Internal Server Error", status, _responseText, _headers, result500);
-            });
-        } else if (status !== 200 && status !== 204) {
-            return response.text().then((_responseText) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            });
-        }
-        return Promise.resolve<EkycResponse>(<any>null);
-    }
-
-    /**
-     * get ekyc information
-     * @return Successfully
-     * @deprecated
-     */
-    ekycGet(): Promise<EkycResponse> {
-        let url_ = this.baseUrl + "/api/v1/kbfina/user/ekyc";
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ = <RequestInit>{
-            method: "GET",
-            headers: {
-                "Accept": "application/json"
-            }
-        };
-
-        return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processEkycGet(_response);
-        });
-    }
-
-    protected processEkycGet(response: Response): Promise<EkycResponse> {
-        const status = response.status;
-        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
-        if (status === 200) {
-            return response.text().then((_responseText) => {
-            let result200: any = null;
-            result200 = _responseText === "" ? null : <EkycResponse>JSON.parse(_responseText, this.jsonParseReviver);
-            return result200;
-            });
-        } else if (status === 400) {
-            return response.text().then((_responseText) => {
-            let result400: any = null;
-            result400 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
-            return throwException("Invalid input param", status, _responseText, _headers, result400);
-            });
-        } else if (status === 401) {
-            return response.text().then((_responseText) => {
-            let result401: any = null;
-            result401 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
-            return throwException("Unauthorized", status, _responseText, _headers, result401);
-            });
-        } else if (status === 403) {
-            return response.text().then((_responseText) => {
-            let result403: any = null;
-            result403 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
-            return throwException("Unauthorized", status, _responseText, _headers, result403);
-            });
-        } else if (status === 500) {
-            return response.text().then((_responseText) => {
-            let result500: any = null;
-            result500 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
-            return throwException("Internal Server Error", status, _responseText, _headers, result500);
-            });
-        } else if (status !== 200 && status !== 204) {
-            return response.text().then((_responseText) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            });
-        }
-        return Promise.resolve<EkycResponse>(<any>null);
-    }
-
-    /**
-     * get presigned url to upload to S3
-     * @param body Register Object
-     * @return Successfully
-     * @deprecated
-     */
-    ekycPost(body: EkycRequest): Promise<EkycResponse> {
-        let url_ = this.baseUrl + "/api/v1/kbfina/user/ekyc";
-        url_ = url_.replace(/[?&]$/, "");
-
-        const content_ = JSON.stringify(body);
-
-        let options_ = <RequestInit>{
-            body: content_,
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Accept": "application/json"
-            }
-        };
-
-        return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processEkycPost(_response);
-        });
-    }
-
-    protected processEkycPost(response: Response): Promise<EkycResponse> {
-        const status = response.status;
-        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
-        if (status === 200) {
-            return response.text().then((_responseText) => {
-            let result200: any = null;
-            result200 = _responseText === "" ? null : <EkycResponse>JSON.parse(_responseText, this.jsonParseReviver);
-            return result200;
-            });
-        } else if (status === 400) {
-            return response.text().then((_responseText) => {
-            let result400: any = null;
-            result400 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
-            return throwException("Invalid input param", status, _responseText, _headers, result400);
-            });
-        } else if (status === 401) {
-            return response.text().then((_responseText) => {
-            let result401: any = null;
-            result401 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
-            return throwException("Unauthorized", status, _responseText, _headers, result401);
-            });
-        } else if (status === 403) {
-            return response.text().then((_responseText) => {
-            let result403: any = null;
-            result403 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
-            return throwException("Unauthorized", status, _responseText, _headers, result403);
-            });
-        } else if (status === 500) {
-            return response.text().then((_responseText) => {
-            let result500: any = null;
-            result500 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
-            return throwException("Internal Server Error", status, _responseText, _headers, result500);
-            });
-        } else if (status !== 200 && status !== 204) {
-            return response.text().then((_responseText) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            });
-        }
-        return Promise.resolve<EkycResponse>(<any>null);
-    }
+    return Promise.resolve<EkycResponse>(<any>null)
+  }
 }
 
 export class KbfinaServiceProxy {
-    private http: { fetch(url: RequestInfo, init?: RequestInit): Promise<Response> };
-    private baseUrl: string;
-    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+  private http: { fetch(url: RequestInfo, init?: RequestInit): Promise<Response> }
+  private baseUrl: string
+  protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined
 
-    constructor(baseUrl?: string, http?: { fetch(url: RequestInfo, init?: RequestInit): Promise<Response> }) {
-        this.http = http ? http : <any>window;
-        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "http://52.74.51.47/rest";
+  constructor(
+    baseUrl?: string,
+    http?: { fetch(url: RequestInfo, init?: RequestInit): Promise<Response> },
+  ) {
+    this.http = http ? http : <any>window
+    this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "http://52.74.51.47/rest"
+  }
+
+  /**
+   * Get user information
+   * @param userId userId return from login api
+   * @return Successfully
+   */
+  userGet(userId: string): Promise<UserInfo> {
+    let url_ = this.baseUrl + "/api/v1/kbfina/user/{userId}"
+    if (userId === undefined || userId === null)
+      throw new Error("The parameter 'userId' must be defined.")
+    url_ = url_.replace("{userId}", encodeURIComponent("" + userId))
+    url_ = url_.replace(/[?&]$/, "")
+
+    let options_ = <RequestInit>{
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+      },
     }
 
-    /**
-     * Get user information
-     * @param userId userId return from login api
-     * @return Successfully
-     */
-    userGet(userId: string): Promise<UserInfo> {
-        let url_ = this.baseUrl + "/api/v1/kbfina/user/{userId}";
-        if (userId === undefined || userId === null)
-            throw new Error("The parameter 'userId' must be defined.");
-        url_ = url_.replace("{userId}", encodeURIComponent("" + userId));
-        url_ = url_.replace(/[?&]$/, "");
+    return this.http.fetch(url_, options_).then((_response: Response) => {
+      return this.processUserGet(_response)
+    })
+  }
 
-        let options_ = <RequestInit>{
-            method: "GET",
-            headers: {
-                "Accept": "application/json"
-            }
-        };
+  protected processUserGet(response: Response): Promise<UserInfo> {
+    const status = response.status
+    let _headers: any = {}
+    if (response.headers && response.headers.forEach) {
+      response.headers.forEach((v: any, k: any) => (_headers[k] = v))
+    }
+    if (status === 200) {
+      return response.text().then((_responseText) => {
+        let result200: any = null
+        result200 =
+          _responseText === "" ? null : <UserInfo>JSON.parse(_responseText, this.jsonParseReviver)
+        return result200
+      })
+    } else if (status === 400) {
+      return response.text().then((_responseText) => {
+        let result400: any = null
+        result400 =
+          _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver)
+        return throwException("Invalid input param", status, _responseText, _headers, result400)
+      })
+    } else if (status === 401) {
+      return response.text().then((_responseText) => {
+        let result401: any = null
+        result401 =
+          _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver)
+        return throwException("Unauthorized", status, _responseText, _headers, result401)
+      })
+    } else if (status === 403) {
+      return response.text().then((_responseText) => {
+        let result403: any = null
+        result403 =
+          _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver)
+        return throwException("Unauthorized", status, _responseText, _headers, result403)
+      })
+    } else if (status === 500) {
+      return response.text().then((_responseText) => {
+        let result500: any = null
+        result500 =
+          _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver)
+        return throwException("Internal Server Error", status, _responseText, _headers, result500)
+      })
+    } else if (status !== 200 && status !== 204) {
+      return response.text().then((_responseText) => {
+        return throwException(
+          "An unexpected server error occurred.",
+          status,
+          _responseText,
+          _headers,
+        )
+      })
+    }
+    return Promise.resolve<UserInfo>(<any>null)
+  }
 
-        return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processUserGet(_response);
-        });
+  /**
+   * Update user information
+   * @param userId userId return from login api
+   * @param body Register Object
+   * @return Successfully
+   */
+  userPut(userId: string, body: UserInfoUpdateRequest): Promise<UserInfoResponse> {
+    let url_ = this.baseUrl + "/api/v1/kbfina/user/{userId}"
+    if (userId === undefined || userId === null)
+      throw new Error("The parameter 'userId' must be defined.")
+    url_ = url_.replace("{userId}", encodeURIComponent("" + userId))
+    url_ = url_.replace(/[?&]$/, "")
+
+    const content_ = JSON.stringify(body)
+
+    let options_ = <RequestInit>{
+      body: content_,
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
     }
 
-    protected processUserGet(response: Response): Promise<UserInfo> {
-        const status = response.status;
-        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
-        if (status === 200) {
-            return response.text().then((_responseText) => {
-            let result200: any = null;
-            result200 = _responseText === "" ? null : <UserInfo>JSON.parse(_responseText, this.jsonParseReviver);
-            return result200;
-            });
-        } else if (status === 400) {
-            return response.text().then((_responseText) => {
-            let result400: any = null;
-            result400 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
-            return throwException("Invalid input param", status, _responseText, _headers, result400);
-            });
-        } else if (status === 401) {
-            return response.text().then((_responseText) => {
-            let result401: any = null;
-            result401 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
-            return throwException("Unauthorized", status, _responseText, _headers, result401);
-            });
-        } else if (status === 403) {
-            return response.text().then((_responseText) => {
-            let result403: any = null;
-            result403 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
-            return throwException("Unauthorized", status, _responseText, _headers, result403);
-            });
-        } else if (status === 500) {
-            return response.text().then((_responseText) => {
-            let result500: any = null;
-            result500 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
-            return throwException("Internal Server Error", status, _responseText, _headers, result500);
-            });
-        } else if (status !== 200 && status !== 204) {
-            return response.text().then((_responseText) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            });
-        }
-        return Promise.resolve<UserInfo>(<any>null);
+    return this.http.fetch(url_, options_).then((_response: Response) => {
+      return this.processUserPut(_response)
+    })
+  }
+
+  protected processUserPut(response: Response): Promise<UserInfoResponse> {
+    const status = response.status
+    let _headers: any = {}
+    if (response.headers && response.headers.forEach) {
+      response.headers.forEach((v: any, k: any) => (_headers[k] = v))
+    }
+    if (status === 200) {
+      return response.text().then((_responseText) => {
+        let result200: any = null
+        result200 =
+          _responseText === ""
+            ? null
+            : <UserInfoResponse>JSON.parse(_responseText, this.jsonParseReviver)
+        return result200
+      })
+    } else if (status === 400) {
+      return response.text().then((_responseText) => {
+        let result400: any = null
+        result400 =
+          _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver)
+        return throwException("Invalid input param", status, _responseText, _headers, result400)
+      })
+    } else if (status === 401) {
+      return response.text().then((_responseText) => {
+        let result401: any = null
+        result401 =
+          _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver)
+        return throwException("Unauthorized", status, _responseText, _headers, result401)
+      })
+    } else if (status === 403) {
+      return response.text().then((_responseText) => {
+        let result403: any = null
+        result403 =
+          _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver)
+        return throwException("Unauthorized", status, _responseText, _headers, result403)
+      })
+    } else if (status === 500) {
+      return response.text().then((_responseText) => {
+        let result500: any = null
+        result500 =
+          _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver)
+        return throwException("Internal Server Error", status, _responseText, _headers, result500)
+      })
+    } else if (status !== 200 && status !== 204) {
+      return response.text().then((_responseText) => {
+        return throwException(
+          "An unexpected server error occurred.",
+          status,
+          _responseText,
+          _headers,
+        )
+      })
+    }
+    return Promise.resolve<UserInfoResponse>(<any>null)
+  }
+
+  /**
+   * Deactivate user account
+   * @param userId userId return from login api
+   * @return Successfully
+   */
+  userDelete(userId: string): Promise<UserInfo> {
+    let url_ = this.baseUrl + "/api/v1/kbfina/user/{userId}"
+    if (userId === undefined || userId === null)
+      throw new Error("The parameter 'userId' must be defined.")
+    url_ = url_.replace("{userId}", encodeURIComponent("" + userId))
+    url_ = url_.replace(/[?&]$/, "")
+
+    let options_ = <RequestInit>{
+      method: "DELETE",
+      headers: {
+        Accept: "application/json",
+      },
     }
 
-    /**
-     * Update user information
-     * @param userId userId return from login api
-     * @param body Register Object
-     * @return Successfully
-     */
-    userPut(userId: string, body: UserInfoUpdateRequest): Promise<UserInfoResponse> {
-        let url_ = this.baseUrl + "/api/v1/kbfina/user/{userId}";
-        if (userId === undefined || userId === null)
-            throw new Error("The parameter 'userId' must be defined.");
-        url_ = url_.replace("{userId}", encodeURIComponent("" + userId));
-        url_ = url_.replace(/[?&]$/, "");
+    return this.http.fetch(url_, options_).then((_response: Response) => {
+      return this.processUserDelete(_response)
+    })
+  }
 
-        const content_ = JSON.stringify(body);
-
-        let options_ = <RequestInit>{
-            body: content_,
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json",
-                "Accept": "application/json"
-            }
-        };
-
-        return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processUserPut(_response);
-        });
+  protected processUserDelete(response: Response): Promise<UserInfo> {
+    const status = response.status
+    let _headers: any = {}
+    if (response.headers && response.headers.forEach) {
+      response.headers.forEach((v: any, k: any) => (_headers[k] = v))
     }
-
-    protected processUserPut(response: Response): Promise<UserInfoResponse> {
-        const status = response.status;
-        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
-        if (status === 200) {
-            return response.text().then((_responseText) => {
-            let result200: any = null;
-            result200 = _responseText === "" ? null : <UserInfoResponse>JSON.parse(_responseText, this.jsonParseReviver);
-            return result200;
-            });
-        } else if (status === 400) {
-            return response.text().then((_responseText) => {
-            let result400: any = null;
-            result400 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
-            return throwException("Invalid input param", status, _responseText, _headers, result400);
-            });
-        } else if (status === 401) {
-            return response.text().then((_responseText) => {
-            let result401: any = null;
-            result401 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
-            return throwException("Unauthorized", status, _responseText, _headers, result401);
-            });
-        } else if (status === 403) {
-            return response.text().then((_responseText) => {
-            let result403: any = null;
-            result403 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
-            return throwException("Unauthorized", status, _responseText, _headers, result403);
-            });
-        } else if (status === 500) {
-            return response.text().then((_responseText) => {
-            let result500: any = null;
-            result500 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
-            return throwException("Internal Server Error", status, _responseText, _headers, result500);
-            });
-        } else if (status !== 200 && status !== 204) {
-            return response.text().then((_responseText) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            });
-        }
-        return Promise.resolve<UserInfoResponse>(<any>null);
+    if (status === 200) {
+      return response.text().then((_responseText) => {
+        let result200: any = null
+        result200 =
+          _responseText === "" ? null : <UserInfo>JSON.parse(_responseText, this.jsonParseReviver)
+        return result200
+      })
+    } else if (status === 400) {
+      return response.text().then((_responseText) => {
+        let result400: any = null
+        result400 =
+          _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver)
+        return throwException("Invalid input param", status, _responseText, _headers, result400)
+      })
+    } else if (status === 401) {
+      return response.text().then((_responseText) => {
+        let result401: any = null
+        result401 =
+          _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver)
+        return throwException("Unauthorized", status, _responseText, _headers, result401)
+      })
+    } else if (status === 403) {
+      return response.text().then((_responseText) => {
+        let result403: any = null
+        result403 =
+          _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver)
+        return throwException("Unauthorized", status, _responseText, _headers, result403)
+      })
+    } else if (status === 500) {
+      return response.text().then((_responseText) => {
+        let result500: any = null
+        result500 =
+          _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver)
+        return throwException("Internal Server Error", status, _responseText, _headers, result500)
+      })
+    } else if (status !== 200 && status !== 204) {
+      return response.text().then((_responseText) => {
+        return throwException(
+          "An unexpected server error occurred.",
+          status,
+          _responseText,
+          _headers,
+        )
+      })
     }
-
-    /**
-     * Deactivate user account
-     * @param userId userId return from login api
-     * @return Successfully
-     */
-    userDelete(userId: string): Promise<UserInfo> {
-        let url_ = this.baseUrl + "/api/v1/kbfina/user/{userId}";
-        if (userId === undefined || userId === null)
-            throw new Error("The parameter 'userId' must be defined.");
-        url_ = url_.replace("{userId}", encodeURIComponent("" + userId));
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ = <RequestInit>{
-            method: "DELETE",
-            headers: {
-                "Accept": "application/json"
-            }
-        };
-
-        return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processUserDelete(_response);
-        });
-    }
-
-    protected processUserDelete(response: Response): Promise<UserInfo> {
-        const status = response.status;
-        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
-        if (status === 200) {
-            return response.text().then((_responseText) => {
-            let result200: any = null;
-            result200 = _responseText === "" ? null : <UserInfo>JSON.parse(_responseText, this.jsonParseReviver);
-            return result200;
-            });
-        } else if (status === 400) {
-            return response.text().then((_responseText) => {
-            let result400: any = null;
-            result400 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
-            return throwException("Invalid input param", status, _responseText, _headers, result400);
-            });
-        } else if (status === 401) {
-            return response.text().then((_responseText) => {
-            let result401: any = null;
-            result401 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
-            return throwException("Unauthorized", status, _responseText, _headers, result401);
-            });
-        } else if (status === 403) {
-            return response.text().then((_responseText) => {
-            let result403: any = null;
-            result403 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
-            return throwException("Unauthorized", status, _responseText, _headers, result403);
-            });
-        } else if (status === 500) {
-            return response.text().then((_responseText) => {
-            let result500: any = null;
-            result500 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
-            return throwException("Internal Server Error", status, _responseText, _headers, result500);
-            });
-        } else if (status !== 200 && status !== 204) {
-            return response.text().then((_responseText) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            });
-        }
-        return Promise.resolve<UserInfo>(<any>null);
-    }
+    return Promise.resolve<UserInfo>(<any>null)
+  }
 }
 
 export class FilesServiceProxy {
-    private http: { fetch(url: RequestInfo, init?: RequestInit): Promise<Response> };
-    private baseUrl: string;
-    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+  private http: { fetch(url: RequestInfo, init?: RequestInit): Promise<Response> }
+  private baseUrl: string
+  protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined
 
-    constructor(baseUrl?: string, http?: { fetch(url: RequestInfo, init?: RequestInit): Promise<Response> }) {
-        this.http = http ? http : <any>window;
-        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "http://52.74.51.47/rest";
+  constructor(
+    baseUrl?: string,
+    http?: { fetch(url: RequestInfo, init?: RequestInit): Promise<Response> },
+  ) {
+    this.http = http ? http : <any>window
+    this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "http://52.74.51.47/rest"
+  }
+
+  /**
+   * get presigned url to upload to S3
+   * @param body Register Object
+   * @return Successfully
+   */
+  presignedUrl(body: PresignedUrlRequest): Promise<PresignedUrlResponse> {
+    let url_ = this.baseUrl + "/api/v1/kbfina/files/presignedUrl"
+    url_ = url_.replace(/[?&]$/, "")
+
+    const content_ = JSON.stringify(body)
+
+    let options_ = <RequestInit>{
+      body: content_,
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
     }
 
-    /**
-     * get presigned url to upload to S3
-     * @param body Register Object
-     * @return Successfully
-     */
-    presignedUrl(body: PresignedUrlRequest): Promise<PresignedUrlResponse> {
-        let url_ = this.baseUrl + "/api/v1/kbfina/files/presignedUrl";
-        url_ = url_.replace(/[?&]$/, "");
+    return this.http.fetch(url_, options_).then((_response: Response) => {
+      return this.processPresignedUrl(_response)
+    })
+  }
 
-        const content_ = JSON.stringify(body);
-
-        let options_ = <RequestInit>{
-            body: content_,
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Accept": "application/json"
-            }
-        };
-
-        return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processPresignedUrl(_response);
-        });
+  protected processPresignedUrl(response: Response): Promise<PresignedUrlResponse> {
+    const status = response.status
+    let _headers: any = {}
+    if (response.headers && response.headers.forEach) {
+      response.headers.forEach((v: any, k: any) => (_headers[k] = v))
     }
-
-    protected processPresignedUrl(response: Response): Promise<PresignedUrlResponse> {
-        const status = response.status;
-        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
-        if (status === 200) {
-            return response.text().then((_responseText) => {
-            let result200: any = null;
-            result200 = _responseText === "" ? null : <PresignedUrlResponse>JSON.parse(_responseText, this.jsonParseReviver);
-            return result200;
-            });
-        } else if (status === 400) {
-            return response.text().then((_responseText) => {
-            let result400: any = null;
-            result400 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
-            return throwException("Invalid input param", status, _responseText, _headers, result400);
-            });
-        } else if (status === 401) {
-            return response.text().then((_responseText) => {
-            let result401: any = null;
-            result401 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
-            return throwException("Unauthorized", status, _responseText, _headers, result401);
-            });
-        } else if (status === 403) {
-            return response.text().then((_responseText) => {
-            let result403: any = null;
-            result403 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
-            return throwException("Unauthorized", status, _responseText, _headers, result403);
-            });
-        } else if (status === 500) {
-            return response.text().then((_responseText) => {
-            let result500: any = null;
-            result500 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
-            return throwException("Internal Server Error", status, _responseText, _headers, result500);
-            });
-        } else if (status !== 200 && status !== 204) {
-            return response.text().then((_responseText) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            });
-        }
-        return Promise.resolve<PresignedUrlResponse>(<any>null);
+    if (status === 200) {
+      return response.text().then((_responseText) => {
+        let result200: any = null
+        result200 =
+          _responseText === ""
+            ? null
+            : <PresignedUrlResponse>JSON.parse(_responseText, this.jsonParseReviver)
+        return result200
+      })
+    } else if (status === 400) {
+      return response.text().then((_responseText) => {
+        let result400: any = null
+        result400 =
+          _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver)
+        return throwException("Invalid input param", status, _responseText, _headers, result400)
+      })
+    } else if (status === 401) {
+      return response.text().then((_responseText) => {
+        let result401: any = null
+        result401 =
+          _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver)
+        return throwException("Unauthorized", status, _responseText, _headers, result401)
+      })
+    } else if (status === 403) {
+      return response.text().then((_responseText) => {
+        let result403: any = null
+        result403 =
+          _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver)
+        return throwException("Unauthorized", status, _responseText, _headers, result403)
+      })
+    } else if (status === 500) {
+      return response.text().then((_responseText) => {
+        let result500: any = null
+        result500 =
+          _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver)
+        return throwException("Internal Server Error", status, _responseText, _headers, result500)
+      })
+    } else if (status !== 200 && status !== 204) {
+      return response.text().then((_responseText) => {
+        return throwException(
+          "An unexpected server error occurred.",
+          status,
+          _responseText,
+          _headers,
+        )
+      })
     }
+    return Promise.resolve<PresignedUrlResponse>(<any>null)
+  }
 }
 
 export class GpayServiceProxy {
-    private http: { fetch(url: RequestInfo, init?: RequestInit): Promise<Response> };
-    private baseUrl: string;
-    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+  private http: { fetch(url: RequestInfo, init?: RequestInit): Promise<Response> }
+  private baseUrl: string
+  protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined
 
-    constructor(baseUrl?: string, http?: { fetch(url: RequestInfo, init?: RequestInit): Promise<Response> }) {
-        this.http = http ? http : <any>window;
-        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "http://52.74.51.47/rest";
+  constructor(
+    baseUrl?: string,
+    http?: { fetch(url: RequestInfo, init?: RequestInit): Promise<Response> },
+  ) {
+    this.http = http ? http : <any>window
+    this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "http://52.74.51.47/rest"
+  }
+
+  /**
+   * transfer money from linked account to another linked account
+   * @param body Register Object
+   * @return Successfully
+   */
+  transfer(body: LinkedAccountTransferRequest): Promise<LinkedAccountTransferResponse> {
+    let url_ = this.baseUrl + "/api/v1/gpay/transfer"
+    url_ = url_.replace(/[?&]$/, "")
+
+    const content_ = JSON.stringify(body)
+
+    let options_ = <RequestInit>{
+      body: content_,
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
     }
 
-    /**
-     * transfer money from linked account to another linked account
-     * @param body Register Object
-     * @return Successfully
-     */
-    transfer(body: LinkedAccountTransferRequest): Promise<LinkedAccountTransferResponse> {
-        let url_ = this.baseUrl + "/api/v1/gpay/transfer";
-        url_ = url_.replace(/[?&]$/, "");
+    return this.http.fetch(url_, options_).then((_response: Response) => {
+      return this.processTransfer(_response)
+    })
+  }
 
-        const content_ = JSON.stringify(body);
-
-        let options_ = <RequestInit>{
-            body: content_,
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Accept": "application/json"
-            }
-        };
-
-        return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processTransfer(_response);
-        });
+  protected processTransfer(response: Response): Promise<LinkedAccountTransferResponse> {
+    const status = response.status
+    let _headers: any = {}
+    if (response.headers && response.headers.forEach) {
+      response.headers.forEach((v: any, k: any) => (_headers[k] = v))
     }
-
-    protected processTransfer(response: Response): Promise<LinkedAccountTransferResponse> {
-        const status = response.status;
-        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
-        if (status === 200) {
-            return response.text().then((_responseText) => {
-            let result200: any = null;
-            result200 = _responseText === "" ? null : <LinkedAccountTransferResponse>JSON.parse(_responseText, this.jsonParseReviver);
-            return result200;
-            });
-        } else if (status === 400) {
-            return response.text().then((_responseText) => {
-            let result400: any = null;
-            result400 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
-            return throwException("Invalid input param", status, _responseText, _headers, result400);
-            });
-        } else if (status === 401) {
-            return response.text().then((_responseText) => {
-            let result401: any = null;
-            result401 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
-            return throwException("Unauthorized", status, _responseText, _headers, result401);
-            });
-        } else if (status === 403) {
-            return response.text().then((_responseText) => {
-            let result403: any = null;
-            result403 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
-            return throwException("Unauthorized", status, _responseText, _headers, result403);
-            });
-        } else if (status === 500) {
-            return response.text().then((_responseText) => {
-            let result500: any = null;
-            result500 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
-            return throwException("Internal Server Error", status, _responseText, _headers, result500);
-            });
-        } else if (status !== 200 && status !== 204) {
-            return response.text().then((_responseText) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            });
-        }
-        return Promise.resolve<LinkedAccountTransferResponse>(<any>null);
+    if (status === 200) {
+      return response.text().then((_responseText) => {
+        let result200: any = null
+        result200 =
+          _responseText === ""
+            ? null
+            : <LinkedAccountTransferResponse>JSON.parse(_responseText, this.jsonParseReviver)
+        return result200
+      })
+    } else if (status === 400) {
+      return response.text().then((_responseText) => {
+        let result400: any = null
+        result400 =
+          _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver)
+        return throwException("Invalid input param", status, _responseText, _headers, result400)
+      })
+    } else if (status === 401) {
+      return response.text().then((_responseText) => {
+        let result401: any = null
+        result401 =
+          _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver)
+        return throwException("Unauthorized", status, _responseText, _headers, result401)
+      })
+    } else if (status === 403) {
+      return response.text().then((_responseText) => {
+        let result403: any = null
+        result403 =
+          _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver)
+        return throwException("Unauthorized", status, _responseText, _headers, result403)
+      })
+    } else if (status === 500) {
+      return response.text().then((_responseText) => {
+        let result500: any = null
+        result500 =
+          _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver)
+        return throwException("Internal Server Error", status, _responseText, _headers, result500)
+      })
+    } else if (status !== 200 && status !== 204) {
+      return response.text().then((_responseText) => {
+        return throwException(
+          "An unexpected server error occurred.",
+          status,
+          _responseText,
+          _headers,
+        )
+      })
     }
+    return Promise.resolve<LinkedAccountTransferResponse>(<any>null)
+  }
 }
 
 export class ReportServiceProxy {
-    private http: { fetch(url: RequestInfo, init?: RequestInit): Promise<Response> };
-    private baseUrl: string;
-    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+  private http: { fetch(url: RequestInfo, init?: RequestInit): Promise<Response> }
+  private baseUrl: string
+  protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined
 
-    constructor(baseUrl?: string, http?: { fetch(url: RequestInfo, init?: RequestInit): Promise<Response> }) {
-        this.http = http ? http : <any>window;
-        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "http://52.74.51.47/rest";
+  constructor(
+    baseUrl?: string,
+    http?: { fetch(url: RequestInfo, init?: RequestInit): Promise<Response> },
+  ) {
+    this.http = http ? http : <any>window
+    this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "http://52.74.51.47/rest"
+  }
+
+  /**
+   * lãi lỗ đã thực hiện
+   * @param accountId Số tiểu khoản cần truy vấn
+   * @param fromDate từ ngày
+   * @param toDate đến ngày
+   * @param code (optional) mã chứng khoán cần truy vấn
+   * @return lãi lỗ đã thực hiện
+   */
+  pnlExecuted(
+    accountId: string,
+    fromDate: string,
+    toDate: string,
+    code: string | undefined,
+  ): Promise<Anonymous3[]> {
+    let url_ = this.baseUrl + "/api/v1/kbsv/equity/report/pnlExecuted?"
+    if (accountId === undefined || accountId === null)
+      throw new Error("The parameter 'accountId' must be defined and cannot be null.")
+    else url_ += "accountId=" + encodeURIComponent("" + accountId) + "&"
+    if (fromDate === undefined || fromDate === null)
+      throw new Error("The parameter 'fromDate' must be defined and cannot be null.")
+    else url_ += "fromDate=" + encodeURIComponent("" + fromDate) + "&"
+    if (toDate === undefined || toDate === null)
+      throw new Error("The parameter 'toDate' must be defined and cannot be null.")
+    else url_ += "toDate=" + encodeURIComponent("" + toDate) + "&"
+    if (code === null) throw new Error("The parameter 'code' cannot be null.")
+    else if (code !== undefined) url_ += "code=" + encodeURIComponent("" + code) + "&"
+    url_ = url_.replace(/[?&]$/, "")
+
+    let options_ = <RequestInit>{
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+      },
     }
 
-    /**
-     * lãi lỗ đã thực hiện
-     * @param accountId Số tiểu khoản cần truy vấn
-     * @param fromDate từ ngày
-     * @param toDate đến ngày
-     * @param code (optional) mã chứng khoán cần truy vấn
-     * @return lãi lỗ đã thực hiện
-     */
-    pnlExecuted(accountId: string, fromDate: string, toDate: string, code: string | undefined): Promise<Anonymous3[]> {
-        let url_ = this.baseUrl + "/api/v1/kbsv/equity/report/pnlExecuted?";
-        if (accountId === undefined || accountId === null)
-            throw new Error("The parameter 'accountId' must be defined and cannot be null.");
-        else
-            url_ += "accountId=" + encodeURIComponent("" + accountId) + "&";
-        if (fromDate === undefined || fromDate === null)
-            throw new Error("The parameter 'fromDate' must be defined and cannot be null.");
-        else
-            url_ += "fromDate=" + encodeURIComponent("" + fromDate) + "&";
-        if (toDate === undefined || toDate === null)
-            throw new Error("The parameter 'toDate' must be defined and cannot be null.");
-        else
-            url_ += "toDate=" + encodeURIComponent("" + toDate) + "&";
-        if (code === null)
-            throw new Error("The parameter 'code' cannot be null.");
-        else if (code !== undefined)
-            url_ += "code=" + encodeURIComponent("" + code) + "&";
-        url_ = url_.replace(/[?&]$/, "");
+    return this.http.fetch(url_, options_).then((_response: Response) => {
+      return this.processPnlExecuted(_response)
+    })
+  }
 
-        let options_ = <RequestInit>{
-            method: "GET",
-            headers: {
-                "Accept": "application/json"
-            }
-        };
+  protected processPnlExecuted(response: Response): Promise<Anonymous3[]> {
+    const status = response.status
+    let _headers: any = {}
+    if (response.headers && response.headers.forEach) {
+      response.headers.forEach((v: any, k: any) => (_headers[k] = v))
+    }
+    if (status === 200) {
+      return response.text().then((_responseText) => {
+        let result200: any = null
+        result200 =
+          _responseText === ""
+            ? null
+            : <Anonymous3[]>JSON.parse(_responseText, this.jsonParseReviver)
+        return result200
+      })
+    } else if (status !== 200 && status !== 204) {
+      return response.text().then((_responseText) => {
+        return throwException(
+          "An unexpected server error occurred.",
+          status,
+          _responseText,
+          _headers,
+        )
+      })
+    }
+    return Promise.resolve<Anonymous3[]>(<any>null)
+  }
 
-        return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processPnlExecuted(_response);
-        });
+  /**
+   * tra cứu lịch sử đặt lệnh
+   * @param accountId Số tiểu khoản cần truy vấn
+   * @param fromDate từ ngày
+   * @param toDate đến ngày
+   * @param sellBuyType (optional) loại thực hiện (BUY/SELL)
+   * @param via (optional) Kênh giao dịch
+   * @param code (optional) mã chứng khoán cần query
+   * @param status (optional) trạng thái lịch sử
+   * @return tra cứu lịch sử đặt lệnh
+   */
+  queryOrderHist(
+    accountId: string,
+    fromDate: string,
+    toDate: string,
+    sellBuyType: string | undefined,
+    via: string | undefined,
+    code: string | undefined,
+    status: string | undefined,
+  ): Promise<Anonymous4[]> {
+    let url_ = this.baseUrl + "/api/v1/kbsv/equity/report/queryOrderHist?"
+    if (accountId === undefined || accountId === null)
+      throw new Error("The parameter 'accountId' must be defined and cannot be null.")
+    else url_ += "accountId=" + encodeURIComponent("" + accountId) + "&"
+    if (fromDate === undefined || fromDate === null)
+      throw new Error("The parameter 'fromDate' must be defined and cannot be null.")
+    else url_ += "fromDate=" + encodeURIComponent("" + fromDate) + "&"
+    if (toDate === undefined || toDate === null)
+      throw new Error("The parameter 'toDate' must be defined and cannot be null.")
+    else url_ += "toDate=" + encodeURIComponent("" + toDate) + "&"
+    if (sellBuyType === null) throw new Error("The parameter 'sellBuyType' cannot be null.")
+    else if (sellBuyType !== undefined)
+      url_ += "sellBuyType=" + encodeURIComponent("" + sellBuyType) + "&"
+    if (via === null) throw new Error("The parameter 'via' cannot be null.")
+    else if (via !== undefined) url_ += "via=" + encodeURIComponent("" + via) + "&"
+    if (code === null) throw new Error("The parameter 'code' cannot be null.")
+    else if (code !== undefined) url_ += "code=" + encodeURIComponent("" + code) + "&"
+    if (status === null) throw new Error("The parameter 'status' cannot be null.")
+    else if (status !== undefined) url_ += "status=" + encodeURIComponent("" + status) + "&"
+    url_ = url_.replace(/[?&]$/, "")
+
+    let options_ = <RequestInit>{
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+      },
     }
 
-    protected processPnlExecuted(response: Response): Promise<Anonymous3[]> {
-        const status = response.status;
-        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
-        if (status === 200) {
-            return response.text().then((_responseText) => {
-            let result200: any = null;
-            result200 = _responseText === "" ? null : <Anonymous3[]>JSON.parse(_responseText, this.jsonParseReviver);
-            return result200;
-            });
-        } else if (status !== 200 && status !== 204) {
-            return response.text().then((_responseText) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            });
-        }
-        return Promise.resolve<Anonymous3[]>(<any>null);
+    return this.http.fetch(url_, options_).then((_response: Response) => {
+      return this.processQueryOrderHist(_response)
+    })
+  }
+
+  protected processQueryOrderHist(response: Response): Promise<Anonymous4[]> {
+    const status = response.status
+    let _headers: any = {}
+    if (response.headers && response.headers.forEach) {
+      response.headers.forEach((v: any, k: any) => (_headers[k] = v))
+    }
+    if (status === 200) {
+      return response.text().then((_responseText) => {
+        let result200: any = null
+        result200 =
+          _responseText === ""
+            ? null
+            : <Anonymous4[]>JSON.parse(_responseText, this.jsonParseReviver)
+        return result200
+      })
+    } else if (status !== 200 && status !== 204) {
+      return response.text().then((_responseText) => {
+        return throwException(
+          "An unexpected server error occurred.",
+          status,
+          _responseText,
+          _headers,
+        )
+      })
+    }
+    return Promise.resolve<Anonymous4[]>(<any>null)
+  }
+
+  /**
+   * tra cứu lịch sử chuyển tiền
+   * @param accountId Số tiểu khoản
+   * @param fromDate từ ngày
+   * @param toDate đến ngày
+   * @param type (optional) loại giao dịch ( EXTERNAL - Chuyển tiền ra ngân hàng / INTERNAL - chuyển tiền  nội bộ / ACCOUNT - Chuyển tiền sang tài khoản khác )
+   * @param fdsAccountId (optional) tiểu khoản phái sinh ( lấy thông tin chuyển tiền vào tài khoản phái sinh)
+   * @return lịch sử chuyển tiền
+   */
+  cashTransfer(
+    accountId: string,
+    fromDate: string,
+    toDate: string,
+    type: string | undefined,
+    fdsAccountId: string | undefined,
+  ): Promise<Anonymous5[]> {
+    let url_ = this.baseUrl + "/api/v1/kbsv/equity/report/cashTransfer?"
+    if (accountId === undefined || accountId === null)
+      throw new Error("The parameter 'accountId' must be defined and cannot be null.")
+    else url_ += "accountId=" + encodeURIComponent("" + accountId) + "&"
+    if (fromDate === undefined || fromDate === null)
+      throw new Error("The parameter 'fromDate' must be defined and cannot be null.")
+    else url_ += "fromDate=" + encodeURIComponent("" + fromDate) + "&"
+    if (toDate === undefined || toDate === null)
+      throw new Error("The parameter 'toDate' must be defined and cannot be null.")
+    else url_ += "toDate=" + encodeURIComponent("" + toDate) + "&"
+    if (type === null) throw new Error("The parameter 'type' cannot be null.")
+    else if (type !== undefined) url_ += "type=" + encodeURIComponent("" + type) + "&"
+    if (fdsAccountId === null) throw new Error("The parameter 'fdsAccountId' cannot be null.")
+    else if (fdsAccountId !== undefined)
+      url_ += "fdsAccountId=" + encodeURIComponent("" + fdsAccountId) + "&"
+    url_ = url_.replace(/[?&]$/, "")
+
+    let options_ = <RequestInit>{
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+      },
     }
 
-    /**
-     * tra cứu lịch sử đặt lệnh
-     * @param accountId Số tiểu khoản cần truy vấn
-     * @param fromDate từ ngày
-     * @param toDate đến ngày
-     * @param sellBuyType (optional) loại thực hiện (BUY/SELL)
-     * @param via (optional) Kênh giao dịch
-     * @param code (optional) mã chứng khoán cần query
-     * @param status (optional) trạng thái lịch sử
-     * @return tra cứu lịch sử đặt lệnh
-     */
-    queryOrderHist(accountId: string, fromDate: string, toDate: string, sellBuyType: string | undefined, via: string | undefined, code: string | undefined, status: string | undefined): Promise<Anonymous4[]> {
-        let url_ = this.baseUrl + "/api/v1/kbsv/equity/report/queryOrderHist?";
-        if (accountId === undefined || accountId === null)
-            throw new Error("The parameter 'accountId' must be defined and cannot be null.");
-        else
-            url_ += "accountId=" + encodeURIComponent("" + accountId) + "&";
-        if (fromDate === undefined || fromDate === null)
-            throw new Error("The parameter 'fromDate' must be defined and cannot be null.");
-        else
-            url_ += "fromDate=" + encodeURIComponent("" + fromDate) + "&";
-        if (toDate === undefined || toDate === null)
-            throw new Error("The parameter 'toDate' must be defined and cannot be null.");
-        else
-            url_ += "toDate=" + encodeURIComponent("" + toDate) + "&";
-        if (sellBuyType === null)
-            throw new Error("The parameter 'sellBuyType' cannot be null.");
-        else if (sellBuyType !== undefined)
-            url_ += "sellBuyType=" + encodeURIComponent("" + sellBuyType) + "&";
-        if (via === null)
-            throw new Error("The parameter 'via' cannot be null.");
-        else if (via !== undefined)
-            url_ += "via=" + encodeURIComponent("" + via) + "&";
-        if (code === null)
-            throw new Error("The parameter 'code' cannot be null.");
-        else if (code !== undefined)
-            url_ += "code=" + encodeURIComponent("" + code) + "&";
-        if (status === null)
-            throw new Error("The parameter 'status' cannot be null.");
-        else if (status !== undefined)
-            url_ += "status=" + encodeURIComponent("" + status) + "&";
-        url_ = url_.replace(/[?&]$/, "");
+    return this.http.fetch(url_, options_).then((_response: Response) => {
+      return this.processCashTransfer(_response)
+    })
+  }
 
-        let options_ = <RequestInit>{
-            method: "GET",
-            headers: {
-                "Accept": "application/json"
-            }
-        };
-
-        return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processQueryOrderHist(_response);
-        });
+  protected processCashTransfer(response: Response): Promise<Anonymous5[]> {
+    const status = response.status
+    let _headers: any = {}
+    if (response.headers && response.headers.forEach) {
+      response.headers.forEach((v: any, k: any) => (_headers[k] = v))
     }
-
-    protected processQueryOrderHist(response: Response): Promise<Anonymous4[]> {
-        const status = response.status;
-        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
-        if (status === 200) {
-            return response.text().then((_responseText) => {
-            let result200: any = null;
-            result200 = _responseText === "" ? null : <Anonymous4[]>JSON.parse(_responseText, this.jsonParseReviver);
-            return result200;
-            });
-        } else if (status !== 200 && status !== 204) {
-            return response.text().then((_responseText) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            });
-        }
-        return Promise.resolve<Anonymous4[]>(<any>null);
+    if (status === 200) {
+      return response.text().then((_responseText) => {
+        let result200: any = null
+        result200 =
+          _responseText === ""
+            ? null
+            : <Anonymous5[]>JSON.parse(_responseText, this.jsonParseReviver)
+        return result200
+      })
+    } else if (status !== 200 && status !== 204) {
+      return response.text().then((_responseText) => {
+        return throwException(
+          "An unexpected server error occurred.",
+          status,
+          _responseText,
+          _headers,
+        )
+      })
     }
-
-    /**
-     * tra cứu lịch sử chuyển tiền
-     * @param accountId Số tiểu khoản
-     * @param fromDate từ ngày
-     * @param toDate đến ngày
-     * @param type (optional) loại giao dịch ( EXTERNAL - Chuyển tiền ra ngân hàng / INTERNAL - chuyển tiền  nội bộ / ACCOUNT - Chuyển tiền sang tài khoản khác )
-     * @param fdsAccountId (optional) tiểu khoản phái sinh ( lấy thông tin chuyển tiền vào tài khoản phái sinh)
-     * @return lịch sử chuyển tiền
-     */
-    cashTransfer(accountId: string, fromDate: string, toDate: string, type: string | undefined, fdsAccountId: string | undefined): Promise<Anonymous5[]> {
-        let url_ = this.baseUrl + "/api/v1/kbsv/equity/report/cashTransfer?";
-        if (accountId === undefined || accountId === null)
-            throw new Error("The parameter 'accountId' must be defined and cannot be null.");
-        else
-            url_ += "accountId=" + encodeURIComponent("" + accountId) + "&";
-        if (fromDate === undefined || fromDate === null)
-            throw new Error("The parameter 'fromDate' must be defined and cannot be null.");
-        else
-            url_ += "fromDate=" + encodeURIComponent("" + fromDate) + "&";
-        if (toDate === undefined || toDate === null)
-            throw new Error("The parameter 'toDate' must be defined and cannot be null.");
-        else
-            url_ += "toDate=" + encodeURIComponent("" + toDate) + "&";
-        if (type === null)
-            throw new Error("The parameter 'type' cannot be null.");
-        else if (type !== undefined)
-            url_ += "type=" + encodeURIComponent("" + type) + "&";
-        if (fdsAccountId === null)
-            throw new Error("The parameter 'fdsAccountId' cannot be null.");
-        else if (fdsAccountId !== undefined)
-            url_ += "fdsAccountId=" + encodeURIComponent("" + fdsAccountId) + "&";
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ = <RequestInit>{
-            method: "GET",
-            headers: {
-                "Accept": "application/json"
-            }
-        };
-
-        return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processCashTransfer(_response);
-        });
-    }
-
-    protected processCashTransfer(response: Response): Promise<Anonymous5[]> {
-        const status = response.status;
-        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
-        if (status === 200) {
-            return response.text().then((_responseText) => {
-            let result200: any = null;
-            result200 = _responseText === "" ? null : <Anonymous5[]>JSON.parse(_responseText, this.jsonParseReviver);
-            return result200;
-            });
-        } else if (status !== 200 && status !== 204) {
-            return response.text().then((_responseText) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            });
-        }
-        return Promise.resolve<Anonymous5[]>(<any>null);
-    }
+    return Promise.resolve<Anonymous5[]>(<any>null)
+  }
 }
 
 export class InquiryServiceProxy {
-    private http: { fetch(url: RequestInfo, init?: RequestInit): Promise<Response> };
-    private baseUrl: string;
-    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+  private http: { fetch(url: RequestInfo, init?: RequestInit): Promise<Response> }
+  private baseUrl: string
+  protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined
 
-    constructor(baseUrl?: string, http?: { fetch(url: RequestInfo, init?: RequestInit): Promise<Response> }) {
-        this.http = http ? http : <any>window;
-        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "http://52.74.51.47/rest";
+  constructor(
+    baseUrl?: string,
+    http?: { fetch(url: RequestInfo, init?: RequestInit): Promise<Response> },
+  ) {
+    this.http = http ? http : <any>window
+    this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "http://52.74.51.47/rest"
+  }
+
+  /**
+   * tra cứu số dư chứng khoán
+   * @param accountId số tiểu khoản
+   * @return tra cứu số dư chứng khoán
+   */
+  securitiesPortfolio(accountId: string): Promise<Anonymous6[]> {
+    let url_ = this.baseUrl + "/api/v1/kbsv/equity/inquiry/securitiesPortfolio?"
+    if (accountId === undefined || accountId === null)
+      throw new Error("The parameter 'accountId' must be defined and cannot be null.")
+    else url_ += "accountId=" + encodeURIComponent("" + accountId) + "&"
+    url_ = url_.replace(/[?&]$/, "")
+
+    let options_ = <RequestInit>{
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+      },
     }
 
-    /**
-     * tra cứu số dư chứng khoán
-     * @param accountId số tiểu khoản
-     * @return tra cứu số dư chứng khoán
-     */
-    securitiesPortfolio(accountId: string): Promise<Anonymous6[]> {
-        let url_ = this.baseUrl + "/api/v1/kbsv/equity/inquiry/securitiesPortfolio?";
-        if (accountId === undefined || accountId === null)
-            throw new Error("The parameter 'accountId' must be defined and cannot be null.");
-        else
-            url_ += "accountId=" + encodeURIComponent("" + accountId) + "&";
-        url_ = url_.replace(/[?&]$/, "");
+    return this.http.fetch(url_, options_).then((_response: Response) => {
+      return this.processSecuritiesPortfolio(_response)
+    })
+  }
 
-        let options_ = <RequestInit>{
-            method: "GET",
-            headers: {
-                "Accept": "application/json"
-            }
-        };
+  protected processSecuritiesPortfolio(response: Response): Promise<Anonymous6[]> {
+    const status = response.status
+    let _headers: any = {}
+    if (response.headers && response.headers.forEach) {
+      response.headers.forEach((v: any, k: any) => (_headers[k] = v))
+    }
+    if (status === 200) {
+      return response.text().then((_responseText) => {
+        let result200: any = null
+        result200 =
+          _responseText === ""
+            ? null
+            : <Anonymous6[]>JSON.parse(_responseText, this.jsonParseReviver)
+        return result200
+      })
+    } else if (status !== 200 && status !== 204) {
+      return response.text().then((_responseText) => {
+        return throwException(
+          "An unexpected server error occurred.",
+          status,
+          _responseText,
+          _headers,
+        )
+      })
+    }
+    return Promise.resolve<Anonymous6[]>(<any>null)
+  }
 
-        return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processSecuritiesPortfolio(_response);
-        });
+  /**
+   * tra cứu số dư tiền
+   * @param accountId số tiểu khoản
+   * @return tra cứu số dư tiền tiểu khoản phái sinh
+   */
+  summaryAccount(accountId: string): Promise<Anonymous7[]> {
+    let url_ = this.baseUrl + "/api/v1/kbsv/equity/inquiry/summaryAccount?"
+    if (accountId === undefined || accountId === null)
+      throw new Error("The parameter 'accountId' must be defined and cannot be null.")
+    else url_ += "accountId=" + encodeURIComponent("" + accountId) + "&"
+    url_ = url_.replace(/[?&]$/, "")
+
+    let options_ = <RequestInit>{
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+      },
     }
 
-    protected processSecuritiesPortfolio(response: Response): Promise<Anonymous6[]> {
-        const status = response.status;
-        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
-        if (status === 200) {
-            return response.text().then((_responseText) => {
-            let result200: any = null;
-            result200 = _responseText === "" ? null : <Anonymous6[]>JSON.parse(_responseText, this.jsonParseReviver);
-            return result200;
-            });
-        } else if (status !== 200 && status !== 204) {
-            return response.text().then((_responseText) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            });
-        }
-        return Promise.resolve<Anonymous6[]>(<any>null);
+    return this.http.fetch(url_, options_).then((_response: Response) => {
+      return this.processSummaryAccount(_response)
+    })
+  }
+
+  protected processSummaryAccount(response: Response): Promise<Anonymous7[]> {
+    const status = response.status
+    let _headers: any = {}
+    if (response.headers && response.headers.forEach) {
+      response.headers.forEach((v: any, k: any) => (_headers[k] = v))
     }
-
-    /**
-     * tra cứu số dư tiền
-     * @param accountId số tiểu khoản
-     * @return tra cứu số dư tiền tiểu khoản phái sinh
-     */
-    summaryAccount(accountId: string): Promise<Anonymous7[]> {
-        let url_ = this.baseUrl + "/api/v1/kbsv/equity/inquiry/summaryAccount?";
-        if (accountId === undefined || accountId === null)
-            throw new Error("The parameter 'accountId' must be defined and cannot be null.");
-        else
-            url_ += "accountId=" + encodeURIComponent("" + accountId) + "&";
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ = <RequestInit>{
-            method: "GET",
-            headers: {
-                "Accept": "application/json"
-            }
-        };
-
-        return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processSummaryAccount(_response);
-        });
+    if (status === 200) {
+      return response.text().then((_responseText) => {
+        let result200: any = null
+        result200 =
+          _responseText === ""
+            ? null
+            : <Anonymous7[]>JSON.parse(_responseText, this.jsonParseReviver)
+        return result200
+      })
+    } else if (status !== 200 && status !== 204) {
+      return response.text().then((_responseText) => {
+        return throwException(
+          "An unexpected server error occurred.",
+          status,
+          _responseText,
+          _headers,
+        )
+      })
     }
-
-    protected processSummaryAccount(response: Response): Promise<Anonymous7[]> {
-        const status = response.status;
-        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
-        if (status === 200) {
-            return response.text().then((_responseText) => {
-            let result200: any = null;
-            result200 = _responseText === "" ? null : <Anonymous7[]>JSON.parse(_responseText, this.jsonParseReviver);
-            return result200;
-            });
-        } else if (status !== 200 && status !== 204) {
-            return response.text().then((_responseText) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            });
-        }
-        return Promise.resolve<Anonymous7[]>(<any>null);
-    }
+    return Promise.resolve<Anonymous7[]>(<any>null)
+  }
 }
 
 export class InqfdsServiceProxy {
-    private http: { fetch(url: RequestInfo, init?: RequestInit): Promise<Response> };
-    private baseUrl: string;
-    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+  private http: { fetch(url: RequestInfo, init?: RequestInit): Promise<Response> }
+  private baseUrl: string
+  protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined
 
-    constructor(baseUrl?: string, http?: { fetch(url: RequestInfo, init?: RequestInit): Promise<Response> }) {
-        this.http = http ? http : <any>window;
-        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "http://52.74.51.47/rest";
+  constructor(
+    baseUrl?: string,
+    http?: { fetch(url: RequestInfo, init?: RequestInit): Promise<Response> },
+  ) {
+    this.http = http ? http : <any>window
+    this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "http://52.74.51.47/rest"
+  }
+
+  /**
+   * tra cứu số dư tiền tiểu khoản phái sinh
+   * @param accountId số tiểu khoản phái sinh
+   * @return tra cứu số dư tiền tiểu khoản phái sinh
+   */
+  balanceAmount(accountId: string): Promise<Anonymous8> {
+    let url_ = this.baseUrl + "/api/v1/kbsv/derivatives/inqfds/balanceAmount?"
+    if (accountId === undefined || accountId === null)
+      throw new Error("The parameter 'accountId' must be defined and cannot be null.")
+    else url_ += "accountId=" + encodeURIComponent("" + accountId) + "&"
+    url_ = url_.replace(/[?&]$/, "")
+
+    let options_ = <RequestInit>{
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+      },
     }
 
-    /**
-     * tra cứu số dư tiền tiểu khoản phái sinh
-     * @param accountId số tiểu khoản phái sinh
-     * @return tra cứu số dư tiền tiểu khoản phái sinh
-     */
-    balanceAmount(accountId: string): Promise<Anonymous8> {
-        let url_ = this.baseUrl + "/api/v1/kbsv/derivatives/inqfds/balanceAmount?";
-        if (accountId === undefined || accountId === null)
-            throw new Error("The parameter 'accountId' must be defined and cannot be null.");
-        else
-            url_ += "accountId=" + encodeURIComponent("" + accountId) + "&";
-        url_ = url_.replace(/[?&]$/, "");
+    return this.http.fetch(url_, options_).then((_response: Response) => {
+      return this.processBalanceAmount(_response)
+    })
+  }
 
-        let options_ = <RequestInit>{
-            method: "GET",
-            headers: {
-                "Accept": "application/json"
-            }
-        };
-
-        return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processBalanceAmount(_response);
-        });
+  protected processBalanceAmount(response: Response): Promise<Anonymous8> {
+    const status = response.status
+    let _headers: any = {}
+    if (response.headers && response.headers.forEach) {
+      response.headers.forEach((v: any, k: any) => (_headers[k] = v))
     }
-
-    protected processBalanceAmount(response: Response): Promise<Anonymous8> {
-        const status = response.status;
-        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
-        if (status === 200) {
-            return response.text().then((_responseText) => {
-            let result200: any = null;
-            result200 = _responseText === "" ? null : <Anonymous8>JSON.parse(_responseText, this.jsonParseReviver);
-            return result200;
-            });
-        } else if (status !== 200 && status !== 204) {
-            return response.text().then((_responseText) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            });
-        }
-        return Promise.resolve<Anonymous8>(<any>null);
+    if (status === 200) {
+      return response.text().then((_responseText) => {
+        let result200: any = null
+        result200 =
+          _responseText === "" ? null : <Anonymous8>JSON.parse(_responseText, this.jsonParseReviver)
+        return result200
+      })
+    } else if (status !== 200 && status !== 204) {
+      return response.text().then((_responseText) => {
+        return throwException(
+          "An unexpected server error occurred.",
+          status,
+          _responseText,
+          _headers,
+        )
+      })
     }
+    return Promise.resolve<Anonymous8>(<any>null)
+  }
 }
 
 export class ReportfdsServiceProxy {
-    private http: { fetch(url: RequestInfo, init?: RequestInit): Promise<Response> };
-    private baseUrl: string;
-    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+  private http: { fetch(url: RequestInfo, init?: RequestInit): Promise<Response> }
+  private baseUrl: string
+  protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined
 
-    constructor(baseUrl?: string, http?: { fetch(url: RequestInfo, init?: RequestInit): Promise<Response> }) {
-        this.http = http ? http : <any>window;
-        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "http://52.74.51.47/rest";
+  constructor(
+    baseUrl?: string,
+    http?: { fetch(url: RequestInfo, init?: RequestInit): Promise<Response> },
+  ) {
+    this.http = http ? http : <any>window
+    this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "http://52.74.51.47/rest"
+  }
+
+  /**
+   * tra cứu lãi lỗ phái sinh
+   * @param accountId số tiểu khoản phái sinh
+   * @param fromDate từ ngày
+   * @param toDate đến ngày
+   * @param code (optional) mã phái sinh cần truy vấn
+   * @return NplByDay response
+   */
+  nplByDay(
+    accountId: string,
+    fromDate: string,
+    toDate: string,
+    code: string | undefined,
+  ): Promise<Anonymous9[]> {
+    let url_ = this.baseUrl + "/api/v1/kbsv/derivatives/reportfds/nplByDay?"
+    if (accountId === undefined || accountId === null)
+      throw new Error("The parameter 'accountId' must be defined and cannot be null.")
+    else url_ += "accountId=" + encodeURIComponent("" + accountId) + "&"
+    if (fromDate === undefined || fromDate === null)
+      throw new Error("The parameter 'fromDate' must be defined and cannot be null.")
+    else url_ += "fromDate=" + encodeURIComponent("" + fromDate) + "&"
+    if (toDate === undefined || toDate === null)
+      throw new Error("The parameter 'toDate' must be defined and cannot be null.")
+    else url_ += "toDate=" + encodeURIComponent("" + toDate) + "&"
+    if (code === null) throw new Error("The parameter 'code' cannot be null.")
+    else if (code !== undefined) url_ += "code=" + encodeURIComponent("" + code) + "&"
+    url_ = url_.replace(/[?&]$/, "")
+
+    let options_ = <RequestInit>{
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+      },
     }
 
-    /**
-     * tra cứu lãi lỗ phái sinh
-     * @param accountId số tiểu khoản phái sinh
-     * @param fromDate từ ngày
-     * @param toDate đến ngày
-     * @param code (optional) mã phái sinh cần truy vấn
-     * @return NplByDay response
-     */
-    nplByDay(accountId: string, fromDate: string, toDate: string, code: string | undefined): Promise<Anonymous9[]> {
-        let url_ = this.baseUrl + "/api/v1/kbsv/derivatives/reportfds/nplByDay?";
-        if (accountId === undefined || accountId === null)
-            throw new Error("The parameter 'accountId' must be defined and cannot be null.");
-        else
-            url_ += "accountId=" + encodeURIComponent("" + accountId) + "&";
-        if (fromDate === undefined || fromDate === null)
-            throw new Error("The parameter 'fromDate' must be defined and cannot be null.");
-        else
-            url_ += "fromDate=" + encodeURIComponent("" + fromDate) + "&";
-        if (toDate === undefined || toDate === null)
-            throw new Error("The parameter 'toDate' must be defined and cannot be null.");
-        else
-            url_ += "toDate=" + encodeURIComponent("" + toDate) + "&";
-        if (code === null)
-            throw new Error("The parameter 'code' cannot be null.");
-        else if (code !== undefined)
-            url_ += "code=" + encodeURIComponent("" + code) + "&";
-        url_ = url_.replace(/[?&]$/, "");
+    return this.http.fetch(url_, options_).then((_response: Response) => {
+      return this.processNplByDay(_response)
+    })
+  }
 
-        let options_ = <RequestInit>{
-            method: "GET",
-            headers: {
-                "Accept": "application/json"
-            }
-        };
+  protected processNplByDay(response: Response): Promise<Anonymous9[]> {
+    const status = response.status
+    let _headers: any = {}
+    if (response.headers && response.headers.forEach) {
+      response.headers.forEach((v: any, k: any) => (_headers[k] = v))
+    }
+    if (status === 200) {
+      return response.text().then((_responseText) => {
+        let result200: any = null
+        result200 =
+          _responseText === ""
+            ? null
+            : <Anonymous9[]>JSON.parse(_responseText, this.jsonParseReviver)
+        return result200
+      })
+    } else if (status !== 200 && status !== 204) {
+      return response.text().then((_responseText) => {
+        return throwException(
+          "An unexpected server error occurred.",
+          status,
+          _responseText,
+          _headers,
+        )
+      })
+    }
+    return Promise.resolve<Anonymous9[]>(<any>null)
+  }
 
-        return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processNplByDay(_response);
-        });
+  /**
+   * lịch sử nộp tiền vào  tài khoản giao dịch phái  sinh
+   * @param accountId tiểu khoản phái sinh
+   * @param fromDate từ ngày
+   * @param toDate đến ngày
+   * @param status (optional) trạng thái
+   * @return IncreaseDTABalanceHist response
+   */
+  increaseDTABalanceHist(
+    accountId: string,
+    fromDate: string,
+    toDate: string,
+    status: string | undefined,
+  ): Promise<Anonymous10[]> {
+    let url_ = this.baseUrl + "/api/v1/kbsv/derivatives/reportfds/increaseDTABalanceHist?"
+    if (accountId === undefined || accountId === null)
+      throw new Error("The parameter 'accountId' must be defined and cannot be null.")
+    else url_ += "accountId=" + encodeURIComponent("" + accountId) + "&"
+    if (fromDate === undefined || fromDate === null)
+      throw new Error("The parameter 'fromDate' must be defined and cannot be null.")
+    else url_ += "fromDate=" + encodeURIComponent("" + fromDate) + "&"
+    if (toDate === undefined || toDate === null)
+      throw new Error("The parameter 'toDate' must be defined and cannot be null.")
+    else url_ += "toDate=" + encodeURIComponent("" + toDate) + "&"
+    if (status === null) throw new Error("The parameter 'status' cannot be null.")
+    else if (status !== undefined) url_ += "status=" + encodeURIComponent("" + status) + "&"
+    url_ = url_.replace(/[?&]$/, "")
+
+    let options_ = <RequestInit>{
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+      },
     }
 
-    protected processNplByDay(response: Response): Promise<Anonymous9[]> {
-        const status = response.status;
-        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
-        if (status === 200) {
-            return response.text().then((_responseText) => {
-            let result200: any = null;
-            result200 = _responseText === "" ? null : <Anonymous9[]>JSON.parse(_responseText, this.jsonParseReviver);
-            return result200;
-            });
-        } else if (status !== 200 && status !== 204) {
-            return response.text().then((_responseText) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            });
-        }
-        return Promise.resolve<Anonymous9[]>(<any>null);
+    return this.http.fetch(url_, options_).then((_response: Response) => {
+      return this.processIncreaseDTABalanceHist(_response)
+    })
+  }
+
+  protected processIncreaseDTABalanceHist(response: Response): Promise<Anonymous10[]> {
+    const status = response.status
+    let _headers: any = {}
+    if (response.headers && response.headers.forEach) {
+      response.headers.forEach((v: any, k: any) => (_headers[k] = v))
+    }
+    if (status === 200) {
+      return response.text().then((_responseText) => {
+        let result200: any = null
+        result200 =
+          _responseText === ""
+            ? null
+            : <Anonymous10[]>JSON.parse(_responseText, this.jsonParseReviver)
+        return result200
+      })
+    } else if (status !== 200 && status !== 204) {
+      return response.text().then((_responseText) => {
+        return throwException(
+          "An unexpected server error occurred.",
+          status,
+          _responseText,
+          _headers,
+        )
+      })
+    }
+    return Promise.resolve<Anonymous10[]>(<any>null)
+  }
+
+  /**
+   * lịch sử rút tiền từ TKKQ
+   * @param accountId Số tiểu khoản phai sinh
+   * @param fromDate từ ngày
+   * @param toDate đến ngày
+   * @param status (optional) trạng thái
+   * @return lịch sử rút tiền từ TKKQ
+   */
+  decreaseDepositAmountHist(
+    accountId: string,
+    fromDate: string,
+    toDate: string,
+    status: string | undefined,
+  ): Promise<Anonymous11[]> {
+    let url_ = this.baseUrl + "/api/v1/kbsv/derivatives/reportfds/decreaseDepositAmountHist?"
+    if (accountId === undefined || accountId === null)
+      throw new Error("The parameter 'accountId' must be defined and cannot be null.")
+    else url_ += "accountId=" + encodeURIComponent("" + accountId) + "&"
+    if (fromDate === undefined || fromDate === null)
+      throw new Error("The parameter 'fromDate' must be defined and cannot be null.")
+    else url_ += "fromDate=" + encodeURIComponent("" + fromDate) + "&"
+    if (toDate === undefined || toDate === null)
+      throw new Error("The parameter 'toDate' must be defined and cannot be null.")
+    else url_ += "toDate=" + encodeURIComponent("" + toDate) + "&"
+    if (status === null) throw new Error("The parameter 'status' cannot be null.")
+    else if (status !== undefined) url_ += "status=" + encodeURIComponent("" + status) + "&"
+    url_ = url_.replace(/[?&]$/, "")
+
+    let options_ = <RequestInit>{
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+      },
     }
 
-    /**
-     * lịch sử nộp tiền vào  tài khoản giao dịch phái  sinh
-     * @param accountId tiểu khoản phái sinh
-     * @param fromDate từ ngày
-     * @param toDate đến ngày
-     * @param status (optional) trạng thái
-     * @return IncreaseDTABalanceHist response
-     */
-    increaseDTABalanceHist(accountId: string, fromDate: string, toDate: string, status: string | undefined): Promise<Anonymous10[]> {
-        let url_ = this.baseUrl + "/api/v1/kbsv/derivatives/reportfds/increaseDTABalanceHist?";
-        if (accountId === undefined || accountId === null)
-            throw new Error("The parameter 'accountId' must be defined and cannot be null.");
-        else
-            url_ += "accountId=" + encodeURIComponent("" + accountId) + "&";
-        if (fromDate === undefined || fromDate === null)
-            throw new Error("The parameter 'fromDate' must be defined and cannot be null.");
-        else
-            url_ += "fromDate=" + encodeURIComponent("" + fromDate) + "&";
-        if (toDate === undefined || toDate === null)
-            throw new Error("The parameter 'toDate' must be defined and cannot be null.");
-        else
-            url_ += "toDate=" + encodeURIComponent("" + toDate) + "&";
-        if (status === null)
-            throw new Error("The parameter 'status' cannot be null.");
-        else if (status !== undefined)
-            url_ += "status=" + encodeURIComponent("" + status) + "&";
-        url_ = url_.replace(/[?&]$/, "");
+    return this.http.fetch(url_, options_).then((_response: Response) => {
+      return this.processDecreaseDepositAmountHist(_response)
+    })
+  }
 
-        let options_ = <RequestInit>{
-            method: "GET",
-            headers: {
-                "Accept": "application/json"
-            }
-        };
+  protected processDecreaseDepositAmountHist(response: Response): Promise<Anonymous11[]> {
+    const status = response.status
+    let _headers: any = {}
+    if (response.headers && response.headers.forEach) {
+      response.headers.forEach((v: any, k: any) => (_headers[k] = v))
+    }
+    if (status === 200) {
+      return response.text().then((_responseText) => {
+        let result200: any = null
+        result200 =
+          _responseText === ""
+            ? null
+            : <Anonymous11[]>JSON.parse(_responseText, this.jsonParseReviver)
+        return result200
+      })
+    } else if (status !== 200 && status !== 204) {
+      return response.text().then((_responseText) => {
+        return throwException(
+          "An unexpected server error occurred.",
+          status,
+          _responseText,
+          _headers,
+        )
+      })
+    }
+    return Promise.resolve<Anonymous11[]>(<any>null)
+  }
 
-        return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processIncreaseDTABalanceHist(_response);
-        });
+  /**
+   * lịch sử rút tiền từ TKGDPS
+   * @param accountId Số tiểu khoản phái sinh
+   * @param fromDate từ ngày
+   * @param toDate đến ngày
+   * @param status (optional) trạng thái
+   * @return lịch sử rút tiền từ TKGDPS
+   */
+  decreaseDTABalanceHist(
+    accountId: string,
+    fromDate: string,
+    toDate: string,
+    status: string | undefined,
+  ): Promise<Anonymous12[]> {
+    let url_ = this.baseUrl + "/api/v1/kbsv/derivatives/reportfds/decreaseDTABalanceHist?"
+    if (accountId === undefined || accountId === null)
+      throw new Error("The parameter 'accountId' must be defined and cannot be null.")
+    else url_ += "accountId=" + encodeURIComponent("" + accountId) + "&"
+    if (fromDate === undefined || fromDate === null)
+      throw new Error("The parameter 'fromDate' must be defined and cannot be null.")
+    else url_ += "fromDate=" + encodeURIComponent("" + fromDate) + "&"
+    if (toDate === undefined || toDate === null)
+      throw new Error("The parameter 'toDate' must be defined and cannot be null.")
+    else url_ += "toDate=" + encodeURIComponent("" + toDate) + "&"
+    if (status === null) throw new Error("The parameter 'status' cannot be null.")
+    else if (status !== undefined) url_ += "status=" + encodeURIComponent("" + status) + "&"
+    url_ = url_.replace(/[?&]$/, "")
+
+    let options_ = <RequestInit>{
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+      },
     }
 
-    protected processIncreaseDTABalanceHist(response: Response): Promise<Anonymous10[]> {
-        const status = response.status;
-        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
-        if (status === 200) {
-            return response.text().then((_responseText) => {
-            let result200: any = null;
-            result200 = _responseText === "" ? null : <Anonymous10[]>JSON.parse(_responseText, this.jsonParseReviver);
-            return result200;
-            });
-        } else if (status !== 200 && status !== 204) {
-            return response.text().then((_responseText) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            });
-        }
-        return Promise.resolve<Anonymous10[]>(<any>null);
+    return this.http.fetch(url_, options_).then((_response: Response) => {
+      return this.processDecreaseDTABalanceHist(_response)
+    })
+  }
+
+  protected processDecreaseDTABalanceHist(response: Response): Promise<Anonymous12[]> {
+    const status = response.status
+    let _headers: any = {}
+    if (response.headers && response.headers.forEach) {
+      response.headers.forEach((v: any, k: any) => (_headers[k] = v))
+    }
+    if (status === 200) {
+      return response.text().then((_responseText) => {
+        let result200: any = null
+        result200 =
+          _responseText === ""
+            ? null
+            : <Anonymous12[]>JSON.parse(_responseText, this.jsonParseReviver)
+        return result200
+      })
+    } else if (status !== 200 && status !== 204) {
+      return response.text().then((_responseText) => {
+        return throwException(
+          "An unexpected server error occurred.",
+          status,
+          _responseText,
+          _headers,
+        )
+      })
+    }
+    return Promise.resolve<Anonymous12[]>(<any>null)
+  }
+
+  /**
+   * lịch sử nộp tiền vào TKKQ
+   * @param accountId số tiểu khoản
+   * @param fromDate từ ngày
+   * @param toDate đến ngày
+   * @param status (optional) trạng thái
+   * @return lịch sử nộp tiền vào TKKQ
+   */
+  increaseDepositAmountHist(
+    accountId: string,
+    fromDate: string,
+    toDate: string,
+    status: string | undefined,
+  ): Promise<Anonymous13[]> {
+    let url_ = this.baseUrl + "/api/v1/kbsv/derivatives/reportfds/increaseDepositAmountHist?"
+    if (accountId === undefined || accountId === null)
+      throw new Error("The parameter 'accountId' must be defined and cannot be null.")
+    else url_ += "accountId=" + encodeURIComponent("" + accountId) + "&"
+    if (fromDate === undefined || fromDate === null)
+      throw new Error("The parameter 'fromDate' must be defined and cannot be null.")
+    else url_ += "fromDate=" + encodeURIComponent("" + fromDate) + "&"
+    if (toDate === undefined || toDate === null)
+      throw new Error("The parameter 'toDate' must be defined and cannot be null.")
+    else url_ += "toDate=" + encodeURIComponent("" + toDate) + "&"
+    if (status === null) throw new Error("The parameter 'status' cannot be null.")
+    else if (status !== undefined) url_ += "status=" + encodeURIComponent("" + status) + "&"
+    url_ = url_.replace(/[?&]$/, "")
+
+    let options_ = <RequestInit>{
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+      },
     }
 
-    /**
-     * lịch sử rút tiền từ TKKQ
-     * @param accountId Số tiểu khoản phai sinh
-     * @param fromDate từ ngày
-     * @param toDate đến ngày
-     * @param status (optional) trạng thái
-     * @return lịch sử rút tiền từ TKKQ
-     */
-    decreaseDepositAmountHist(accountId: string, fromDate: string, toDate: string, status: string | undefined): Promise<Anonymous11[]> {
-        let url_ = this.baseUrl + "/api/v1/kbsv/derivatives/reportfds/decreaseDepositAmountHist?";
-        if (accountId === undefined || accountId === null)
-            throw new Error("The parameter 'accountId' must be defined and cannot be null.");
-        else
-            url_ += "accountId=" + encodeURIComponent("" + accountId) + "&";
-        if (fromDate === undefined || fromDate === null)
-            throw new Error("The parameter 'fromDate' must be defined and cannot be null.");
-        else
-            url_ += "fromDate=" + encodeURIComponent("" + fromDate) + "&";
-        if (toDate === undefined || toDate === null)
-            throw new Error("The parameter 'toDate' must be defined and cannot be null.");
-        else
-            url_ += "toDate=" + encodeURIComponent("" + toDate) + "&";
-        if (status === null)
-            throw new Error("The parameter 'status' cannot be null.");
-        else if (status !== undefined)
-            url_ += "status=" + encodeURIComponent("" + status) + "&";
-        url_ = url_.replace(/[?&]$/, "");
+    return this.http.fetch(url_, options_).then((_response: Response) => {
+      return this.processIncreaseDepositAmountHist(_response)
+    })
+  }
 
-        let options_ = <RequestInit>{
-            method: "GET",
-            headers: {
-                "Accept": "application/json"
-            }
-        };
+  protected processIncreaseDepositAmountHist(response: Response): Promise<Anonymous13[]> {
+    const status = response.status
+    let _headers: any = {}
+    if (response.headers && response.headers.forEach) {
+      response.headers.forEach((v: any, k: any) => (_headers[k] = v))
+    }
+    if (status === 200) {
+      return response.text().then((_responseText) => {
+        let result200: any = null
+        result200 =
+          _responseText === ""
+            ? null
+            : <Anonymous13[]>JSON.parse(_responseText, this.jsonParseReviver)
+        return result200
+      })
+    } else if (status !== 200 && status !== 204) {
+      return response.text().then((_responseText) => {
+        return throwException(
+          "An unexpected server error occurred.",
+          status,
+          _responseText,
+          _headers,
+        )
+      })
+    }
+    return Promise.resolve<Anonymous13[]>(<any>null)
+  }
 
-        return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processDecreaseDepositAmountHist(_response);
-        });
+  /**
+   * Lịch sử khớp lệnh phái sinh
+   * @param accountId số tiểu khoản phái sinh
+   * @param fromDate từ ngày
+   * @param toDate đến ngày
+   * @param code mã phái sinh
+   * @param side SELL/BUY
+   * @return Lịch sử khớp lệnh phái sinh
+   */
+  orderMatch(
+    accountId: string,
+    fromDate: string,
+    toDate: string,
+    code: string,
+    side: string,
+  ): Promise<Anonymous14[]> {
+    let url_ = this.baseUrl + "/api/v1/kbsv/derivatives/reportfds/orderMatch?"
+    if (accountId === undefined || accountId === null)
+      throw new Error("The parameter 'accountId' must be defined and cannot be null.")
+    else url_ += "accountId=" + encodeURIComponent("" + accountId) + "&"
+    if (fromDate === undefined || fromDate === null)
+      throw new Error("The parameter 'fromDate' must be defined and cannot be null.")
+    else url_ += "fromDate=" + encodeURIComponent("" + fromDate) + "&"
+    if (toDate === undefined || toDate === null)
+      throw new Error("The parameter 'toDate' must be defined and cannot be null.")
+    else url_ += "toDate=" + encodeURIComponent("" + toDate) + "&"
+    if (code === undefined || code === null)
+      throw new Error("The parameter 'code' must be defined and cannot be null.")
+    else url_ += "code=" + encodeURIComponent("" + code) + "&"
+    if (side === undefined || side === null)
+      throw new Error("The parameter 'side' must be defined and cannot be null.")
+    else url_ += "side=" + encodeURIComponent("" + side) + "&"
+    url_ = url_.replace(/[?&]$/, "")
+
+    let options_ = <RequestInit>{
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+      },
     }
 
-    protected processDecreaseDepositAmountHist(response: Response): Promise<Anonymous11[]> {
-        const status = response.status;
-        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
-        if (status === 200) {
-            return response.text().then((_responseText) => {
-            let result200: any = null;
-            result200 = _responseText === "" ? null : <Anonymous11[]>JSON.parse(_responseText, this.jsonParseReviver);
-            return result200;
-            });
-        } else if (status !== 200 && status !== 204) {
-            return response.text().then((_responseText) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            });
-        }
-        return Promise.resolve<Anonymous11[]>(<any>null);
+    return this.http.fetch(url_, options_).then((_response: Response) => {
+      return this.processOrderMatch(_response)
+    })
+  }
+
+  protected processOrderMatch(response: Response): Promise<Anonymous14[]> {
+    const status = response.status
+    let _headers: any = {}
+    if (response.headers && response.headers.forEach) {
+      response.headers.forEach((v: any, k: any) => (_headers[k] = v))
+    }
+    if (status === 200) {
+      return response.text().then((_responseText) => {
+        let result200: any = null
+        result200 =
+          _responseText === ""
+            ? null
+            : <Anonymous14[]>JSON.parse(_responseText, this.jsonParseReviver)
+        return result200
+      })
+    } else if (status !== 200 && status !== 204) {
+      return response.text().then((_responseText) => {
+        return throwException(
+          "An unexpected server error occurred.",
+          status,
+          _responseText,
+          _headers,
+        )
+      })
+    }
+    return Promise.resolve<Anonymous14[]>(<any>null)
+  }
+
+  /**
+   * lịch sử đặt lệnh phái sinh
+   * @param accountId số tiểu khoản phái sinh
+   * @param fromDate từ ngày
+   * @param toDate đến ngày
+   * @param orderType trạng thái lệnh - ALL, NN, BB, SS, ES, SE, TS, TP, SR, RR, SD, DS, DD
+   * @param status trạng thái
+   * @return lịch sử đặt lệnh phái sinh
+   */
+  orderHist(
+    accountId: string,
+    fromDate: string,
+    toDate: string,
+    orderType: string,
+    status: string,
+  ): Promise<Anonymous15[]> {
+    let url_ = this.baseUrl + "/api/v1/kbsv/derivatives/reportfds/orderHist?"
+    if (accountId === undefined || accountId === null)
+      throw new Error("The parameter 'accountId' must be defined and cannot be null.")
+    else url_ += "accountId=" + encodeURIComponent("" + accountId) + "&"
+    if (fromDate === undefined || fromDate === null)
+      throw new Error("The parameter 'fromDate' must be defined and cannot be null.")
+    else url_ += "fromDate=" + encodeURIComponent("" + fromDate) + "&"
+    if (toDate === undefined || toDate === null)
+      throw new Error("The parameter 'toDate' must be defined and cannot be null.")
+    else url_ += "toDate=" + encodeURIComponent("" + toDate) + "&"
+    if (orderType === undefined || orderType === null)
+      throw new Error("The parameter 'orderType' must be defined and cannot be null.")
+    else url_ += "orderType=" + encodeURIComponent("" + orderType) + "&"
+    if (status === undefined || status === null)
+      throw new Error("The parameter 'status' must be defined and cannot be null.")
+    else url_ += "status=" + encodeURIComponent("" + status) + "&"
+    url_ = url_.replace(/[?&]$/, "")
+
+    let options_ = <RequestInit>{
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+      },
     }
 
-    /**
-     * lịch sử rút tiền từ TKGDPS
-     * @param accountId Số tiểu khoản phái sinh
-     * @param fromDate từ ngày
-     * @param toDate đến ngày
-     * @param status (optional) trạng thái
-     * @return lịch sử rút tiền từ TKGDPS
-     */
-    decreaseDTABalanceHist(accountId: string, fromDate: string, toDate: string, status: string | undefined): Promise<Anonymous12[]> {
-        let url_ = this.baseUrl + "/api/v1/kbsv/derivatives/reportfds/decreaseDTABalanceHist?";
-        if (accountId === undefined || accountId === null)
-            throw new Error("The parameter 'accountId' must be defined and cannot be null.");
-        else
-            url_ += "accountId=" + encodeURIComponent("" + accountId) + "&";
-        if (fromDate === undefined || fromDate === null)
-            throw new Error("The parameter 'fromDate' must be defined and cannot be null.");
-        else
-            url_ += "fromDate=" + encodeURIComponent("" + fromDate) + "&";
-        if (toDate === undefined || toDate === null)
-            throw new Error("The parameter 'toDate' must be defined and cannot be null.");
-        else
-            url_ += "toDate=" + encodeURIComponent("" + toDate) + "&";
-        if (status === null)
-            throw new Error("The parameter 'status' cannot be null.");
-        else if (status !== undefined)
-            url_ += "status=" + encodeURIComponent("" + status) + "&";
-        url_ = url_.replace(/[?&]$/, "");
+    return this.http.fetch(url_, options_).then((_response: Response) => {
+      return this.processOrderHist(_response)
+    })
+  }
 
-        let options_ = <RequestInit>{
-            method: "GET",
-            headers: {
-                "Accept": "application/json"
-            }
-        };
-
-        return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processDecreaseDTABalanceHist(_response);
-        });
+  protected processOrderHist(response: Response): Promise<Anonymous15[]> {
+    const status = response.status
+    let _headers: any = {}
+    if (response.headers && response.headers.forEach) {
+      response.headers.forEach((v: any, k: any) => (_headers[k] = v))
     }
-
-    protected processDecreaseDTABalanceHist(response: Response): Promise<Anonymous12[]> {
-        const status = response.status;
-        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
-        if (status === 200) {
-            return response.text().then((_responseText) => {
-            let result200: any = null;
-            result200 = _responseText === "" ? null : <Anonymous12[]>JSON.parse(_responseText, this.jsonParseReviver);
-            return result200;
-            });
-        } else if (status !== 200 && status !== 204) {
-            return response.text().then((_responseText) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            });
-        }
-        return Promise.resolve<Anonymous12[]>(<any>null);
+    if (status === 200) {
+      return response.text().then((_responseText) => {
+        let result200: any = null
+        result200 =
+          _responseText === ""
+            ? null
+            : <Anonymous15[]>JSON.parse(_responseText, this.jsonParseReviver)
+        return result200
+      })
+    } else if (status !== 200 && status !== 204) {
+      return response.text().then((_responseText) => {
+        return throwException(
+          "An unexpected server error occurred.",
+          status,
+          _responseText,
+          _headers,
+        )
+      })
     }
-
-    /**
-     * lịch sử nộp tiền vào TKKQ
-     * @param accountId số tiểu khoản
-     * @param fromDate từ ngày
-     * @param toDate đến ngày
-     * @param status (optional) trạng thái
-     * @return lịch sử nộp tiền vào TKKQ
-     */
-    increaseDepositAmountHist(accountId: string, fromDate: string, toDate: string, status: string | undefined): Promise<Anonymous13[]> {
-        let url_ = this.baseUrl + "/api/v1/kbsv/derivatives/reportfds/increaseDepositAmountHist?";
-        if (accountId === undefined || accountId === null)
-            throw new Error("The parameter 'accountId' must be defined and cannot be null.");
-        else
-            url_ += "accountId=" + encodeURIComponent("" + accountId) + "&";
-        if (fromDate === undefined || fromDate === null)
-            throw new Error("The parameter 'fromDate' must be defined and cannot be null.");
-        else
-            url_ += "fromDate=" + encodeURIComponent("" + fromDate) + "&";
-        if (toDate === undefined || toDate === null)
-            throw new Error("The parameter 'toDate' must be defined and cannot be null.");
-        else
-            url_ += "toDate=" + encodeURIComponent("" + toDate) + "&";
-        if (status === null)
-            throw new Error("The parameter 'status' cannot be null.");
-        else if (status !== undefined)
-            url_ += "status=" + encodeURIComponent("" + status) + "&";
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ = <RequestInit>{
-            method: "GET",
-            headers: {
-                "Accept": "application/json"
-            }
-        };
-
-        return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processIncreaseDepositAmountHist(_response);
-        });
-    }
-
-    protected processIncreaseDepositAmountHist(response: Response): Promise<Anonymous13[]> {
-        const status = response.status;
-        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
-        if (status === 200) {
-            return response.text().then((_responseText) => {
-            let result200: any = null;
-            result200 = _responseText === "" ? null : <Anonymous13[]>JSON.parse(_responseText, this.jsonParseReviver);
-            return result200;
-            });
-        } else if (status !== 200 && status !== 204) {
-            return response.text().then((_responseText) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            });
-        }
-        return Promise.resolve<Anonymous13[]>(<any>null);
-    }
-
-    /**
-     * Lịch sử khớp lệnh phái sinh
-     * @param accountId số tiểu khoản phái sinh
-     * @param fromDate từ ngày
-     * @param toDate đến ngày
-     * @param code mã phái sinh
-     * @param side SELL/BUY
-     * @return Lịch sử khớp lệnh phái sinh
-     */
-    orderMatch(accountId: string, fromDate: string, toDate: string, code: string, side: string): Promise<Anonymous14[]> {
-        let url_ = this.baseUrl + "/api/v1/kbsv/derivatives/reportfds/orderMatch?";
-        if (accountId === undefined || accountId === null)
-            throw new Error("The parameter 'accountId' must be defined and cannot be null.");
-        else
-            url_ += "accountId=" + encodeURIComponent("" + accountId) + "&";
-        if (fromDate === undefined || fromDate === null)
-            throw new Error("The parameter 'fromDate' must be defined and cannot be null.");
-        else
-            url_ += "fromDate=" + encodeURIComponent("" + fromDate) + "&";
-        if (toDate === undefined || toDate === null)
-            throw new Error("The parameter 'toDate' must be defined and cannot be null.");
-        else
-            url_ += "toDate=" + encodeURIComponent("" + toDate) + "&";
-        if (code === undefined || code === null)
-            throw new Error("The parameter 'code' must be defined and cannot be null.");
-        else
-            url_ += "code=" + encodeURIComponent("" + code) + "&";
-        if (side === undefined || side === null)
-            throw new Error("The parameter 'side' must be defined and cannot be null.");
-        else
-            url_ += "side=" + encodeURIComponent("" + side) + "&";
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ = <RequestInit>{
-            method: "GET",
-            headers: {
-                "Accept": "application/json"
-            }
-        };
-
-        return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processOrderMatch(_response);
-        });
-    }
-
-    protected processOrderMatch(response: Response): Promise<Anonymous14[]> {
-        const status = response.status;
-        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
-        if (status === 200) {
-            return response.text().then((_responseText) => {
-            let result200: any = null;
-            result200 = _responseText === "" ? null : <Anonymous14[]>JSON.parse(_responseText, this.jsonParseReviver);
-            return result200;
-            });
-        } else if (status !== 200 && status !== 204) {
-            return response.text().then((_responseText) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            });
-        }
-        return Promise.resolve<Anonymous14[]>(<any>null);
-    }
-
-    /**
-     * lịch sử đặt lệnh phái sinh
-     * @param accountId số tiểu khoản phái sinh
-     * @param fromDate từ ngày
-     * @param toDate đến ngày
-     * @param orderType trạng thái lệnh - ALL, NN, BB, SS, ES, SE, TS, TP, SR, RR, SD, DS, DD
-     * @param status trạng thái
-     * @return lịch sử đặt lệnh phái sinh
-     */
-    orderHist(accountId: string, fromDate: string, toDate: string, orderType: string, status: string): Promise<Anonymous15[]> {
-        let url_ = this.baseUrl + "/api/v1/kbsv/derivatives/reportfds/orderHist?";
-        if (accountId === undefined || accountId === null)
-            throw new Error("The parameter 'accountId' must be defined and cannot be null.");
-        else
-            url_ += "accountId=" + encodeURIComponent("" + accountId) + "&";
-        if (fromDate === undefined || fromDate === null)
-            throw new Error("The parameter 'fromDate' must be defined and cannot be null.");
-        else
-            url_ += "fromDate=" + encodeURIComponent("" + fromDate) + "&";
-        if (toDate === undefined || toDate === null)
-            throw new Error("The parameter 'toDate' must be defined and cannot be null.");
-        else
-            url_ += "toDate=" + encodeURIComponent("" + toDate) + "&";
-        if (orderType === undefined || orderType === null)
-            throw new Error("The parameter 'orderType' must be defined and cannot be null.");
-        else
-            url_ += "orderType=" + encodeURIComponent("" + orderType) + "&";
-        if (status === undefined || status === null)
-            throw new Error("The parameter 'status' must be defined and cannot be null.");
-        else
-            url_ += "status=" + encodeURIComponent("" + status) + "&";
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ = <RequestInit>{
-            method: "GET",
-            headers: {
-                "Accept": "application/json"
-            }
-        };
-
-        return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processOrderHist(_response);
-        });
-    }
-
-    protected processOrderHist(response: Response): Promise<Anonymous15[]> {
-        const status = response.status;
-        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
-        if (status === 200) {
-            return response.text().then((_responseText) => {
-            let result200: any = null;
-            result200 = _responseText === "" ? null : <Anonymous15[]>JSON.parse(_responseText, this.jsonParseReviver);
-            return result200;
-            });
-        } else if (status !== 200 && status !== 204) {
-            return response.text().then((_responseText) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            });
-        }
-        return Promise.resolve<Anonymous15[]>(<any>null);
-    }
+    return Promise.resolve<Anonymous15[]>(<any>null)
+  }
 }
 
 export interface FieldError {
-    /** error code */
-    code: string;
-    /** error message */
-    message: string;
-    /** parameter name that is not correct */
-    param: string;
+  /** error code */
+  code: string
+  /** error message */
+  message: string
+  /** parameter name that is not correct */
+  param: string
 }
 
 export interface ErrorDto {
-    /** error code */
-    code: string;
-    /** error message */
-    message: string;
-    /** error message */
-    errors: FieldError[];
+  /** error code */
+  code: string
+  /** error message */
+  message: string
+  /** error message */
+  errors: FieldError[]
 }
 
 export interface Address {
-    /** specific address include house number, road, floor of building */
-    address: string;
-    /** sub-district */
-    "sub-district": string;
-    /** district */
-    district: string;
-    /** province */
-    province: string;
+  /** specific address include house number, road, floor of building */
+  address: string
+  /** sub-district */
+  "sub-district": string
+  /** district */
+  district: string
+  /** province */
+  province: string
 }
 
 export interface UserInfo {
-    /** id card no */
-    idNo: string;
-    /** type of id card */
-    idType: UserInfoIdType;
-    /** phone number of user */
-    fullName: string;
-    /** gender */
-    gender: UserInfoGender;
-    /** que quan */
-    residence: Address;
-    /** dia chi thuong tru */
-    contactAddress: Address;
-    /** issue date of id card, format is ''yyyyMMdd' */
-    idCardIssueDate: string;
-    /** issue place of id card */
-    idCardIssuePlace: string;
-    /** issue place of id card */
-    idCardExpiredDate: string;
-    /** the birthday of KBFINA user, format is 'yyyyMMdd' */
-    birthday: string;
-    /** url link to avatar */
-    avatarUrl: string;
+  /** id card no */
+  idNo: string
+  /** type of id card */
+  idType: UserInfoIdType
+  /** phone number of user */
+  fullName: string
+  /** gender */
+  gender: UserInfoGender
+  /** que quan */
+  residence: Address
+  /** dia chi thuong tru */
+  contactAddress: Address
+  /** issue date of id card, format is ''yyyyMMdd' */
+  idCardIssueDate: string
+  /** issue place of id card */
+  idCardIssuePlace: string
+  /** issue place of id card */
+  idCardExpiredDate: string
+  /** the birthday of KBFINA user, format is 'yyyyMMdd' */
+  birthday: string
+  /** url link to avatar */
+  avatarUrl: string
 }
 
 export interface UserInfoUpdateRequest {
-    /** id card no */
-    idNo: string;
-    /** type of id card */
-    idType: UserInfoUpdateRequestIdType;
-    /** phone number of user */
-    fullName: string;
-    /** gender */
-    gender: UserInfoUpdateRequestGender;
-    /** que quan */
-    residence: Address;
-    /** dia chi thuong tru */
-    contactAddress: Address;
-    /** issue date of id card, format is ''yyyyMMdd' */
-    idCardIssueDate: string;
-    /** issue place of id card */
-    idCardIssuePlace: string;
-    /** issue place of id card */
-    idCardExpiredDate: string;
-    /** the birthday of KBFINA user, format is 'yyyyMMdd' */
-    birthday: string;
-    /** url link to avatar */
-    avatarUrl: string;
+  /** id card no */
+  idNo: string
+  /** type of id card */
+  idType: UserInfoUpdateRequestIdType
+  /** phone number of user */
+  fullName: string
+  /** gender */
+  gender: UserInfoUpdateRequestGender
+  /** que quan */
+  residence: Address
+  /** dia chi thuong tru */
+  contactAddress: Address
+  /** issue date of id card, format is ''yyyyMMdd' */
+  idCardIssueDate: string
+  /** issue place of id card */
+  idCardIssuePlace: string
+  /** issue place of id card */
+  idCardExpiredDate: string
+  /** the birthday of KBFINA user, format is 'yyyyMMdd' */
+  birthday: string
+  /** url link to avatar */
+  avatarUrl: string
 }
 
 export interface UserRegistrationRequest {
-    /** uniq username or mobile phone or email */
-    username: string;
-    /** type of username */
-    usernameType: UserRegistrationRequestUsernameType;
-    /** phone number of user */
-    phoneNo: string;
-    /** phone number of user */
-    email: string;
-    /** password */
-    password: string;
-    /** surname */
-    surname: string;
-    /** given name */
-    givenName: string;
-    /** the birthday of KBFINA user, format is 'yyyyMMdd' */
-    birthday: string;
-    /** link to avatar image. image can be uploaded to S3 by api presignedUrl */
-    avatarUrl: string;
-    /** otp key receive when verify */
-    otpKey: string;
+  /** uniq username or mobile phone or email */
+  username: string
+  /** type of username */
+  usernameType: UserRegistrationRequestUsernameType
+  /** phone number of user */
+  phoneNo: string
+  /** phone number of user */
+  email: string
+  /** password */
+  password: string
+  /** surname */
+  surname: string
+  /** given name */
+  givenName: string
+  /** the birthday of KBFINA user, format is 'yyyyMMdd' */
+  birthday: string
+  /** link to avatar image. image can be uploaded to S3 by api presignedUrl */
+  avatarUrl: string
+  /** otp key receive when verify */
+  otpKey: string
 }
 
 export interface UserInfoResponse {
-    /** the unique id of KBFINA user */
-    id: number;
-    /** username that used for logging in KBFINA System */
-    username: string;
-    /** surname */
-    surname: string;
-    /** given name */
-    givenName: string;
-    /** email used for contac */
-    email: string;
-    /** phone number of KBFINA user */
-    phoneNumber: string;
-    /** the birthday of KBFINA user, format is 'yyyyMMdd' */
-    birthday: string;
-    /** link to avatar image */
-    avatarUrl: string;
+  /** the unique id of KBFINA user */
+  id: number
+  /** username that used for logging in KBFINA System */
+  username: string
+  /** surname */
+  surname: string
+  /** given name */
+  givenName: string
+  /** email used for contac */
+  email: string
+  /** phone number of KBFINA user */
+  phoneNumber: string
+  /** the birthday of KBFINA user, format is 'yyyyMMdd' */
+  birthday: string
+  /** link to avatar image */
+  avatarUrl: string
 }
 
 export interface LoginResponse {
-    /** token to access all other APIs in system */
-    accessToken: string;
-    /** token to renew access_token when it's expire */
-    refreshToken: string;
-    userInfo: UserInfoResponse;
+  /** token to access all other APIs in system */
+  accessToken: string
+  /** token to renew access_token when it's expire */
+  refreshToken: string
+  userInfo: UserInfoResponse
 }
 
 export interface PresignedUrlRequest {
-    /** type of upload files */
-    category: PresignedUrlRequestCategory;
-    ekycImageType: PresignedUrlRequestEkycImageType;
+  /** type of upload files */
+  category: PresignedUrlRequestCategory
+  ekycImageType: PresignedUrlRequestEkycImageType
 }
 
 export interface PresignedUrlResponse {
-    /** url for uploading */
-    url: string;
-    /** file Id for using in another api like ekyc */
-    fileId: string;
+  /** url for uploading */
+  url: string
+  /** file Id for using in another api like ekyc */
+  fileId: string
 }
 
 export interface EkycRequest {
-    /** file id of front id card image that is uploaded via presigned url */
-    idCardFrontFileId: string;
-    /** file id of back id card image that is uploaded via presigned url */
-    idCardBackFileId: string;
-    /** type of id card */
-    type: EkycRequestType;
+  /** file id of front id card image that is uploaded via presigned url */
+  idCardFrontFileId: string
+  /** file id of back id card image that is uploaded via presigned url */
+  idCardBackFileId: string
+  /** type of id card */
+  type: EkycRequestType
 }
 
 export interface EkycResponse {
-    /** ekyc id */
-    id: string;
-    /** so the */
-    identity: string;
-    /** ten day du */
-    fullName: string;
-    /** so dien thoai */
-    phoneNo: string;
-    /** gioi tinh */
-    gender: string;
-    /** loai giay to */
-    type: string;
-    /** ngay sinh, format is yyyyMMdd */
-    birthDay: string;
-    /** so ho chieu */
-    passportId: string;
-    /** ngay het han,  format is yyyyMMdd */
-    expiredDate: string;
-    /** ngay cap,  format is yyyyMMdd */
-    issueDate: string;
-    /** noi cap phat giay to */
-    issuePlace: string;
-    /** noi cu tru */
-    residence: Residence;
+  /** ekyc id */
+  id: string
+  /** so the */
+  identity: string
+  /** ten day du */
+  fullName: string
+  /** so dien thoai */
+  phoneNo: string
+  /** gioi tinh */
+  gender: string
+  /** loai giay to */
+  type: string
+  /** ngay sinh, format is yyyyMMdd */
+  birthDay: string
+  /** so ho chieu */
+  passportId: string
+  /** ngay het han,  format is yyyyMMdd */
+  expiredDate: string
+  /** ngay cap,  format is yyyyMMdd */
+  issueDate: string
+  /** noi cap phat giay to */
+  issuePlace: string
+  /** noi cu tru */
+  residence: Residence
 }
 
 export interface RefreshTokenResponse {
-    /** new access token to call API */
-    accessToken: string;
+  /** new access token to call API */
+  accessToken: string
 }
 
 export interface LinkAccountRequest {
-    type: LinkAccountRequestType;
-    /** account Id of the linked account */
-    accountId: string;
-    /** token to access to institution api or password to login to insitution */
-    credential: string;
+  type: LinkAccountRequestType
+  /** account Id of the linked account */
+  accountId: string
+  /** token to access to institution api or password to login to insitution */
+  credential: string
 }
 
 export interface LinkAccountResponse {
-    /** uniq id of linked account */
-    id: number;
-    type: LinkAccountResponseType;
-    /** account Id of the linked account */
-    accountId: string;
+  /** uniq id of linked account */
+  id: number
+  type: LinkAccountResponseType
+  /** account Id of the linked account */
+  accountId: string
 }
 
 export interface LinkedAccountTransferRequest {
-    /** transfer from */
-    fromLinkedAccountId: number;
-    /** transfer to */
-    toLinkedAccountId: number;
-    /** transfer amount in VND */
-    amount: number;
+  /** transfer from */
+  fromLinkedAccountId: number
+  /** transfer to */
+  toLinkedAccountId: number
+  /** transfer amount in VND */
+  amount: number
 }
 
 export interface LinkedAccountTransferResponse {
-    /** transaction id */
-    txId: string;
-    /** transaction status, PENDI */
-    status: LinkedAccountTransferResponseStatus;
-    /** more exaplain about fail reason */
-    failReason: string;
+  /** transaction id */
+  txId: string
+  /** transaction status, PENDI */
+  status: LinkedAccountTransferResponseStatus
+  /** more exaplain about fail reason */
+  failReason: string
 }
 
 export interface SendOtpRequest {
-    /** id can be email or phone number */
-    id: string;
-    idType: SendOtpRequestIdType;
-    /** pupose of otp */
-    txType: SendOtpRequestTxType;
+  /** id can be email or phone number */
+  id: string
+  idType: SendOtpRequestIdType
+  /** pupose of otp */
+  txType: SendOtpRequestTxType
 }
 
 export interface SendOtpResponse {
-    /** id can be email or phone number */
-    otpId: string;
-    /** expired time in format yyyMMddhhmmss */
-    expiredTime: string;
+  /** id can be email or phone number */
+  otpId: string
+  /** expired time in format yyyMMddhhmmss */
+  expiredTime: string
 }
 
 export interface VerifyOtpRequest {
-    /** id that you receive when sendOtp */
-    otpId: string;
-    /** otp value user enter */
-    otpValue: string;
+  /** id that you receive when sendOtp */
+  otpId: string
+  /** otp value user enter */
+  otpValue: string
 }
 
 export interface VerifyOtpResponse {
-    /** otp verify success key */
-    otpKey: string;
-    /** expired time in format yyyMMddhhmmss */
-    expiredTime: string;
+  /** otp verify success key */
+  otpKey: string
+  /** expired time in format yyyMMddhhmmss */
+  expiredTime: string
 }
 
 export interface ResetPasswordRequest {
-    /** username that you want to reset password */
-    username: string;
-    /** id can be email or phone number */
-    newPassword: string;
-    /** otp key when verify success enter */
-    otpKey: string;
+  /** username that you want to reset password */
+  username: string
+  /** id can be email or phone number */
+  newPassword: string
+  /** otp key when verify success enter */
+  otpKey: string
 }
 
-export interface ResetPasswordResponse {
-}
+export interface ResetPasswordResponse {}
 
 export interface ChangePasswordRequest {
-    /** old password */
-    oldPassword: string;
-    /** new password */
-    newPassword: string;
+  /** old password */
+  oldPassword: string
+  /** new password */
+  newPassword: string
 }
 
-export interface ChangePasswordResponse {
-}
+export interface ChangePasswordResponse {}
 
 export interface Body {
-    /** type of login */
-    grant_type: BodyGrant_type;
-    /** id of app */
-    client_id: string;
-    /** A secret for id */
-    client_secret: string;
-    /** username or id of token receive from social network or username of kb */
-    username: string;
-    /** user password or access_token receive from google, facebook */
-    password: string;
+  /** type of login */
+  grant_type: BodyGrant_type
+  /** id of app */
+  client_id: string
+  /** A secret for id */
+  client_secret: string
+  /** username or id of token receive from social network or username of kb */
+  username: string
+  /** user password or access_token receive from google, facebook */
+  password: string
 }
 
 export interface Body2 {
-    /** the specific grant type to renew access token */
-    grant_type: Body2Grant_type;
-    /** this value is unique, linking with MTS and only provide for access MTS API system */
-    client_id: string;
-    /** this value is unique, linking with MTS, only provide for access MTS API system and pair with **client_id** */
-    client_secret: string;
-    /** token to renew access_token when it's expired */
-    refresh_token: string;
+  /** the specific grant type to renew access token */
+  grant_type: Body2Grant_type
+  /** this value is unique, linking with MTS and only provide for access MTS API system */
+  client_id: string
+  /** this value is unique, linking with MTS, only provide for access MTS API system and pair with **client_id** */
+  client_secret: string
+  /** token to renew access_token when it's expired */
+  refresh_token: string
 }
 
 export interface Body3 {
-    /** the refresh token need to be invalidated */
-    refresh_token: string;
+  /** the refresh token need to be invalidated */
+  refresh_token: string
 }
 
 export interface Body4 {
-    /** mật khẩu tài khoản */
-    password: string;
-    /** public key gen từ device đăng kí */
-    publicKey: string;
-    /** loại biometri (FINGER/FACE) */
-    biometricType: string;
+  /** mật khẩu tài khoản */
+  password: string
+  /** public key gen từ device đăng kí */
+  publicKey: string
+  /** loại biometri (FINGER/FACE) */
+  biometricType: string
 }
 
 export interface Anonymous {
-    /** biometric có tồn tạ hay không . */
-    isEnable: boolean;
+  /** biometric có tồn tạ hay không . */
+  isEnable: boolean
 }
 
 export interface Anonymous2 {
-    /** số otp */
-    index: number;
-    /** biometric id */
-    biometricId: number;
+  /** số otp */
+  index: number
+  /** biometric id */
+  biometricId: number
 }
 
 export interface Anonymous3 {
-    /** Lãi/Lỗ. */
-    pnl: number;
-    /** Phí Mua/Bán CK. */
-    feeAmt: number;
-    /** Mã chứng khoán. */
-    symbol: string;
-    /** Ngày Giao Dịch. */
-    txDate: string;
-    /** tỉ lệ lãi lỗ. */
-    pnlRate: number;
-    /** loại thực hiệ(BUY/SELL)). */
-    execType: string;
-    /** số lượng đặt. */
-    quantity: number;
-    /** số tiểu khoản. */
-    accountID: string;
-    /** Giá Vốn TB. */
-    costPrice: number;
-    /** Giá Thực Hiện. */
-    execPrice: number;
-    /** Phí/Thuế Khác. */
-    taxSellAmt: number;
-    /** Giá Trị Vốn. */
-    costPriceValue: number;
-    /** Giá Trị Thực Hiện. */
-    execPriceValue: number;
+  /** Lãi/Lỗ. */
+  pnl: number
+  /** Phí Mua/Bán CK. */
+  feeAmt: number
+  /** Mã chứng khoán. */
+  symbol: string
+  /** Ngày Giao Dịch. */
+  txDate: string
+  /** tỉ lệ lãi lỗ. */
+  pnlRate: number
+  /** loại thực hiệ(BUY/SELL)). */
+  execType: string
+  /** số lượng đặt. */
+  quantity: number
+  /** số tiểu khoản. */
+  accountID: string
+  /** Giá Vốn TB. */
+  costPrice: number
+  /** Giá Thực Hiện. */
+  execPrice: number
+  /** Phí/Thuế Khác. */
+  taxSellAmt: number
+  /** Giá Trị Vốn. */
+  costPriceValue: number
+  /** Giá Trị Thực Hiện. */
+  execPriceValue: number
 }
 
 export interface Anonymous4 {
-    /** thuế. */
-    tax: number;
-    /** price. */
-    price: number;
-    /** trạng thái. */
-    status: string;
-    /** Mã chứng khoán. */
-    symbol: string;
-    /** số hiệu lệnh. */
-    orderId: string;
-    /** sô lượng đặt. */
-    quantity: number;
-    /** số tài khoản. */
-    accountId: string;
-    /** ngày thanh toán. */
-    clearDate: string;
-    /** loại thực hiện(SELL/BUY). */
-    sellBuyType: string;
-    /** giá khớp. */
-    matchedPrice: number;
-    /** giá trị khớp. */
-    matchedValue: number;
-    /** khối lượng khớp. */
-    matchedAmount: number;
-    /** kênh giao dịch. */
-    orderingPlace: string;
-    /** phí giao dịch. */
-    transactionFee: number;
-    /** ngày giao dịch. */
-    transactionDate: string;
-    /** tỉ lệ phí giao dịch. */
-    transactionFeeRate: number;
+  /** thuế. */
+  tax: number
+  /** price. */
+  price: number
+  /** trạng thái. */
+  status: string
+  /** Mã chứng khoán. */
+  symbol: string
+  /** số hiệu lệnh. */
+  orderId: string
+  /** sô lượng đặt. */
+  quantity: number
+  /** số tài khoản. */
+  accountId: string
+  /** ngày thanh toán. */
+  clearDate: string
+  /** loại thực hiện(SELL/BUY). */
+  sellBuyType: string
+  /** giá khớp. */
+  matchedPrice: number
+  /** giá trị khớp. */
+  matchedValue: number
+  /** khối lượng khớp. */
+  matchedAmount: number
+  /** kênh giao dịch. */
+  orderingPlace: string
+  /** phí giao dịch. */
+  transactionFee: number
+  /** ngày giao dịch. */
+  transactionDate: string
+  /** tỉ lệ phí giao dịch. */
+  transactionFeeRate: number
 }
 
 export interface Anonymous5 {
-    /** số tiền giao dịch. */
-    amt: number;
-    /** trạng thái. */
-    status: string;
-    /** ngày giao dịch. */
-    txDate: string;
-    /** Ngày Hiệu Lực. */
-    busDate: string;
-    /** mã trạng thái. */
-    statusCode: string;
-    /** nội dung chuuyền tiền. */
-    description: string;
-    /** ngân hàng nhận. */
-    receiverBank: string;
-    /** tên người nhận . */
-    receiverName: number;
-    /** loại chuyển tiền. */
-    transferType: string;
-    /** kênh giao dịch. */
-    transferPlace: string;
-    /** số  chứng từ. */
-    transactionNum: string;
-    /** tiểu khoản nhận. */
-    receiverAccount: string;
-    /** Số lưu ký nhận. */
-    receiverCustodycd: string;
-    /** Số lưu ký chuyển. */
-    transferCustodycd: string;
+  /** số tiền giao dịch. */
+  amt: number
+  /** trạng thái. */
+  status: string
+  /** ngày giao dịch. */
+  txDate: string
+  /** Ngày Hiệu Lực. */
+  busDate: string
+  /** mã trạng thái. */
+  statusCode: string
+  /** nội dung chuuyền tiền. */
+  description: string
+  /** ngân hàng nhận. */
+  receiverBank: string
+  /** tên người nhận . */
+  receiverName: number
+  /** loại chuyển tiền. */
+  transferType: string
+  /** kênh giao dịch. */
+  transferPlace: string
+  /** số  chứng từ. */
+  transactionNum: string
+  /** tiểu khoản nhận. */
+  receiverAccount: string
+  /** Số lưu ký nhận. */
+  receiverCustodycd: string
+  /** Số lưu ký chuyển. */
+  transferCustodycd: string
 }
 
 export interface Anonymous6 {
-    /** Tổng KLCK. */
-    total: number;
-    /** Số Dư Khả Dụng. */
-    trade: number;
-    /** Lãi/Lỗ Chưa Thực Hiện. */
-    pnlAmt: number;
-    /** mã chứng khoán. */
-    symbol: string;
-    /** Khối lượng bị phong tỏa. */
-    blocked: number;
-    /** Tỉ lện lãi lỗ chưa thực hiện. */
-    pnlRate: number;
-    /** Cầm cố . */
-    mortgage: number;
-    /** số tiểu khoản. */
-    accountId: string;
-    /** Giá TB. */
-    costPrice: number;
-    /** bán T0. */
-    sendingT0: number;
-    /** bán T1. */
-    sendingT1: number;
-    /** bán T2. */
-    sendingT2: number;
-    /** Giá Hiện Tại. */
-    basicPrice: number;
-    /** mua T0. */
-    receivingT0: number;
-    /** mua T1. */
-    receivingT1: number;
-    /** mua T2. */
-    receivingT2: number;
-    /** Giá Trị. */
-    costPriceAmt: number;
-    /** Giá Trị Thị Trường. */
-    basicPriceAmt: number;
-    /** Quyền Chờ Về. */
-    receivingRight: number;
-    /** Chờ Khớp. */
-    remainQtty: number;
+  /** Tổng KLCK. */
+  total: number
+  /** Số Dư Khả Dụng. */
+  trade: number
+  /** Lãi/Lỗ Chưa Thực Hiện. */
+  pnlAmt: number
+  /** mã chứng khoán. */
+  symbol: string
+  /** Khối lượng bị phong tỏa. */
+  blocked: number
+  /** Tỉ lện lãi lỗ chưa thực hiện. */
+  pnlRate: number
+  /** Cầm cố . */
+  mortgage: number
+  /** số tiểu khoản. */
+  accountId: string
+  /** Giá TB. */
+  costPrice: number
+  /** bán T0. */
+  sendingT0: number
+  /** bán T1. */
+  sendingT1: number
+  /** bán T2. */
+  sendingT2: number
+  /** Giá Hiện Tại. */
+  basicPrice: number
+  /** mua T0. */
+  receivingT0: number
+  /** mua T1. */
+  receivingT1: number
+  /** mua T2. */
+  receivingT2: number
+  /** Giá Trị. */
+  costPriceAmt: number
+  /** Giá Trị Thị Trường. */
+  basicPriceAmt: number
+  /** Quyền Chờ Về. */
+  receivingRight: number
+  /** Chờ Khớp. */
+  remainQtty: number
 }
 
 export interface Anonymous7 {
-    /** Tiền Đưa Về Duy Trì. */
-    addVnd: number;
-    /** Tiền Đặt Lệnh. */
-    buyAmt: number;
-    /** số dư. */
-    balance: number;
-    /** số tiểu khoản. */
-    accountId: string;
-    /** tiền bán T0. */
-    sendingT0: number;
-    /** Tiền Ứng Bán CK Tối Đa. */
-    avladvance: number;
-    /** Tỷ Lệ Ký Quỹ. */
-    marginRate: number;
-    /** Tiền Rút Khả Dụng. */
-    avlwithdraw: number;
-    /** Cổ Tức Chờ Về. */
-    caReceiving: number;
-    /** tiền mua T0. */
-    receivingT0: number;
-    /** tiền mua T1. */
-    receivingT1: number;
-    /** tiền mua T2. */
-    receivingT2: number;
-    /** Tổng Nợ. */
-    totalDebtAmt: number;
-    /** Tiền Mua Chưa Khớp. */
-    buyRemainValue: number;
-    /** sức mua. */
-    basicPurchasingPower: number;
+  /** Tiền Đưa Về Duy Trì. */
+  addVnd: number
+  /** Tiền Đặt Lệnh. */
+  buyAmt: number
+  /** số dư. */
+  balance: number
+  /** số tiểu khoản. */
+  accountId: string
+  /** tiền bán T0. */
+  sendingT0: number
+  /** Tiền Ứng Bán CK Tối Đa. */
+  avladvance: number
+  /** Tỷ Lệ Ký Quỹ. */
+  marginRate: number
+  /** Tiền Rút Khả Dụng. */
+  avlwithdraw: number
+  /** Cổ Tức Chờ Về. */
+  caReceiving: number
+  /** tiền mua T0. */
+  receivingT0: number
+  /** tiền mua T1. */
+  receivingT1: number
+  /** tiền mua T2. */
+  receivingT2: number
+  /** Tổng Nợ. */
+  totalDebtAmt: number
+  /** Tiền Mua Chưa Khớp. */
+  buyRemainValue: number
+  /** sức mua. */
+  basicPurchasingPower: number
 }
 
 export interface Anonymous8 {
-    /** Sức Mua/Bán. */
-    pp: number;
-    /** vm. */
-    vm: number;
-    /** tài khoản giao dịch. */
-    acctNo: string;
-    /** Tiền Mua. */
-    buyAmt: number;
-    /** grName. */
-    grName: string;
-    /** Giá Trị Mua/Bán. */
-    bsValue: number;
-    /** Tiền Bán. */
-    sellAmt: number;
-    /** Tiền Tại CCP. */
-    vimCash: number;
-    /** VM Trong Ngày. */
-    vrvmAmt: number;
-    /** Tiền Chờ Ký Quỹ. */
-    wSecured: number;
-    /** Tỷ Lệ Sử Dụng TS Ký Quỹ. */
-    acctRatio: number;
-    /** Tổng nợ. */
-    totalDebt: number;
-    /** Tiền Ký Quỹ Chờ Rút. */
-    wTransfer: number;
-    /** Giá Trị Tài Sản. */
-    assetValue: number;
-    /** Tiền mặt. */
-    vCashOnHand: number;
-    /** VM Phải Giao. */
-    vrDebtvmAmt: number;
-    /** Số Tiền Cần Nộp Bổ Sung. */
-    reqAddSecured: number;
+  /** Sức Mua/Bán. */
+  pp: number
+  /** vm. */
+  vm: number
+  /** tài khoản giao dịch. */
+  acctNo: string
+  /** Tiền Mua. */
+  buyAmt: number
+  /** grName. */
+  grName: string
+  /** Giá Trị Mua/Bán. */
+  bsValue: number
+  /** Tiền Bán. */
+  sellAmt: number
+  /** Tiền Tại CCP. */
+  vimCash: number
+  /** VM Trong Ngày. */
+  vrvmAmt: number
+  /** Tiền Chờ Ký Quỹ. */
+  wSecured: number
+  /** Tỷ Lệ Sử Dụng TS Ký Quỹ. */
+  acctRatio: number
+  /** Tổng nợ. */
+  totalDebt: number
+  /** Tiền Ký Quỹ Chờ Rút. */
+  wTransfer: number
+  /** Giá Trị Tài Sản. */
+  assetValue: number
+  /** Tiền mặt. */
+  vCashOnHand: number
+  /** VM Phải Giao. */
+  vrDebtvmAmt: number
+  /** Số Tiền Cần Nộp Bổ Sung. */
+  reqAddSecured: number
 }
 
 export interface Anonymous9 {
-    /** Giá DSP. */
-    dsp: number;
-    /** khối lượng long. */
-    lQtty: number;
-    /** Giá Long. */
-    lVwap: number;
-    /** khối lượng shot. */
-    sQtty: number;
-    /** giá short. */
-    sVwap: number;
-    /** mã phái sinh. */
-    codeId: string;
-    /** mã chứng khoán phái sinh. */
-    symbol: string;
-    /** ngày thực hiện. */
-    txDate: string;
-    /** tỉ lệ Lãi/Lỗ Đã Thực Hiện. */
-    reliPnl: number;
-    /** Giá Trị Lãi/Lỗ Đã Thực Hiện. */
-    vrplAmt: number;
-    /** Tổng Giá Trị Vốn. */
-    vwapAmt: number;
-    /** giá trị khớp lệnh / giá trị net. */
-    matchAmt: number;
-    /** giá trị Lãi/Lỗ Chưa Thực Hiện. */
-    nonRplAmt: number;
-    /** khối lượng đóng. */
-    closedQtty: number;
-    /** Giá trị lãi lỗ. */
-    nonVwapAmt: number;
-    /** Lãi Lỗ Hàng Ngày. */
-    dailyProfit: number;
-    /** Tổng Giá Trị Đóng. */
-    nonClosedAmt: number;
-    /** tỉ lệ Lãi/Lỗ Chưa Thực Hiện. */
-    pecentNonRplAmt: number;
-    /** Phí Đáo Hạn. */
-    dueFeeAmt: number;
+  /** Giá DSP. */
+  dsp: number
+  /** khối lượng long. */
+  lQtty: number
+  /** Giá Long. */
+  lVwap: number
+  /** khối lượng shot. */
+  sQtty: number
+  /** giá short. */
+  sVwap: number
+  /** mã phái sinh. */
+  codeId: string
+  /** mã chứng khoán phái sinh. */
+  symbol: string
+  /** ngày thực hiện. */
+  txDate: string
+  /** tỉ lệ Lãi/Lỗ Đã Thực Hiện. */
+  reliPnl: number
+  /** Giá Trị Lãi/Lỗ Đã Thực Hiện. */
+  vrplAmt: number
+  /** Tổng Giá Trị Vốn. */
+  vwapAmt: number
+  /** giá trị khớp lệnh / giá trị net. */
+  matchAmt: number
+  /** giá trị Lãi/Lỗ Chưa Thực Hiện. */
+  nonRplAmt: number
+  /** khối lượng đóng. */
+  closedQtty: number
+  /** Giá trị lãi lỗ. */
+  nonVwapAmt: number
+  /** Lãi Lỗ Hàng Ngày. */
+  dailyProfit: number
+  /** Tổng Giá Trị Đóng. */
+  nonClosedAmt: number
+  /** tỉ lệ Lãi/Lỗ Chưa Thực Hiện. */
+  pecentNonRplAmt: number
+  /** Phí Đáo Hạn. */
+  dueFeeAmt: number
 }
 
 export interface Anonymous10 {
-    /** số chứng từ. */
-    txNum: string;
-    /** Số Tiền Nộp. */
-    msgAmt: number;
-    /** trạng thái. */
-    status: string;
-    /** ngày yêu cầu. */
-    txDate: string;
-    /** nội dung. */
-    txDesc: string;
-    /** ngày hiệu lực. */
-    busDate: string;
-    /** tiểu khoản giao dịch. */
-    msgAcct: number;
+  /** số chứng từ. */
+  txNum: string
+  /** Số Tiền Nộp. */
+  msgAmt: number
+  /** trạng thái. */
+  status: string
+  /** ngày yêu cầu. */
+  txDate: string
+  /** nội dung. */
+  txDesc: string
+  /** ngày hiệu lực. */
+  busDate: string
+  /** tiểu khoản giao dịch. */
+  msgAcct: number
 }
 
 export interface Anonymous11 {
-    /** số thứng từ . */
-    txNum: string;
-    /** số tiền rút. */
-    msgAmt: string;
-    /** trạng thái. */
-    status: string;
-    /** ngày giao dịch. */
-    txDate: string;
-    /** nội dung. */
-    txDesc: string;
-    /** ngày thực hiện . */
-    busDate: string;
-    /** số tiểu khoản. */
-    msgAcct: number;
+  /** số thứng từ . */
+  txNum: string
+  /** số tiền rút. */
+  msgAmt: string
+  /** trạng thái. */
+  status: string
+  /** ngày giao dịch. */
+  txDate: string
+  /** nội dung. */
+  txDesc: string
+  /** ngày thực hiện . */
+  busDate: string
+  /** số tiểu khoản. */
+  msgAcct: number
 }
 
 export interface Anonymous12 {
-    /** số chứng từ . */
-    txNum: string;
-    /** số tiền rút. */
-    msgAmt: string;
-    /** trạng thái. */
-    status: string;
-    /** ngày thực hiện. */
-    txDate: string;
-    /** nội dung. */
-    txDesc: string;
-    /** ngày hiệu lực. */
-    busDate: string;
-    /** số tk. */
-    msgAcct: number;
+  /** số chứng từ . */
+  txNum: string
+  /** số tiền rút. */
+  msgAmt: string
+  /** trạng thái. */
+  status: string
+  /** ngày thực hiện. */
+  txDate: string
+  /** nội dung. */
+  txDesc: string
+  /** ngày hiệu lực. */
+  busDate: string
+  /** số tk. */
+  msgAcct: number
 }
 
 export interface Anonymous13 {
-    /** số chứng từ . */
-    txNum: string;
-    /** số tiền nộp. */
-    msgAmt: string;
-    /** trạng thái. */
-    status: string;
-    /** ngày yêu cầu. */
-    txDate: string;
-    /** nội dung. */
-    txDesc: string;
-    /** ngày hiệu lực. */
-    busDate: string;
-    /** stk . */
-    msgAcct: number;
+  /** số chứng từ . */
+  txNum: string
+  /** số tiền nộp. */
+  msgAmt: string
+  /** trạng thái. */
+  status: string
+  /** ngày yêu cầu. */
+  txDate: string
+  /** nội dung. */
+  txDesc: string
+  /** ngày hiệu lực. */
+  busDate: string
+  /** stk . */
+  msgAcct: number
 }
 
 export interface Anonymous14 {
-    /** Phải Trả/Thực Nhận. */
-    amt: number;
-    /** Thường/Thỏa Thuận. */
-    norp: string;
-    /** Mua/Bán. */
-    side: string;
-    /** số tiểu khoản. */
-    acctNo: string;
-    /** aofirm. */
-    aofirm: string;
-    /** Phí Giao Dịch Tại KBSV. */
-    feeAmt: number;
-    /** Mã phái sinh. */
-    symbol: string;
-    /** Thuế. */
-    taxAmt: number;
-    /** ngày giao dịch. */
-    txDate: string;
-    /** Số Hiệu Lệnh. */
-    orderId: string;
-    /** Giá Trị Khớp. */
-    matchAmt: number;
-    /** số lưu ký. */
-    custodycd: string;
-    /** số lượng khớp. */
-    matchQtty: number;
-    /** loại giá. */
-    subTypeCd: string;
-    /** Giá Khớp Trung Bình. */
-    matchPrice: number;
+  /** Phải Trả/Thực Nhận. */
+  amt: number
+  /** Thường/Thỏa Thuận. */
+  norp: string
+  /** Mua/Bán. */
+  side: string
+  /** số tiểu khoản. */
+  acctNo: string
+  /** aofirm. */
+  aofirm: string
+  /** Phí Giao Dịch Tại KBSV. */
+  feeAmt: number
+  /** Mã phái sinh. */
+  symbol: string
+  /** Thuế. */
+  taxAmt: number
+  /** ngày giao dịch. */
+  txDate: string
+  /** Số Hiệu Lệnh. */
+  orderId: string
+  /** Giá Trị Khớp. */
+  matchAmt: number
+  /** số lưu ký. */
+  custodycd: string
+  /** số lượng khớp. */
+  matchQtty: number
+  /** loại giá. */
+  subTypeCd: string
+  /** Giá Khớp Trung Bình. */
+  matchPrice: number
 }
 
 export interface Anonymous15 {
-    /** số lưu ký. */
-    custodycd: string;
-    /** số tiểu khoản. */
-    accountNo: string;
-    /** Số Hiệu Lệnh. */
-    orderNumber: string;
-    /** mã phái sinh. */
-    code: string;
-    /** thời gian. */
-    lastChange: string;
-    /** Mua/Bán. */
-    sellBuyType: string;
-    /** diễn giải loại lệnh. */
-    sideDesc: string;
-    /** loại giá. */
-    orderType: string;
-    /** diễn giải loại giá. */
-    orderTypeDesc: string;
-    /** . */
-    validity: string;
-    /** . */
-    dataval: string;
-    /** Trạng Thái Lệnh. */
-    status: string;
-    /** Khối Lượng Đặt. */
-    orderQuantity: string;
-    /** Giá Đặt. */
-    orderPrice: string;
-    /** Giá Khớp Trung Bình. */
-    matchPrice: string;
-    /** SL Khớp. */
-    matchQtty: string;
-    /** thời gian đặt. */
-    odsent: string;
-    /** Giá Trị Khớp. */
-    execAmt: string;
-    /** số lượng chưa khớp. */
-    unmatchedQuantity: string;
-    /** số lượng huỷ. */
-    cancelQtty: string;
-    /** số lượng sửa. */
-    admEndQtty: string;
-    /** số hiệu lệ(shl) sở confirm. */
-    confirmId: string;
-    /** shl gốc. */
-    originOrderId: string;
-    /** ngày giao dịch. */
-    txDate: string;
-    /** GT Phí. */
-    feeAmt: string;
-    /** Thuế. */
-    tax: string;
-    /** Mức Phí. */
-    tradingFee: string;
-    /** Kênh Thực Hiện. */
-    via: string;
-    /** Thường/Thỏa Thuận. */
-    norp: string;
+  /** số lưu ký. */
+  custodycd: string
+  /** số tiểu khoản. */
+  accountNo: string
+  /** Số Hiệu Lệnh. */
+  orderNumber: string
+  /** mã phái sinh. */
+  code: string
+  /** thời gian. */
+  lastChange: string
+  /** Mua/Bán. */
+  sellBuyType: string
+  /** diễn giải loại lệnh. */
+  sideDesc: string
+  /** loại giá. */
+  orderType: string
+  /** diễn giải loại giá. */
+  orderTypeDesc: string
+  /** . */
+  validity: string
+  /** . */
+  dataval: string
+  /** Trạng Thái Lệnh. */
+  status: string
+  /** Khối Lượng Đặt. */
+  orderQuantity: string
+  /** Giá Đặt. */
+  orderPrice: string
+  /** Giá Khớp Trung Bình. */
+  matchPrice: string
+  /** SL Khớp. */
+  matchQtty: string
+  /** thời gian đặt. */
+  odsent: string
+  /** Giá Trị Khớp. */
+  execAmt: string
+  /** số lượng chưa khớp. */
+  unmatchedQuantity: string
+  /** số lượng huỷ. */
+  cancelQtty: string
+  /** số lượng sửa. */
+  admEndQtty: string
+  /** số hiệu lệ(shl) sở confirm. */
+  confirmId: string
+  /** shl gốc. */
+  originOrderId: string
+  /** ngày giao dịch. */
+  txDate: string
+  /** GT Phí. */
+  feeAmt: string
+  /** Thuế. */
+  tax: string
+  /** Mức Phí. */
+  tradingFee: string
+  /** Kênh Thực Hiện. */
+  via: string
+  /** Thường/Thỏa Thuận. */
+  norp: string
 }
 
 export enum UserInfoIdType {
-    CMND = "CMND",
-    CCCD = "CCCD",
-    PASSPORT = "PASSPORT",
+  CMND = "CMND",
+  CCCD = "CCCD",
+  PASSPORT = "PASSPORT",
 }
 
 export enum UserInfoGender {
-    MALE = "MALE",
-    FEMALE = "FEMALE",
-    OTHER = "OTHER",
+  MALE = "MALE",
+  FEMALE = "FEMALE",
+  OTHER = "OTHER",
 }
 
 export enum UserInfoUpdateRequestIdType {
-    CMND = "CMND",
-    CCCD = "CCCD",
-    PASSPORT = "PASSPORT",
+  CMND = "CMND",
+  CCCD = "CCCD",
+  PASSPORT = "PASSPORT",
 }
 
 export enum UserInfoUpdateRequestGender {
-    MALE = "MALE",
-    FEMALE = "FEMALE",
-    OTHER = "OTHER",
+  MALE = "MALE",
+  FEMALE = "FEMALE",
+  OTHER = "OTHER",
 }
 
 export enum UserRegistrationRequestUsernameType {
-    Username = "username",
-    Email = "email",
-    PhoneNo = "phoneNo",
+  Username = "username",
+  Email = "email",
+  PhoneNo = "phoneNo",
 }
 
 export enum PresignedUrlRequestCategory {
-    EKYC = "EKYC",
+  EKYC = "EKYC",
 }
 
 export enum PresignedUrlRequestEkycImageType {
-    CMND_FRONT = "CMND_FRONT",
-    CMND_BACK = "CMND_BACK",
-    CCCD_FRONT = "CCCD_FRONT",
-    CCCD_BACK = "CCCD_BACK",
-    PASSPORD_FRONT = "PASSPORD_FRONT",
-    PASSPORD_BACK = "PASSPORD_BACK",
-    AVATAR = "AVATAR",
+  CMND_FRONT = "CMND_FRONT",
+  CMND_BACK = "CMND_BACK",
+  CCCD_FRONT = "CCCD_FRONT",
+  CCCD_BACK = "CCCD_BACK",
+  PASSPORD_FRONT = "PASSPORD_FRONT",
+  PASSPORD_BACK = "PASSPORD_BACK",
+  AVATAR = "AVATAR",
 }
 
 export enum EkycRequestType {
-    CMND = "CMND",
-    CCCD = "CCCD",
-    PASSPORT = "PASSPORT",
+  CMND = "CMND",
+  CCCD = "CCCD",
+  PASSPORT = "PASSPORT",
 }
 
 export interface Residence {
-    /** dia chi */
-    address: string;
-    /** quan huyen */
-    district: string;
-    /** tinh/ thanh pho */
-    province: string;
+  /** dia chi */
+  address: string
+  /** quan huyen */
+  district: string
+  /** tinh/ thanh pho */
+  province: string
 }
 
 export enum LinkAccountRequestType {
-    GPAY = "GPAY",
-    KBSEC = "KBSEC",
+  GPAY = "GPAY",
+  KBSEC = "KBSEC",
 }
 
 export enum LinkAccountResponseType {
-    GPAY = "GPAY",
-    KBSEC = "KBSEC",
+  GPAY = "GPAY",
+  KBSEC = "KBSEC",
 }
 
 export enum LinkedAccountTransferResponseStatus {
-    PENDING = "PENDING",
-    EXECUTING = "EXECUTING",
-    SUCCESS = "SUCCESS",
-    FAIL = "FAIL",
+  PENDING = "PENDING",
+  EXECUTING = "EXECUTING",
+  SUCCESS = "SUCCESS",
+  FAIL = "FAIL",
 }
 
 export enum SendOtpRequestIdType {
-    EMAIL = "EMAIL",
-    PHONE_NO = "PHONE_NO",
+  EMAIL = "EMAIL",
+  PHONE_NO = "PHONE_NO",
 }
 
 export enum SendOtpRequestTxType {
-    NEW_DEVICE = "NEW_DEVICE",
-    REGISTER = "REGISTER",
-    RESET_PASSWORD = "RESET_PASSWORD",
+  NEW_DEVICE = "NEW_DEVICE",
+  REGISTER = "REGISTER",
+  RESET_PASSWORD = "RESET_PASSWORD",
 }
 
 export enum BodyGrant_type {
-    Password = "password",
-    Access_facebook = "access_facebook",
-    Access_google = "access_google",
-    Access_kb = "access_kb",
+  Password = "password",
+  Access_facebook = "access_facebook",
+  Access_google = "access_google",
+  Access_kb = "access_kb",
 }
 
 export enum Body2Grant_type {
-    Refresh_token = "refresh_token",
+  Refresh_token = "refresh_token",
 }
 
 export class ApiException extends Error {
-    message: string;
-    status: number;
-    response: string;
-    headers: { [key: string]: any; };
-    result: any;
+  message: string
+  status: number
+  response: string
+  headers: { [key: string]: any }
+  result: any
 
-    constructor(message: string, status: number, response: string, headers: { [key: string]: any; }, result: any) {
-        super();
+  constructor(
+    message: string,
+    status: number,
+    response: string,
+    headers: { [key: string]: any },
+    result: any,
+  ) {
+    super()
 
-        this.message = message;
-        this.status = status;
-        this.response = response;
-        this.headers = headers;
-        this.result = result;
-    }
+    this.message = message
+    this.status = status
+    this.response = response
+    this.headers = headers
+    this.result = result
+  }
 
-    protected isApiException = true;
+  protected isApiException = true
 
-    static isApiException(obj: any): obj is ApiException {
-        return obj.isApiException === true;
-    }
+  static isApiException(obj: any): obj is ApiException {
+    return obj.isApiException === true
+  }
 }
 
-function throwException(message: string, status: number, response: string, headers: { [key: string]: any; }, result?: any): any {
-    if (result !== null && result !== undefined)
-        throw result;
-    else
-        throw new ApiException(message, status, response, headers, null);
+function throwException(
+  message: string,
+  status: number,
+  response: string,
+  headers: { [key: string]: any },
+  result?: any,
+): any {
+  if (result !== null && result !== undefined) throw result
+  else throw new ApiException(message, status, response, headers, null)
 }
-
-/Users/pc/Desktop/Work/TestApp/app/services/nswag/service.extensions.ts
