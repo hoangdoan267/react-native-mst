@@ -1,0 +1,2514 @@
+openapi: 3.0.0
+info:
+  title: KBFINA Core API Specification
+  version: 0.9.0
+  description: 'Created and managed by KBFINA on March 31, 2021'
+servers:
+  - url: 'http://52.74.51.47/rest'
+    description: KBFINA API Server - DEV 
+components:
+  securitySchemes:
+    Bearer:
+      type: apiKey
+      in: header
+      name: Authorization
+  schemas:
+    FieldError:
+      type: object
+      properties:
+        code:
+          type: string
+          description: "error code"
+        message:
+          type: string
+          description: "error message"
+        param:
+          type: string
+          description: "parameter name that is not correct"
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+          description: "error code"
+        message:
+          type: string
+          description: "error message"
+        errors:
+          type: array
+          items:
+            $ref: "#/components/schemas/FieldError"
+          description: "error message"
+    Address:
+      type: object
+      properties:
+        address:
+          type: string
+          description: "specific address include house number, road, floor of building"
+        sub-district:
+          type: string
+          description: "sub-district"
+        district:
+          type: string
+          description: "district"
+        province:
+          type: string
+          description: "province"
+    UserInfo:
+      type: object
+      properties:
+        idNo:
+          type: string
+          description: "id card no"
+        idType:
+          enum:
+            - CMND
+            - CCCD
+            - PASSPORT
+          description: type of id card
+        fullName:
+          type: string
+          description: phone number of user
+        gender:
+          enum:
+            - MALE
+            - FEMALE
+            - OTHER
+          description: gender
+        residence:
+          allOf:
+            - $ref: "#/components/schemas/Address"
+          description: que quan
+        contactAddress:
+          allOf:
+            - $ref: "#/components/schemas/Address"
+          description: dia chi thuong tru
+        idCardIssueDate:
+          type: string
+          description: issue date of id card, format is ''yyyyMMdd'
+        idCardIssuePlace:
+          type: string
+          description: issue place of id card
+        idCardExpiredDate:
+          type: string
+          description: issue place of id card
+        birthday:
+          type: string
+          description: 'the birthday of KBFINA user, format is ''yyyyMMdd'''
+        avatarUrl:
+          type: string
+          description: 'url link to avatar'
+    UserInfoUpdateRequest:
+      type: object
+      properties:
+        idNo:
+          type: string
+          description: "id card no"
+        idType:
+          enum:
+            - CMND
+            - CCCD
+            - PASSPORT
+          description: type of id card
+        fullName:
+          type: string
+          description: phone number of user
+        gender:
+          enum:
+            - MALE
+            - FEMALE
+            - OTHER
+          description: gender
+        residence:
+          allOf:
+            - $ref: "#/components/schemas/Address"
+          description: que quan
+        contactAddress:
+          allOf:
+            - $ref: "#/components/schemas/Address"
+          description: dia chi thuong tru
+        idCardIssueDate:
+          type: string
+          description: issue date of id card, format is ''yyyyMMdd'
+        idCardIssuePlace:
+          type: string
+          description: issue place of id card
+        idCardExpiredDate:
+          type: string
+          description: issue place of id card
+        birthday:
+          type: string
+          description: 'the birthday of KBFINA user, format is ''yyyyMMdd'''
+        avatarUrl:
+          type: string
+          description: 'url link to avatar'
+    UserRegistrationRequest:
+      type: object
+      required:
+        - username
+        - phoneNo
+        - email
+        - otpKey
+      properties:
+        username:
+          type: string
+          description: uniq username or mobile phone or email
+        usernameType:
+          enum:
+            - username
+            - email
+            - phoneNo
+          description: type of username
+        phoneNo:
+          type: string
+          description: phone number of user
+        email:
+          type: string
+          description: phone number of user
+        password:
+          type: string
+          description: password
+        surname:
+          type: string
+          description: surname
+        givenName:
+          type: string
+          description: given name
+        birthday:
+          type: string
+          description: 'the birthday of KBFINA user, format is ''yyyyMMdd'''
+        avatarUrl:
+          type: string
+          description: 'link to avatar image. image can be uploaded to S3 by api presignedUrl'
+        otpKey:
+          type: string
+          description: 'otp key receive when verify'
+    UserInfoResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: the unique id of KBFINA user
+        username:
+          type: string
+          description: username that used for logging in KBFINA System
+        surname:
+          type: string
+          description: surname
+        givenName:
+          type: string
+          description: given name
+        email:
+          type: string
+          description: email used for contac
+        phoneNumber:
+          type: string
+          description: phone number of KBFINA user
+        birthday:
+          type: string
+          description: 'the birthday of KBFINA user, format is ''yyyyMMdd'''
+        avatarUrl:
+          type: string
+          description: 'link to avatar image'
+    LoginResponse:
+      type: object
+      properties:
+        accessToken:
+          type: string
+          description: token to access all other APIs in system
+        refreshToken:
+          type: string
+          description: token to renew access_token when it's expire
+        userInfo:
+          "$ref": "#/components/schemas/UserInfoResponse"
+    PresignedUrlRequest:
+      type: object
+      properties:
+        category:
+          enum:
+            - EKYC
+          description: type of upload files
+        ekycImageType:
+          enum:
+            - CMND_FRONT
+            - CMND_BACK
+            - CCCD_FRONT
+            - CCCD_BACK
+            - PASSPORD_FRONT
+            - PASSPORD_BACK
+            - AVATAR
+      required:
+        - category
+    PresignedUrlResponse:
+      type: object
+      properties:
+        url:
+          type: string
+          description: url for uploading
+        fileId:
+          type: string
+          description: file Id for using in another api like ekyc
+      required:
+        - url
+        - fileId
+    EkycRequest:
+      type: object
+      properties:
+        idCardFrontFileId:
+          type: string
+          description: file id of front id card image that is uploaded via presigned url
+        idCardBackFileId:
+          type: string
+          description: file id of back id card image that is uploaded via presigned url
+        type:
+          enum:
+            - CMND
+            - CCCD
+            - PASSPORT
+          description: type of id card
+      required:
+        - idCardFrontFileId
+        - idCardBackFileId
+        - type
+    EkycResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: ekyc id
+        identity:
+          type: string
+          description: so the
+        fullName:
+          type: string
+          description: ten day du
+        phoneNo:
+          type: string
+          description: so dien thoai
+        gender:
+          type: string
+          description: gioi tinh
+        type:
+          type: string
+          description: loai giay to
+        birthDay:
+          type: string
+          description: ngay sinh, format is yyyyMMdd
+        passportId:
+          type: string
+          description: so ho chieu
+        expiredDate:
+          type: string
+          description: ngay het han,  format is yyyyMMdd
+        issueDate:
+          type: string
+          description: ngay cap,  format is yyyyMMdd
+        issuePlace:
+          type: string
+          description: noi cap phat giay to
+        residence:
+          type: object
+          description: noi cu tru
+          properties:
+            address:
+              type: string
+              description: dia chi
+            district:
+              type: string
+              description: quan huyen
+            province:
+              type: string
+              description: tinh/ thanh pho
+      required:
+        - idCardFrontFileId
+        - idCardBackFileId
+        - type
+    RefreshTokenResponse:
+      type: object
+      properties:
+        accessToken:
+          type: string
+          description: new access token to call API
+    LinkAccountRequest:
+      type: object
+      properties:
+        type:
+          enum:
+            - GPAY
+            - KBSEC
+        accountId:
+          type: string
+          description: account Id of the linked account
+        credential:
+          type: string
+          description: token to access to institution api or password to login to insitution
+      required:
+        - type
+        - accountId
+        - credential
+    LinkAccountResponse:
+      type: object
+      properties:
+        id:
+          type: number
+          description: uniq id of linked account
+        type:
+          enum:
+            - GPAY
+            - KBSEC
+        accountId:
+          type: string
+          description: account Id of the linked account
+      required:
+        - type
+        - accountId
+    ListLinkAccountResponse:
+      type: array
+      items:
+        $ref: "#/components/schemas/LinkAccountResponse"
+    LinkedAccountTransferRequest:
+      type: object
+      properties:
+        fromLinkedAccountId:
+          type: number
+          description: transfer from
+        toLinkedAccountId:
+          type: number
+          description: transfer to
+        amount:
+          type: number
+          description: transfer amount in VND
+      required:
+        - fromLinkedAccountId
+        - toLinkedAccountId
+        - amount
+    LinkedAccountTransferResponse:
+      type: object
+      properties:
+        txId:
+          type: string
+          description: transaction id
+        status:
+          enum:
+            - PENDING
+            - EXECUTING
+            - SUCCESS
+            - FAIL
+          description: transaction status, PENDI
+        failReason:
+          type: string
+          description: more exaplain about fail reason
+      required:
+        - txId
+        - status
+        - failReason
+    SendOtpRequest:
+      type: object
+      properties:
+        id:
+          type: string
+          description: id can be email or phone number
+        idType:
+          enum:
+            - EMAIL
+            - PHONE_NO
+        txType:
+          enum:
+            - NEW_DEVICE
+            - REGISTER
+            - RESET_PASSWORD
+          description: pupose of otp
+      required:
+        - id
+        - idType
+        - txType
+    SendOtpResponse:
+      type: object
+      properties:
+        otpId:
+          type: string
+          description: id can be email or phone number
+        expiredTime:
+          type: string
+          description: expired time in format yyyMMddhhmmss
+      required:
+        - otpId
+        - expiredTime
+    VerifyOtpRequest:
+      type: object
+      properties:
+        otpId:
+          type: string
+          description: id that you receive when sendOtp
+        otpValue:
+          type: string
+          description: otp value user enter
+      required:
+        - otpValue
+        - otpId
+    VerifyOtpResponse:
+      type: object
+      properties:
+        otpKey:
+          type: string
+          description: otp verify success key
+        expiredTime:
+          type: string
+          description: expired time in format yyyMMddhhmmss
+      required:
+        - otpKey
+        - expiredTime
+    ResetPasswordRequest:
+      type: object
+      properties:
+        username:
+          type: string
+          description: username that you want to reset password
+        newPassword:
+          type: string
+          description: id can be email or phone number
+        otpKey:
+          type: string
+          description: 'otp key when verify success enter'
+      required:
+        - username
+        - newPassword
+        - otpKey
+    ResetPasswordResponse:
+      type: object
+    ChangePasswordRequest:
+      type: object
+      properties:
+        oldPassword:
+          type: string
+          description: old password
+        newPassword:
+          type: string
+          description: new password
+      required:
+        - oldPassword
+        - newPassword
+    ChangePasswordResponse:
+      type: object
+paths:
+  /api/v1/kbfina/user/changePassword:
+    post:
+      tags:
+        - KBFINA - User
+      summary: change password
+      security:
+        - Bearer: []
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/ChangePasswordRequest"
+      responses:
+        '200':
+          description: Refresh Token Successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChangePasswordResponse'
+        '400':
+          description: Invalid input param
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/v1/kbfina/user/resetPassword:
+    post:
+      tags:
+        - KBFINA - User
+      summary: reset password
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/ResetPasswordRequest"
+      responses:
+        '200':
+          description: Refresh Token Successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResetPasswordResponse'
+        '400':
+          description: Invalid input param
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/v1/kbfina/user/sendOtp:
+    post:
+      tags:
+        - KBFINA - User
+      summary: Trigger to send otp to verify Otp
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/SendOtpRequest"
+      responses:
+        '200':
+          description: Refresh Token Successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SendOtpResponse'
+        '400':
+          description: Invalid input param
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/v1/kbfina/user/verifyOtp:
+    post:
+      tags:
+        - KBFINA - User
+      summary: Verify otp
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/VerifyOtpRequest"
+      responses:
+        '200':
+          description: verify success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VerifyOtpResponse'
+        '400':
+          description: Invalid input param
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/v1/kbfina/user/login:
+    post:
+      tags:
+        - KBFINA - User
+      summary: Login to get access token
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                grant_type:
+                  description: 'type of login'
+                  type: string
+                  enum:
+                    - password
+                    - access_facebook
+                    - access_google
+                    - access_kb
+                client_id:
+                  description: 'id of app'
+                  type: string
+                client_secret:
+                  description: 'A secret for id'
+                  type: string
+                username:
+                  description: 'username or id of token receive from social network or username of kb'
+                  type: string
+                password:
+                  description: 'user password or access_token receive from google, facebook'
+                  type: string
+                  format: password
+              required:
+                - grant_type
+                - client_id
+                - client_secret
+                - username
+                - password
+      responses:
+        '200':
+          description: Authenticate Successfully
+          content:
+            application/json:
+              schema:
+                "$ref": '#/components/schemas/LoginResponse'
+        '400':
+          description: Invalid input param
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/v1/kbfina/user/refreshToken:
+    post:
+      tags:
+        - KBFINA - User
+      summary: Renew Access Token
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                grant_type:
+                  description: the specific grant type to renew access token
+                  type: string
+                  enum:
+                    - refresh_token
+                client_id:
+                  description: 'this value is unique, linking with MTS and only provide for access MTS API system'
+                  type: string
+                client_secret:
+                  description: 'this value is unique, linking with MTS, only provide for access MTS API system and pair with **client_id**'
+                  type: string
+                refresh_token:
+                  description: token to renew access_token when it's expired
+                  type: string
+              required:
+                - grant_type
+                - client_id
+                - client_secret
+                - refresh_token
+      responses:
+        '200':
+          description: Refresh Token Successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RefreshTokenResponse'
+        '400':
+          description: Invalid input param
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/v1/kbfina/user/revokeToken:
+    post:
+      tags:
+        - KBFINA - User
+      summary: Invalidate your refresh token
+      description: 'Invalidate your refresh token that you cannot use it to get access token anymore, so you need to login again to get new refresh token & access token'
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                refresh_token:
+                  description: the refresh token need to be invalidated
+                  type: string
+              required:
+                - refresh_token
+      responses:
+        '200':
+          description: Successfully
+          content:
+            application/json:
+              schema: {}
+        '400':
+          description: Invalid input param
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/v1/kbfina/user/register:
+    post:
+      tags:
+        - KBFINA - User
+      summary: Register new account
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserRegistrationRequest'
+        description: Register Object
+        required: true
+      responses:
+        '200':
+          description: Successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserInfoResponse'
+        '400':
+          description: Invalid input param
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/v1/kbfina/user/{userId}:
+    get:
+      tags:
+        - KBFINA - User
+      summary: Get user information
+      security:
+        - Bearer: []
+      parameters:
+        - in: path
+          name: userId
+          schema:
+            type: string
+          required: true
+          description: userId return from login api
+      responses:
+        '200':
+          description: Successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserInfo'
+        '400':
+          description: Invalid input param
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    put:
+      tags:
+        - KBFINA - User
+      summary: Update user information
+      security:
+        - Bearer: []
+      parameters:
+        - in: path
+          name: userId
+          schema:
+            type: string
+          required: true
+          description: userId return from login api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserInfoUpdateRequest'
+        description: Register Object
+        required: true
+      responses:
+        '200':
+          description: Successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserInfoResponse'
+        '400':
+          description: Invalid input param
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    delete:
+      tags:
+        - KBFINA - User
+      summary: Deactivate user account
+      security:
+        - Bearer: []
+      parameters:
+        - in: path
+          name: userId
+          schema:
+            type: string
+          required: true
+          description: userId return from login api
+      responses:
+        '200':
+          description: Successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserInfo'
+        '400':
+          description: Invalid input param
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/v1/kbfina/user/{userId}/linkAccount:
+    get:
+      tags:
+        - KBFINA - User
+      summary: Query Linked account
+      security:
+        - Bearer: []
+      parameters:
+        - in: path
+          name: userId
+          schema:
+            type: string
+          required: true
+          description: userId return from login api
+      responses:
+        '200':
+          description: Successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ListLinkAccountResponse"
+        '400':
+          description: Invalid input param
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      tags:
+        - KBFINA - User
+      summary: Link KBFINA account to institution account
+      security:
+        - Bearer: []
+      parameters:
+        - in: path
+          name: userId
+          schema:
+            type: string
+          required: true
+          description: userId return from login api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LinkAccountRequest'
+        description: Register Object
+        required: true
+      responses:
+        '200':
+          description: Successfully
+          content:
+            application/json:
+              schema: {}
+        '400':
+          description: Invalid input param
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/v1/kbfina/user/biometric:
+    get:
+      tags:
+        - KBFINA - User
+      summary: tra cứu trạng thái sinh trắc học của  thiết bị
+      operationId: BIOMETRIC_DEVICE_STATUS
+      parameters:
+        - in: query
+          name: publicKey
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: Successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    isEnable:
+                      type: boolean
+                      description: biometric có tồn tạ hay không .
+    post:
+      tags:
+        - KBFINA - User
+      summary: đăng kí đăng nhập bằng sinh trắc học
+      security:
+        - Bearer: []
+      description: đăng kí đăng nhập bằng sinh trắc học
+      operationId: BIOMETRIC_REGISTER
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - password
+                - publicKey
+              properties:
+                password:
+                  type: string
+                  description: mật khẩu tài khoản
+                publicKey:
+                  type: string
+                  description: public key gen từ device đăng kí
+                biometricType:
+                  type: string
+                  description: loại biometri (FINGER/FACE)
+        description: Đăng kí biometric
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    index:
+                      type: number
+                      description: số otp
+                    biometricId:
+                      type: number
+                      description: biometric id
+          description: OK
+    delete:
+      tags:
+        - KBFINA - User
+      summary: huỷ đăng kí đăng nhập bằng sinh trắc học
+      security:
+        - Bearer: []
+      description: huỷ đăng kí đăng nhập bằng sinh trắc học
+      operationId: BIOMETRIC_UNREGISTER
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+          description: OK
+  /api/v1/kbfina/user/ekyc:
+    put:
+      tags:
+        - KBFINA - User
+      summary: update ekyc information
+      deprecated: true
+      security:
+        - Bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EkycResponse'
+        description: Register Object
+        required: true
+      responses:
+        '200':
+          description: Successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EkycResponse'
+        '400':
+          description: Invalid input param
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    get:
+      tags:
+        - KBFINA - User
+      summary: get ekyc information
+      deprecated: true
+      responses:
+        '200':
+          description: Successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EkycResponse'
+        '400':
+          description: Invalid input param
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      tags:
+        - KBFINA - User
+      summary: get presigned url to upload to S3
+      deprecated: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EkycRequest'
+        description: Register Object
+        required: true
+      responses:
+        '200':
+          description: Successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EkycResponse'
+        '400':
+          description: Invalid input param
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/v1/kbfina/files/presignedUrl:
+    post:
+      tags:
+        - KBFINA - User
+      summary: get presigned url to upload to S3
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PresignedUrlRequest'
+        description: Register Object
+        required: true
+      responses:
+        '200':
+          description: Successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PresignedUrlResponse'
+        '400':
+          description: Invalid input param
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/v1/gpay/transfer:
+    post:
+      tags:
+        - GPAY
+      summary: transfer money from linked account to another linked account
+      security:
+        - Bearer: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LinkedAccountTransferRequest'
+        description: Register Object
+        required: true
+      responses:
+        '200':
+          description: Successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LinkedAccountTransferResponse'
+        '400':
+          description: Invalid input param
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/v1/kbsv/equity/report/pnlExecuted:
+    get:
+      tags:
+        - KBSV
+      summary: lãi lỗ đã thực hiện
+      security:
+        - Bearer: []
+      operationId: FSS_EQUITY_REPORT_PNL_EXECUTED
+      parameters:
+        - in: query
+          name: accountId
+          schema:
+            type: string
+          required: true
+          description: Số tiểu khoản cần truy vấn
+        - in: query
+          name: fromDate
+          schema:
+            type: string
+          required: true
+          description: từ ngày
+        - in: query
+          name: toDate
+          schema:
+            type: string
+          required: true
+          description: đến ngày
+        - in: query
+          name: code
+          schema:
+            type: string
+          required: false
+          description: mã chứng khoán cần truy vấn
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    pnl:
+                      type: number
+                      description: Lãi/Lỗ.
+                    feeAmt:
+                      type: number
+                      description: Phí Mua/Bán CK.
+                    symbol:
+                      type: string
+                      description: Mã chứng khoán.
+                    txDate:
+                      type: string
+                      description: Ngày Giao Dịch.
+                    pnlRate:
+                      type: number
+                      description: tỉ lệ lãi lỗ.
+                    execType:
+                      type: string
+                      description: loại thực hiệ(BUY/SELL)).
+                    quantity:
+                      type: number
+                      description: số lượng đặt.
+                    accountID:
+                      type: string
+                      description: số tiểu khoản.
+                    costPrice:
+                      type: number
+                      description: Giá Vốn TB.
+                    execPrice:
+                      type: number
+                      description: Giá Thực Hiện.
+                    taxSellAmt:
+                      type: number
+                      description: Phí/Thuế Khác.
+                    costPriceValue:
+                      type: number
+                      description: Giá Trị Vốn.
+                    execPriceValue:
+                      type: number
+                      description: Giá Trị Thực Hiện.
+          description: lãi lỗ đã thực hiện
+  /api/v1/kbsv/equity/report/queryOrderHist:
+    get:
+      tags:
+        - KBSV
+      summary: tra cứu lịch sử đặt lệnh
+      security:
+        - Bearer: []
+      operationId: FSS_EQUIRY_REPORT_ORDER_HISTORY
+      parameters:
+        - in: query
+          name: accountId
+          schema:
+            type: string
+          required: true
+          description: Số tiểu khoản cần truy vấn
+        - in: query
+          name: fromDate
+          schema:
+            type: string
+          required: true
+          description: từ ngày
+        - in: query
+          name: toDate
+          schema:
+            type: string
+          required: true
+          description: đến ngày
+        - in: query
+          name: sellBuyType
+          schema:
+            type: string
+          required: false
+          description: loại thực hiện (BUY/SELL)
+        - in: query
+          name: via
+          schema:
+            type: string
+          required: false
+          description: Kênh giao dịch
+        - in: query
+          name: code
+          schema:
+            type: string
+          required: false
+          description: mã chứng khoán cần query
+        - in: query
+          name: status
+          schema:
+            type: string
+          required: false
+          description: trạng thái lịch sử
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    tax:
+                      type: number
+                      description: thuế.
+                    price:
+                      type: number
+                      description: price.
+                    status:
+                      type: string
+                      description: trạng thái.
+                    symbol:
+                      type: string
+                      description: Mã chứng khoán.
+                    orderId:
+                      type: string
+                      description: số hiệu lệnh.
+                    quantity:
+                      type: number
+                      description: sô lượng đặt.
+                    accountId:
+                      type: string
+                      description: số tài khoản.
+                    clearDate:
+                      type: string
+                      description: ngày thanh toán.
+                    sellBuyType:
+                      type: string
+                      description: loại thực hiện(SELL/BUY).
+                    matchedPrice:
+                      type: number
+                      description: giá khớp.
+                    matchedValue:
+                      type: number
+                      description: giá trị khớp.
+                    matchedAmount:
+                      type: number
+                      description: khối lượng khớp.
+                    orderingPlace:
+                      type: string
+                      description: kênh giao dịch.
+                    transactionFee:
+                      type: number
+                      description: phí giao dịch.
+                    transactionDate:
+                      type: string
+                      description: ngày giao dịch.
+                    transactionFeeRate:
+                      type: number
+                      description: tỉ lệ phí giao dịch.
+          description: tra cứu lịch sử đặt lệnh
+  /api/v1/kbsv/equity/inquiry/securitiesPortfolio:
+    get:
+      tags:
+        - KBSV
+      summary: tra cứu số dư chứng khoán
+      security:
+        - Bearer: []
+      operationId: FSS_EQUITY_INQUIRY_SECURITIES_PORTFOLIO
+      parameters:
+        - in: query
+          name: accountId
+          schema:
+            type: string
+          required: true
+          description: số tiểu khoản
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    total:
+                      type: number
+                      description: Tổng KLCK.
+                    trade:
+                      type: number
+                      description: Số Dư Khả Dụng.
+                    pnlAmt:
+                      type: number
+                      description: Lãi/Lỗ Chưa Thực Hiện.
+                    symbol:
+                      type: string
+                      description: mã chứng khoán.
+                    blocked:
+                      type: number
+                      description: Khối lượng bị phong tỏa.
+                    pnlRate:
+                      type: number
+                      description: Tỉ lện lãi lỗ chưa thực hiện.
+                    mortgage:
+                      type: number
+                      description: Cầm cố .
+                    accountId:
+                      type: string
+                      description: số tiểu khoản.
+                    costPrice:
+                      type: number
+                      description: Giá TB.
+                    sendingT0:
+                      type: number
+                      description: bán T0.
+                    sendingT1:
+                      type: number
+                      description: bán T1.
+                    sendingT2:
+                      type: number
+                      description: bán T2.
+                    basicPrice:
+                      type: number
+                      description: Giá Hiện Tại.
+                    receivingT0:
+                      type: number
+                      description: mua T0.
+                    receivingT1:
+                      type: number
+                      description: mua T1.
+                    receivingT2:
+                      type: number
+                      description: mua T2.
+                    costPriceAmt:
+                      type: number
+                      description: Giá Trị.
+                    basicPriceAmt:
+                      type: number
+                      description: Giá Trị Thị Trường.
+                    receivingRight:
+                      type: number
+                      description: Quyền Chờ Về.
+                    remainQtty:
+                      type: number
+                      description: Chờ Khớp.
+          description: tra cứu số dư chứng khoán
+  /api/v1/kbsv/equity/inquiry/summaryAccount:
+    get:
+      tags:
+        - KBSV
+      summary: tra cứu số dư tiền
+      security:
+        - Bearer: []
+      operationId: FSS_EQUITY_INQUIRY_SUMMARY_ACCOUNT
+      parameters:
+        - in: query
+          name: accountId
+          schema:
+            type: string
+          required: true
+          description: số tiểu khoản
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    addVnd:
+                      type: number
+                      description: Tiền Đưa Về Duy Trì.
+                    buyAmt:
+                      type: number
+                      description: Tiền Đặt Lệnh.
+                    balance:
+                      type: number
+                      description: số dư.
+                    accountId:
+                      type: string
+                      description: số tiểu khoản.
+                    sendingT0:
+                      type: number
+                      description: tiền bán T0.
+                    avladvance:
+                      type: number
+                      description: Tiền Ứng Bán CK Tối Đa.
+                    marginRate:
+                      type: number
+                      description: Tỷ Lệ Ký Quỹ.
+                    avlwithdraw:
+                      type: number
+                      description: Tiền Rút Khả Dụng.
+                    caReceiving:
+                      type: number
+                      description: Cổ Tức Chờ Về.
+                    receivingT0:
+                      type: number
+                      description: tiền mua T0.
+                    receivingT1:
+                      type: number
+                      description: tiền mua T1.
+                    receivingT2:
+                      type: number
+                      description: tiền mua T2.
+                    totalDebtAmt:
+                      type: number
+                      description: Tổng Nợ.
+                    buyRemainValue:
+                      type: number
+                      description: Tiền Mua Chưa Khớp.
+                    basicPurchasingPower:
+                      type: number
+                      description: sức mua.
+          description: tra cứu số dư tiền tiểu khoản phái sinh
+  /api/v1/kbsv/equity/report/cashTransfer:
+    get:
+      tags:
+        - KBSV
+      summary: tra cứu lịch sử chuyển tiền
+      security:
+        - Bearer: []
+      operationId: FSS_EQUITY_REPORT_CASH_TRANSFER
+      parameters:
+        - in: query
+          name: accountId
+          schema:
+            type: string
+          required: true
+          description: Số tiểu khoản
+        - in: query
+          name: fromDate
+          schema:
+            type: string
+          required: true
+          description: từ ngày
+        - in: query
+          name: toDate
+          schema:
+            type: string
+          required: true
+          description: đến ngày
+        - in: query
+          name: type
+          schema:
+            type: string
+          required: false
+          description: loại giao dịch ( EXTERNAL - Chuyển tiền ra ngân hàng / INTERNAL - chuyển tiền  nội bộ / ACCOUNT - Chuyển tiền sang tài khoản khác )
+        - in: query
+          name: fdsAccountId
+          schema:
+            type: string
+          required: false
+          description: tiểu khoản phái sinh ( lấy thông tin chuyển tiền vào tài khoản phái sinh)
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    amt:
+                      type: number
+                      description: số tiền giao dịch.
+                    status:
+                      type: string
+                      description: trạng thái.
+                    txDate:
+                      type: string
+                      description: ngày giao dịch.
+                    busDate:
+                      type: string
+                      description: Ngày Hiệu Lực.
+                    statusCode:
+                      type: string
+                      description: mã trạng thái.
+                    description:
+                      type: string
+                      description: nội dung chuuyền tiền.
+                    receiverBank:
+                      type: string
+                      description: ngân hàng nhận.
+                    receiverName:
+                      type: number
+                      description: tên người nhận .
+                    transferType:
+                      type: string
+                      description: loại chuyển tiền.
+                    transferPlace:
+                      type: string
+                      description: kênh giao dịch.
+                    transactionNum:
+                      type: string
+                      description: số  chứng từ.
+                    receiverAccount:
+                      type: string
+                      description: tiểu khoản nhận.
+                    receiverCustodycd:
+                      type: string
+                      description: Số lưu ký nhận.
+                    transferCustodycd:
+                      type: string
+                      description: Số lưu ký chuyển.
+          description: lịch sử chuyển tiền
+  /api/v1/kbsv/derivatives/inqfds/balanceAmount:
+    get:
+      tags:
+        - KBSV
+      summary: tra cứu số dư tiền tiểu khoản phái sinh
+      security:
+        - Bearer: []
+      operationId: FSS_DERIVATIVES_INQUIRYFDS_BALANCE_AMOUNT
+      parameters:
+        - in: query
+          name: accountId
+          schema:
+            type: string
+          required: true
+          description: số tiểu khoản phái sinh
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  pp:
+                    type: number
+                    description: Sức Mua/Bán.
+                  vm:
+                    type: number
+                    description: vm.
+                  acctNo:
+                    type: string
+                    description: tài khoản giao dịch.
+                  buyAmt:
+                    type: number
+                    description: Tiền Mua.
+                  grName:
+                    type: string
+                    description: grName.
+                  bsValue:
+                    type: number
+                    description: Giá Trị Mua/Bán.
+                  sellAmt:
+                    type: number
+                    description: Tiền Bán.
+                  vimCash:
+                    type: number
+                    description: Tiền Tại CCP.
+                  vrvmAmt:
+                    type: number
+                    description: VM Trong Ngày.
+                  wSecured:
+                    type: number
+                    description: Tiền Chờ Ký Quỹ.
+                  acctRatio:
+                    type: number
+                    description: Tỷ Lệ Sử Dụng TS Ký Quỹ.
+                  totalDebt:
+                    type: number
+                    description: Tổng nợ.
+                  wTransfer:
+                    type: number
+                    description: Tiền Ký Quỹ Chờ Rút.
+                  assetValue:
+                    type: number
+                    description: Giá Trị Tài Sản.
+                  vCashOnHand:
+                    type: number
+                    description: Tiền mặt.
+                  vrDebtvmAmt:
+                    type: number
+                    description: VM Phải Giao.
+                  reqAddSecured:
+                    type: number
+                    description: Số Tiền Cần Nộp Bổ Sung.
+          description: tra cứu số dư tiền tiểu khoản phái sinh
+  /api/v1/kbsv/derivatives/reportfds/nplByDay:
+    get:
+      tags:
+        - KBSV
+      summary: tra cứu lãi lỗ phái sinh
+      security:
+        - Bearer: []
+      operationId: FSS_DERIVATIVES_REPORTFDS_NPL_BY_DAY
+      parameters:
+        - in: query
+          name: accountId
+          schema:
+            type: string
+          required: true
+          description: số tiểu khoản phái sinh
+        - in: query
+          name: fromDate
+          schema:
+            type: string
+          required: true
+          description: từ ngày
+        - in: query
+          name: toDate
+          schema:
+            type: string
+          required: true
+          description: đến ngày
+        - in: query
+          name: code
+          schema:
+            type: string
+          required: false
+          description: mã phái sinh cần truy vấn
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    dsp:
+                      type: number
+                      description: Giá DSP.
+                    lQtty:
+                      type: number
+                      description: khối lượng long.
+                    lVwap:
+                      type: number
+                      description: Giá Long.
+                    sQtty:
+                      type: number
+                      description: khối lượng shot.
+                    sVwap:
+                      type: number
+                      description: giá short.
+                    codeId:
+                      type: string
+                      description: mã phái sinh.
+                    symbol:
+                      type: string
+                      description: mã chứng khoán phái sinh.
+                    txDate:
+                      type: string
+                      description: ngày thực hiện.
+                    reliPnl:
+                      type: number
+                      description: tỉ lệ Lãi/Lỗ Đã Thực Hiện.
+                    vrplAmt:
+                      type: number
+                      description: Giá Trị Lãi/Lỗ Đã Thực Hiện.
+                    vwapAmt:
+                      type: number
+                      description: Tổng Giá Trị Vốn.
+                    matchAmt:
+                      type: number
+                      description: giá trị khớp lệnh / giá trị net.
+                    nonRplAmt:
+                      type: number
+                      description: giá trị Lãi/Lỗ Chưa Thực Hiện.
+                    closedQtty:
+                      type: number
+                      description: khối lượng đóng.
+                    nonVwapAmt:
+                      type: number
+                      description: Giá trị lãi lỗ.
+                    dailyProfit:
+                      type: number
+                      description: Lãi Lỗ Hàng Ngày.
+                    nonClosedAmt:
+                      type: number
+                      description: Tổng Giá Trị Đóng.
+                    pecentNonRplAmt:
+                      type: number
+                      description: tỉ lệ Lãi/Lỗ Chưa Thực Hiện.
+                    dueFeeAmt:
+                      type: number
+                      description: Phí Đáo Hạn.
+          description: NplByDay response
+  /api/v1/kbsv/derivatives/reportfds/increaseDTABalanceHist:
+    get:
+      tags:
+        - KBSV
+      summary: lịch sử nộp tiền vào  tài khoản giao dịch phái  sinh
+      security:
+        - Bearer: []
+      operationId: FSS_DERIVATIVES_REPORTFDS_INCREASE_DTA_BALANCE_HIST
+      parameters:
+        - in: query
+          name: accountId
+          schema:
+            type: string
+          required: true
+          description: tiểu khoản phái sinh
+        - in: query
+          name: fromDate
+          schema:
+            type: string
+          required: true
+          description: từ ngày
+        - in: query
+          name: toDate
+          schema:
+            type: string
+          required: true
+          description: đến ngày
+        - in: query
+          name: status
+          schema:
+            type: string
+          required: false
+          description: trạng thái
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    txNum:
+                      type: string
+                      description: số chứng từ.
+                    msgAmt:
+                      type: number
+                      description: Số Tiền Nộp.
+                    status:
+                      type: string
+                      description: trạng thái.
+                    txDate:
+                      type: string
+                      description: ngày yêu cầu.
+                    txDesc:
+                      type: string
+                      description: nội dung.
+                    busDate:
+                      type: string
+                      description: ngày hiệu lực.
+                    msgAcct:
+                      type: number
+                      description: tiểu khoản giao dịch.
+          description: IncreaseDTABalanceHist response
+  /api/v1/kbsv/derivatives/reportfds/decreaseDepositAmountHist:
+    get:
+      tags:
+        - KBSV
+      summary: lịch sử rút tiền từ TKKQ
+      security:
+        - Bearer: []
+      operationId: FSS_DERIVATIVES_REPORTFDS_DECREASE_DEPOSIT_AMOUNT_HIST
+      parameters:
+        - in: query
+          name: accountId
+          schema:
+            type: string
+          required: true
+          description: Số tiểu khoản phai sinh
+        - in: query
+          name: fromDate
+          schema:
+            type: string
+          required: true
+          description: từ ngày
+        - in: query
+          name: toDate
+          schema:
+            type: string
+          required: true
+          description: đến ngày
+        - in: query
+          name: status
+          schema:
+            type: string
+          required: false
+          description: trạng thái
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    txNum:
+                      type: string
+                      description: số thứng từ .
+                    msgAmt:
+                      type: string
+                      description: số tiền rút.
+                    status:
+                      type: string
+                      description: trạng thái.
+                    txDate:
+                      type: string
+                      description: ngày giao dịch.
+                    txDesc:
+                      type: string
+                      description: nội dung.
+                    busDate:
+                      type: string
+                      description: ngày thực hiện .
+                    msgAcct:
+                      type: number
+                      description: số tiểu khoản.
+          description: lịch sử rút tiền từ TKKQ
+  /api/v1/kbsv/derivatives/reportfds/decreaseDTABalanceHist:
+    get:
+      tags:
+        - KBSV
+      summary: lịch sử rút tiền từ TKGDPS
+      security:
+        - Bearer: []
+      operationId: FSS_DERIVATIVES_REPORTFDS_DECREASE_DTA_BALANCE_HIST
+      parameters:
+        - in: query
+          name: accountId
+          schema:
+            type: string
+          required: true
+          description: Số tiểu khoản phái sinh
+        - in: query
+          name: fromDate
+          schema:
+            type: string
+          required: true
+          description: từ ngày
+        - in: query
+          name: toDate
+          schema:
+            type: string
+          required: true
+          description: đến ngày
+        - in: query
+          name: status
+          schema:
+            type: string
+          required: false
+          description: trạng thái
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    txNum:
+                      type: string
+                      description: số chứng từ .
+                    msgAmt:
+                      type: string
+                      description: số tiền rút.
+                    status:
+                      type: string
+                      description: trạng thái.
+                    txDate:
+                      type: string
+                      description: ngày thực hiện.
+                    txDesc:
+                      type: string
+                      description: nội dung.
+                    busDate:
+                      type: string
+                      description: ngày hiệu lực.
+                    msgAcct:
+                      type: number
+                      description: số tk.
+          description: lịch sử rút tiền từ TKGDPS
+  /api/v1/kbsv/derivatives/reportfds/increaseDepositAmountHist:
+    get:
+      tags:
+        - KBSV
+      summary: lịch sử nộp tiền vào TKKQ
+      security:
+        - Bearer: []
+      operationId: FSS_DERIVATIVES_REPORTFDS_INCREASE_DEPOSIT_AMOUNT_HIST
+      parameters:
+        - in: query
+          name: accountId
+          schema:
+            type: string
+          required: true
+          description: số tiểu khoản
+        - in: query
+          name: fromDate
+          schema:
+            type: string
+          required: true
+          description: từ ngày
+        - in: query
+          name: toDate
+          schema:
+            type: string
+          required: true
+          description: đến ngày
+        - in: query
+          name: status
+          schema:
+            type: string
+          required: false
+          description: trạng thái
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    txNum:
+                      type: string
+                      description: số chứng từ .
+                    msgAmt:
+                      type: string
+                      description: số tiền nộp.
+                    status:
+                      type: string
+                      description: trạng thái.
+                    txDate:
+                      type: string
+                      description: ngày yêu cầu.
+                    txDesc:
+                      type: string
+                      description: nội dung.
+                    busDate:
+                      type: string
+                      description: ngày hiệu lực.
+                    msgAcct:
+                      type: number
+                      description: stk .
+          description: lịch sử nộp tiền vào TKKQ
+  /api/v1/kbsv/derivatives/reportfds/orderMatch:
+    get:
+      tags:
+        - KBSV
+      summary: Lịch sử khớp lệnh phái sinh
+      security:
+        - Bearer: []
+      operationId: FSS_DERIVATIVES_REPORTFDS_ORDER_MATCH
+      parameters:
+        - in: query
+          name: accountId
+          schema:
+            type: string
+          required: true
+          description: số tiểu khoản phái sinh
+        - in: query
+          name: fromDate
+          schema:
+            type: string
+          required: true
+          description: từ ngày
+        - in: query
+          name: toDate
+          schema:
+            type: string
+          required: true
+          description: đến ngày
+        - in: query
+          name: code
+          schema:
+            type: string
+          required: true
+          description: mã phái sinh
+        - in: query
+          name: side
+          schema:
+            type: string
+          required: true
+          description: SELL/BUY
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    amt:
+                      type: number
+                      description: Phải Trả/Thực Nhận.
+                    norp:
+                      type: string
+                      description: Thường/Thỏa Thuận.
+                    side:
+                      type: string
+                      description: Mua/Bán.
+                    acctNo:
+                      type: string
+                      description: số tiểu khoản.
+                    aofirm:
+                      type: string
+                      description: aofirm.
+                    feeAmt:
+                      type: number
+                      description: Phí Giao Dịch Tại KBSV.
+                    symbol:
+                      type: string
+                      description: Mã phái sinh.
+                    taxAmt:
+                      type: number
+                      description: Thuế.
+                    txDate:
+                      type: string
+                      description: ngày giao dịch.
+                    orderId:
+                      type: string
+                      description: Số Hiệu Lệnh.
+                    matchAmt:
+                      type: number
+                      description: Giá Trị Khớp.
+                    custodycd:
+                      type: string
+                      description: số lưu ký.
+                    matchQtty:
+                      type: number
+                      description: số lượng khớp.
+                    subTypeCd:
+                      type: string
+                      description: loại giá.
+                    matchPrice:
+                      type: number
+                      description: Giá Khớp Trung Bình.
+          description: Lịch sử khớp lệnh phái sinh
+  /api/v1/kbsv/derivatives/reportfds/orderHist:
+    get:
+      tags:
+        - KBSV
+      summary: lịch sử đặt lệnh phái sinh
+      security:
+        - Bearer: []
+      operationId: FSS_DERIVATIVES_REPORTFDS_ORDER_HIST
+      parameters:
+        - in: query
+          name: accountId
+          schema:
+            type: string
+          required: true
+          description: số tiểu khoản phái sinh
+        - in: query
+          name: fromDate
+          schema:
+            type: string
+          required: true
+          description: từ ngày
+        - in: query
+          name: toDate
+          schema:
+            type: string
+          required: true
+          description: đến ngày
+        - in: query
+          name: orderType
+          schema:
+            type: string
+          required: true
+          description: trạng thái lệnh - ALL, NN, BB, SS, ES, SE, TS, TP, SR, RR, SD, DS, DD
+        - in: query
+          name: status
+          schema:
+            type: string
+          required: true
+          description: trạng thái
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    custodycd:
+                        type: string
+                        description: số lưu ký.
+                    accountNo:
+                        type: string
+                        description: số tiểu khoản.
+                    orderNumber:
+                        type: string
+                        description: Số Hiệu Lệnh.
+                    code:
+                        type: string
+                        description: mã phái sinh.
+                    lastChange:
+                        type: string
+                        description: thời gian.
+                    sellBuyType:
+                        type: string
+                        description: Mua/Bán.
+                    sideDesc:
+                        type: string
+                        description: diễn giải loại lệnh.
+                    orderType:
+                        type: string
+                        description: loại giá.
+                    orderTypeDesc:
+                        type: string
+                        description: diễn giải loại giá.
+                    validity:
+                        type: string
+                        description: .
+                    dataval:
+                        type: string
+                        description: .
+                    status:
+                        type: string
+                        description: Trạng Thái Lệnh.
+                    orderQuantity:
+                        type: string
+                        description: Khối Lượng Đặt.
+                    orderPrice:
+                        type: string
+                        description: Giá Đặt.
+                    matchPrice:
+                        type: string
+                        description: Giá Khớp Trung Bình.
+                    matchQtty:
+                        type: string
+                        description: SL Khớp.
+                    odsent:
+                        type: string
+                        description: thời gian đặt.
+                    execAmt:
+                        type: string
+                        description: Giá Trị Khớp.
+                    unmatchedQuantity:
+                        type: string
+                        description: số lượng chưa khớp.
+                    cancelQtty:
+                        type: string
+                        description: số lượng huỷ.
+                    admEndQtty:
+                        type: string
+                        description: số lượng sửa.
+                    confirmId:
+                        type: string
+                        description: số hiệu lệ(shl) sở confirm.
+                    originOrderId:
+                        type: string
+                        description: shl gốc.
+                    txDate:
+                        type: string
+                        description: ngày giao dịch.
+                    feeAmt:
+                        type: string
+                        description: GT Phí.
+                    tax:
+                        type: string
+                        description: Thuế.
+                    tradingFee:
+                        type: string
+                        description: Mức Phí.
+                    via:
+                        type: string
+                        description: Kênh Thực Hiện.
+                    norp:
+                        type: string
+                        description: Thường/Thỏa Thuận.
+          description: lịch sử đặt lệnh phái sinh
+tags:
+  - name: KBFINA - User
+  - name: GPAY
+  - name: KBSV
+
