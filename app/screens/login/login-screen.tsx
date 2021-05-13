@@ -78,9 +78,8 @@ export const LoginScreen = observer(function LoginScreen() {
             </View>
             <Button
               text={"Login"}
-              preset=""
+              preset="primary"
               style={styles.submitButton}
-              textStyle={styles.buttonText}
               onPress={handleSubmit}
             />
             <View style={{ flexDirection: "row", justifyContent: "center" }}>

@@ -23,12 +23,10 @@ export const styles = StyleSheet.create({
     marginTop: 32,
   },
   submitButton: {
-    paddingVertical: 24,
-    borderRadius: 19,
     marginTop: 30,
     marginBottom: 25,
   },
   buttonText: {
-    fontSize: 18,
+    // fontSize: 18,
   },
 })
