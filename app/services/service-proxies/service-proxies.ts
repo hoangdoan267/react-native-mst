@@ -50,36 +50,31 @@ export class UserServiceProxy {
         if (status === 200) {
             return response.text().then((_responseText) => {
             let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = ChangePasswordResponse.fromJS(resultData200);
+            result200 = _responseText === "" ? null : <ChangePasswordResponse>JSON.parse(_responseText, this.jsonParseReviver);
             return result200;
             });
         } else if (status === 400) {
             return response.text().then((_responseText) => {
             let result400: any = null;
-            let resultData400 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result400 = ErrorDto.fromJS(resultData400);
+            result400 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
             return throwException("Invalid input param", status, _responseText, _headers, result400);
             });
         } else if (status === 401) {
             return response.text().then((_responseText) => {
             let result401: any = null;
-            let resultData401 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result401 = ErrorDto.fromJS(resultData401);
+            result401 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
             return throwException("Unauthorized", status, _responseText, _headers, result401);
             });
         } else if (status === 403) {
             return response.text().then((_responseText) => {
             let result403: any = null;
-            let resultData403 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result403 = ErrorDto.fromJS(resultData403);
+            result403 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
             return throwException("Unauthorized", status, _responseText, _headers, result403);
             });
         } else if (status === 500) {
             return response.text().then((_responseText) => {
             let result500: any = null;
-            let resultData500 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result500 = ErrorDto.fromJS(resultData500);
+            result500 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
             return throwException("Internal Server Error", status, _responseText, _headers, result500);
             });
         } else if (status !== 200 && status !== 204) {
@@ -121,36 +116,31 @@ export class UserServiceProxy {
         if (status === 200) {
             return response.text().then((_responseText) => {
             let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = ResetPasswordResponse.fromJS(resultData200);
+            result200 = _responseText === "" ? null : <ResetPasswordResponse>JSON.parse(_responseText, this.jsonParseReviver);
             return result200;
             });
         } else if (status === 400) {
             return response.text().then((_responseText) => {
             let result400: any = null;
-            let resultData400 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result400 = ErrorDto.fromJS(resultData400);
+            result400 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
             return throwException("Invalid input param", status, _responseText, _headers, result400);
             });
         } else if (status === 401) {
             return response.text().then((_responseText) => {
             let result401: any = null;
-            let resultData401 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result401 = ErrorDto.fromJS(resultData401);
+            result401 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
             return throwException("Unauthorized", status, _responseText, _headers, result401);
             });
         } else if (status === 403) {
             return response.text().then((_responseText) => {
             let result403: any = null;
-            let resultData403 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result403 = ErrorDto.fromJS(resultData403);
+            result403 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
             return throwException("Unauthorized", status, _responseText, _headers, result403);
             });
         } else if (status === 500) {
             return response.text().then((_responseText) => {
             let result500: any = null;
-            let resultData500 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result500 = ErrorDto.fromJS(resultData500);
+            result500 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
             return throwException("Internal Server Error", status, _responseText, _headers, result500);
             });
         } else if (status !== 200 && status !== 204) {
@@ -192,36 +182,31 @@ export class UserServiceProxy {
         if (status === 200) {
             return response.text().then((_responseText) => {
             let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = SendOtpResponse.fromJS(resultData200);
+            result200 = _responseText === "" ? null : <SendOtpResponse>JSON.parse(_responseText, this.jsonParseReviver);
             return result200;
             });
         } else if (status === 400) {
             return response.text().then((_responseText) => {
             let result400: any = null;
-            let resultData400 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result400 = ErrorDto.fromJS(resultData400);
+            result400 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
             return throwException("Invalid input param", status, _responseText, _headers, result400);
             });
         } else if (status === 401) {
             return response.text().then((_responseText) => {
             let result401: any = null;
-            let resultData401 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result401 = ErrorDto.fromJS(resultData401);
+            result401 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
             return throwException("Unauthorized", status, _responseText, _headers, result401);
             });
         } else if (status === 403) {
             return response.text().then((_responseText) => {
             let result403: any = null;
-            let resultData403 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result403 = ErrorDto.fromJS(resultData403);
+            result403 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
             return throwException("Unauthorized", status, _responseText, _headers, result403);
             });
         } else if (status === 500) {
             return response.text().then((_responseText) => {
             let result500: any = null;
-            let resultData500 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result500 = ErrorDto.fromJS(resultData500);
+            result500 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
             return throwException("Internal Server Error", status, _responseText, _headers, result500);
             });
         } else if (status !== 200 && status !== 204) {
@@ -263,36 +248,31 @@ export class UserServiceProxy {
         if (status === 200) {
             return response.text().then((_responseText) => {
             let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = VerifyOtpResponse.fromJS(resultData200);
+            result200 = _responseText === "" ? null : <VerifyOtpResponse>JSON.parse(_responseText, this.jsonParseReviver);
             return result200;
             });
         } else if (status === 400) {
             return response.text().then((_responseText) => {
             let result400: any = null;
-            let resultData400 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result400 = ErrorDto.fromJS(resultData400);
+            result400 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
             return throwException("Invalid input param", status, _responseText, _headers, result400);
             });
         } else if (status === 401) {
             return response.text().then((_responseText) => {
             let result401: any = null;
-            let resultData401 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result401 = ErrorDto.fromJS(resultData401);
+            result401 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
             return throwException("Unauthorized", status, _responseText, _headers, result401);
             });
         } else if (status === 403) {
             return response.text().then((_responseText) => {
             let result403: any = null;
-            let resultData403 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result403 = ErrorDto.fromJS(resultData403);
+            result403 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
             return throwException("Unauthorized", status, _responseText, _headers, result403);
             });
         } else if (status === 500) {
             return response.text().then((_responseText) => {
             let result500: any = null;
-            let resultData500 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result500 = ErrorDto.fromJS(resultData500);
+            result500 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
             return throwException("Internal Server Error", status, _responseText, _headers, result500);
             });
         } else if (status !== 200 && status !== 204) {
@@ -334,36 +314,31 @@ export class UserServiceProxy {
         if (status === 200) {
             return response.text().then((_responseText) => {
             let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = LoginResponse.fromJS(resultData200);
+            result200 = _responseText === "" ? null : <LoginResponse>JSON.parse(_responseText, this.jsonParseReviver);
             return result200;
             });
         } else if (status === 400) {
             return response.text().then((_responseText) => {
             let result400: any = null;
-            let resultData400 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result400 = ErrorDto.fromJS(resultData400);
+            result400 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
             return throwException("Invalid input param", status, _responseText, _headers, result400);
             });
         } else if (status === 401) {
             return response.text().then((_responseText) => {
             let result401: any = null;
-            let resultData401 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result401 = ErrorDto.fromJS(resultData401);
+            result401 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
             return throwException("Unauthorized", status, _responseText, _headers, result401);
             });
         } else if (status === 403) {
             return response.text().then((_responseText) => {
             let result403: any = null;
-            let resultData403 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result403 = ErrorDto.fromJS(resultData403);
+            result403 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
             return throwException("Unauthorized", status, _responseText, _headers, result403);
             });
         } else if (status === 500) {
             return response.text().then((_responseText) => {
             let result500: any = null;
-            let resultData500 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result500 = ErrorDto.fromJS(resultData500);
+            result500 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
             return throwException("Internal Server Error", status, _responseText, _headers, result500);
             });
         } else if (status !== 200 && status !== 204) {
@@ -405,36 +380,31 @@ export class UserServiceProxy {
         if (status === 200) {
             return response.text().then((_responseText) => {
             let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = RefreshTokenResponse.fromJS(resultData200);
+            result200 = _responseText === "" ? null : <RefreshTokenResponse>JSON.parse(_responseText, this.jsonParseReviver);
             return result200;
             });
         } else if (status === 400) {
             return response.text().then((_responseText) => {
             let result400: any = null;
-            let resultData400 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result400 = ErrorDto.fromJS(resultData400);
+            result400 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
             return throwException("Invalid input param", status, _responseText, _headers, result400);
             });
         } else if (status === 401) {
             return response.text().then((_responseText) => {
             let result401: any = null;
-            let resultData401 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result401 = ErrorDto.fromJS(resultData401);
+            result401 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
             return throwException("Unauthorized", status, _responseText, _headers, result401);
             });
         } else if (status === 403) {
             return response.text().then((_responseText) => {
             let result403: any = null;
-            let resultData403 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result403 = ErrorDto.fromJS(resultData403);
+            result403 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
             return throwException("Unauthorized", status, _responseText, _headers, result403);
             });
         } else if (status === 500) {
             return response.text().then((_responseText) => {
             let result500: any = null;
-            let resultData500 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result500 = ErrorDto.fromJS(resultData500);
+            result500 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
             return throwException("Internal Server Error", status, _responseText, _headers, result500);
             });
         } else if (status !== 200 && status !== 204) {
@@ -476,36 +446,31 @@ export class UserServiceProxy {
         if (status === 200) {
             return response.text().then((_responseText) => {
             let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = resultData200 !== undefined ? resultData200 : <any>null;
+            result200 = _responseText === "" ? null : <any>JSON.parse(_responseText, this.jsonParseReviver);
             return result200;
             });
         } else if (status === 400) {
             return response.text().then((_responseText) => {
             let result400: any = null;
-            let resultData400 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result400 = ErrorDto.fromJS(resultData400);
+            result400 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
             return throwException("Invalid input param", status, _responseText, _headers, result400);
             });
         } else if (status === 401) {
             return response.text().then((_responseText) => {
             let result401: any = null;
-            let resultData401 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result401 = ErrorDto.fromJS(resultData401);
+            result401 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
             return throwException("Unauthorized", status, _responseText, _headers, result401);
             });
         } else if (status === 403) {
             return response.text().then((_responseText) => {
             let result403: any = null;
-            let resultData403 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result403 = ErrorDto.fromJS(resultData403);
+            result403 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
             return throwException("Unauthorized", status, _responseText, _headers, result403);
             });
         } else if (status === 500) {
             return response.text().then((_responseText) => {
             let result500: any = null;
-            let resultData500 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result500 = ErrorDto.fromJS(resultData500);
+            result500 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
             return throwException("Internal Server Error", status, _responseText, _headers, result500);
             });
         } else if (status !== 200 && status !== 204) {
@@ -547,36 +512,31 @@ export class UserServiceProxy {
         if (status === 200) {
             return response.text().then((_responseText) => {
             let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = UserInfoResponse.fromJS(resultData200);
+            result200 = _responseText === "" ? null : <UserInfoResponse>JSON.parse(_responseText, this.jsonParseReviver);
             return result200;
             });
         } else if (status === 400) {
             return response.text().then((_responseText) => {
             let result400: any = null;
-            let resultData400 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result400 = ErrorDto.fromJS(resultData400);
+            result400 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
             return throwException("Invalid input param", status, _responseText, _headers, result400);
             });
         } else if (status === 401) {
             return response.text().then((_responseText) => {
             let result401: any = null;
-            let resultData401 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result401 = ErrorDto.fromJS(resultData401);
+            result401 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
             return throwException("Unauthorized", status, _responseText, _headers, result401);
             });
         } else if (status === 403) {
             return response.text().then((_responseText) => {
             let result403: any = null;
-            let resultData403 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result403 = ErrorDto.fromJS(resultData403);
+            result403 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
             return throwException("Unauthorized", status, _responseText, _headers, result403);
             });
         } else if (status === 500) {
             return response.text().then((_responseText) => {
             let result500: any = null;
-            let resultData500 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result500 = ErrorDto.fromJS(resultData500);
+            result500 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
             return throwException("Internal Server Error", status, _responseText, _headers, result500);
             });
         } else if (status !== 200 && status !== 204) {
@@ -617,43 +577,31 @@ export class UserServiceProxy {
         if (status === 200) {
             return response.text().then((_responseText) => {
             let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            if (Array.isArray(resultData200)) {
-                result200 = [] as any;
-                for (let item of resultData200)
-                    result200!.push(LinkAccountResponse.fromJS(item));
-            }
-            else {
-                result200 = <any>null;
-            }
+            result200 = _responseText === "" ? null : <LinkAccountResponse[]>JSON.parse(_responseText, this.jsonParseReviver);
             return result200;
             });
         } else if (status === 400) {
             return response.text().then((_responseText) => {
             let result400: any = null;
-            let resultData400 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result400 = ErrorDto.fromJS(resultData400);
+            result400 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
             return throwException("Invalid input param", status, _responseText, _headers, result400);
             });
         } else if (status === 401) {
             return response.text().then((_responseText) => {
             let result401: any = null;
-            let resultData401 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result401 = ErrorDto.fromJS(resultData401);
+            result401 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
             return throwException("Unauthorized", status, _responseText, _headers, result401);
             });
         } else if (status === 403) {
             return response.text().then((_responseText) => {
             let result403: any = null;
-            let resultData403 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result403 = ErrorDto.fromJS(resultData403);
+            result403 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
             return throwException("Unauthorized", status, _responseText, _headers, result403);
             });
         } else if (status === 500) {
             return response.text().then((_responseText) => {
             let result500: any = null;
-            let resultData500 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result500 = ErrorDto.fromJS(resultData500);
+            result500 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
             return throwException("Internal Server Error", status, _responseText, _headers, result500);
             });
         } else if (status !== 200 && status !== 204) {
@@ -699,36 +647,31 @@ export class UserServiceProxy {
         if (status === 200) {
             return response.text().then((_responseText) => {
             let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = resultData200 !== undefined ? resultData200 : <any>null;
+            result200 = _responseText === "" ? null : <any>JSON.parse(_responseText, this.jsonParseReviver);
             return result200;
             });
         } else if (status === 400) {
             return response.text().then((_responseText) => {
             let result400: any = null;
-            let resultData400 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result400 = ErrorDto.fromJS(resultData400);
+            result400 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
             return throwException("Invalid input param", status, _responseText, _headers, result400);
             });
         } else if (status === 401) {
             return response.text().then((_responseText) => {
             let result401: any = null;
-            let resultData401 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result401 = ErrorDto.fromJS(resultData401);
+            result401 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
             return throwException("Unauthorized", status, _responseText, _headers, result401);
             });
         } else if (status === 403) {
             return response.text().then((_responseText) => {
             let result403: any = null;
-            let resultData403 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result403 = ErrorDto.fromJS(resultData403);
+            result403 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
             return throwException("Unauthorized", status, _responseText, _headers, result403);
             });
         } else if (status === 500) {
             return response.text().then((_responseText) => {
             let result500: any = null;
-            let resultData500 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result500 = ErrorDto.fromJS(resultData500);
+            result500 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
             return throwException("Internal Server Error", status, _responseText, _headers, result500);
             });
         } else if (status !== 200 && status !== 204) {
@@ -769,15 +712,7 @@ export class UserServiceProxy {
         if (status === 200) {
             return response.text().then((_responseText) => {
             let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            if (Array.isArray(resultData200)) {
-                result200 = [] as any;
-                for (let item of resultData200)
-                    result200!.push(Anonymous.fromJS(item));
-            }
-            else {
-                result200 = <any>null;
-            }
+            result200 = _responseText === "" ? null : <Anonymous[]>JSON.parse(_responseText, this.jsonParseReviver);
             return result200;
             });
         } else if (status !== 200 && status !== 204) {
@@ -819,15 +754,7 @@ export class UserServiceProxy {
         if (status === 200) {
             return response.text().then((_responseText) => {
             let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            if (Array.isArray(resultData200)) {
-                result200 = [] as any;
-                for (let item of resultData200)
-                    result200!.push(Anonymous2.fromJS(item));
-            }
-            else {
-                result200 = <any>null;
-            }
+            result200 = _responseText === "" ? null : <Anonymous2[]>JSON.parse(_responseText, this.jsonParseReviver);
             return result200;
             });
         } else if (status !== 200 && status !== 204) {
@@ -864,15 +791,7 @@ export class UserServiceProxy {
         if (status === 200) {
             return response.text().then((_responseText) => {
             let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            if (Array.isArray(resultData200)) {
-                result200 = [] as any;
-                for (let item of resultData200)
-                    result200!.push(item);
-            }
-            else {
-                result200 = <any>null;
-            }
+            result200 = _responseText === "" ? null : <any[]>JSON.parse(_responseText, this.jsonParseReviver);
             return result200;
             });
         } else if (status !== 200 && status !== 204) {
@@ -915,36 +834,31 @@ export class UserServiceProxy {
         if (status === 200) {
             return response.text().then((_responseText) => {
             let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = EkycResponse.fromJS(resultData200);
+            result200 = _responseText === "" ? null : <EkycResponse>JSON.parse(_responseText, this.jsonParseReviver);
             return result200;
             });
         } else if (status === 400) {
             return response.text().then((_responseText) => {
             let result400: any = null;
-            let resultData400 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result400 = ErrorDto.fromJS(resultData400);
+            result400 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
             return throwException("Invalid input param", status, _responseText, _headers, result400);
             });
         } else if (status === 401) {
             return response.text().then((_responseText) => {
             let result401: any = null;
-            let resultData401 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result401 = ErrorDto.fromJS(resultData401);
+            result401 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
             return throwException("Unauthorized", status, _responseText, _headers, result401);
             });
         } else if (status === 403) {
             return response.text().then((_responseText) => {
             let result403: any = null;
-            let resultData403 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result403 = ErrorDto.fromJS(resultData403);
+            result403 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
             return throwException("Unauthorized", status, _responseText, _headers, result403);
             });
         } else if (status === 500) {
             return response.text().then((_responseText) => {
             let result500: any = null;
-            let resultData500 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result500 = ErrorDto.fromJS(resultData500);
+            result500 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
             return throwException("Internal Server Error", status, _responseText, _headers, result500);
             });
         } else if (status !== 200 && status !== 204) {
@@ -982,36 +896,31 @@ export class UserServiceProxy {
         if (status === 200) {
             return response.text().then((_responseText) => {
             let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = EkycResponse.fromJS(resultData200);
+            result200 = _responseText === "" ? null : <EkycResponse>JSON.parse(_responseText, this.jsonParseReviver);
             return result200;
             });
         } else if (status === 400) {
             return response.text().then((_responseText) => {
             let result400: any = null;
-            let resultData400 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result400 = ErrorDto.fromJS(resultData400);
+            result400 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
             return throwException("Invalid input param", status, _responseText, _headers, result400);
             });
         } else if (status === 401) {
             return response.text().then((_responseText) => {
             let result401: any = null;
-            let resultData401 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result401 = ErrorDto.fromJS(resultData401);
+            result401 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
             return throwException("Unauthorized", status, _responseText, _headers, result401);
             });
         } else if (status === 403) {
             return response.text().then((_responseText) => {
             let result403: any = null;
-            let resultData403 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result403 = ErrorDto.fromJS(resultData403);
+            result403 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
             return throwException("Unauthorized", status, _responseText, _headers, result403);
             });
         } else if (status === 500) {
             return response.text().then((_responseText) => {
             let result500: any = null;
-            let resultData500 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result500 = ErrorDto.fromJS(resultData500);
+            result500 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
             return throwException("Internal Server Error", status, _responseText, _headers, result500);
             });
         } else if (status !== 200 && status !== 204) {
@@ -1054,36 +963,31 @@ export class UserServiceProxy {
         if (status === 200) {
             return response.text().then((_responseText) => {
             let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = EkycResponse.fromJS(resultData200);
+            result200 = _responseText === "" ? null : <EkycResponse>JSON.parse(_responseText, this.jsonParseReviver);
             return result200;
             });
         } else if (status === 400) {
             return response.text().then((_responseText) => {
             let result400: any = null;
-            let resultData400 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result400 = ErrorDto.fromJS(resultData400);
+            result400 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
             return throwException("Invalid input param", status, _responseText, _headers, result400);
             });
         } else if (status === 401) {
             return response.text().then((_responseText) => {
             let result401: any = null;
-            let resultData401 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result401 = ErrorDto.fromJS(resultData401);
+            result401 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
             return throwException("Unauthorized", status, _responseText, _headers, result401);
             });
         } else if (status === 403) {
             return response.text().then((_responseText) => {
             let result403: any = null;
-            let resultData403 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result403 = ErrorDto.fromJS(resultData403);
+            result403 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
             return throwException("Unauthorized", status, _responseText, _headers, result403);
             });
         } else if (status === 500) {
             return response.text().then((_responseText) => {
             let result500: any = null;
-            let resultData500 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result500 = ErrorDto.fromJS(resultData500);
+            result500 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
             return throwException("Internal Server Error", status, _responseText, _headers, result500);
             });
         } else if (status !== 200 && status !== 204) {
@@ -1135,36 +1039,31 @@ export class KbfinaServiceProxy {
         if (status === 200) {
             return response.text().then((_responseText) => {
             let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = UserInfo.fromJS(resultData200);
+            result200 = _responseText === "" ? null : <UserInfo>JSON.parse(_responseText, this.jsonParseReviver);
             return result200;
             });
         } else if (status === 400) {
             return response.text().then((_responseText) => {
             let result400: any = null;
-            let resultData400 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result400 = ErrorDto.fromJS(resultData400);
+            result400 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
             return throwException("Invalid input param", status, _responseText, _headers, result400);
             });
         } else if (status === 401) {
             return response.text().then((_responseText) => {
             let result401: any = null;
-            let resultData401 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result401 = ErrorDto.fromJS(resultData401);
+            result401 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
             return throwException("Unauthorized", status, _responseText, _headers, result401);
             });
         } else if (status === 403) {
             return response.text().then((_responseText) => {
             let result403: any = null;
-            let resultData403 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result403 = ErrorDto.fromJS(resultData403);
+            result403 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
             return throwException("Unauthorized", status, _responseText, _headers, result403);
             });
         } else if (status === 500) {
             return response.text().then((_responseText) => {
             let result500: any = null;
-            let resultData500 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result500 = ErrorDto.fromJS(resultData500);
+            result500 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
             return throwException("Internal Server Error", status, _responseText, _headers, result500);
             });
         } else if (status !== 200 && status !== 204) {
@@ -1210,36 +1109,31 @@ export class KbfinaServiceProxy {
         if (status === 200) {
             return response.text().then((_responseText) => {
             let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = UserInfoResponse.fromJS(resultData200);
+            result200 = _responseText === "" ? null : <UserInfoResponse>JSON.parse(_responseText, this.jsonParseReviver);
             return result200;
             });
         } else if (status === 400) {
             return response.text().then((_responseText) => {
             let result400: any = null;
-            let resultData400 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result400 = ErrorDto.fromJS(resultData400);
+            result400 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
             return throwException("Invalid input param", status, _responseText, _headers, result400);
             });
         } else if (status === 401) {
             return response.text().then((_responseText) => {
             let result401: any = null;
-            let resultData401 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result401 = ErrorDto.fromJS(resultData401);
+            result401 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
             return throwException("Unauthorized", status, _responseText, _headers, result401);
             });
         } else if (status === 403) {
             return response.text().then((_responseText) => {
             let result403: any = null;
-            let resultData403 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result403 = ErrorDto.fromJS(resultData403);
+            result403 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
             return throwException("Unauthorized", status, _responseText, _headers, result403);
             });
         } else if (status === 500) {
             return response.text().then((_responseText) => {
             let result500: any = null;
-            let resultData500 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result500 = ErrorDto.fromJS(resultData500);
+            result500 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
             return throwException("Internal Server Error", status, _responseText, _headers, result500);
             });
         } else if (status !== 200 && status !== 204) {
@@ -1280,36 +1174,31 @@ export class KbfinaServiceProxy {
         if (status === 200) {
             return response.text().then((_responseText) => {
             let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = UserInfo.fromJS(resultData200);
+            result200 = _responseText === "" ? null : <UserInfo>JSON.parse(_responseText, this.jsonParseReviver);
             return result200;
             });
         } else if (status === 400) {
             return response.text().then((_responseText) => {
             let result400: any = null;
-            let resultData400 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result400 = ErrorDto.fromJS(resultData400);
+            result400 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
             return throwException("Invalid input param", status, _responseText, _headers, result400);
             });
         } else if (status === 401) {
             return response.text().then((_responseText) => {
             let result401: any = null;
-            let resultData401 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result401 = ErrorDto.fromJS(resultData401);
+            result401 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
             return throwException("Unauthorized", status, _responseText, _headers, result401);
             });
         } else if (status === 403) {
             return response.text().then((_responseText) => {
             let result403: any = null;
-            let resultData403 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result403 = ErrorDto.fromJS(resultData403);
+            result403 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
             return throwException("Unauthorized", status, _responseText, _headers, result403);
             });
         } else if (status === 500) {
             return response.text().then((_responseText) => {
             let result500: any = null;
-            let resultData500 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result500 = ErrorDto.fromJS(resultData500);
+            result500 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
             return throwException("Internal Server Error", status, _responseText, _headers, result500);
             });
         } else if (status !== 200 && status !== 204) {
@@ -1362,36 +1251,31 @@ export class FilesServiceProxy {
         if (status === 200) {
             return response.text().then((_responseText) => {
             let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = PresignedUrlResponse.fromJS(resultData200);
+            result200 = _responseText === "" ? null : <PresignedUrlResponse>JSON.parse(_responseText, this.jsonParseReviver);
             return result200;
             });
         } else if (status === 400) {
             return response.text().then((_responseText) => {
             let result400: any = null;
-            let resultData400 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result400 = ErrorDto.fromJS(resultData400);
+            result400 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
             return throwException("Invalid input param", status, _responseText, _headers, result400);
             });
         } else if (status === 401) {
             return response.text().then((_responseText) => {
             let result401: any = null;
-            let resultData401 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result401 = ErrorDto.fromJS(resultData401);
+            result401 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
             return throwException("Unauthorized", status, _responseText, _headers, result401);
             });
         } else if (status === 403) {
             return response.text().then((_responseText) => {
             let result403: any = null;
-            let resultData403 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result403 = ErrorDto.fromJS(resultData403);
+            result403 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
             return throwException("Unauthorized", status, _responseText, _headers, result403);
             });
         } else if (status === 500) {
             return response.text().then((_responseText) => {
             let result500: any = null;
-            let resultData500 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result500 = ErrorDto.fromJS(resultData500);
+            result500 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
             return throwException("Internal Server Error", status, _responseText, _headers, result500);
             });
         } else if (status !== 200 && status !== 204) {
@@ -1444,36 +1328,31 @@ export class GpayServiceProxy {
         if (status === 200) {
             return response.text().then((_responseText) => {
             let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = LinkedAccountTransferResponse.fromJS(resultData200);
+            result200 = _responseText === "" ? null : <LinkedAccountTransferResponse>JSON.parse(_responseText, this.jsonParseReviver);
             return result200;
             });
         } else if (status === 400) {
             return response.text().then((_responseText) => {
             let result400: any = null;
-            let resultData400 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result400 = ErrorDto.fromJS(resultData400);
+            result400 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
             return throwException("Invalid input param", status, _responseText, _headers, result400);
             });
         } else if (status === 401) {
             return response.text().then((_responseText) => {
             let result401: any = null;
-            let resultData401 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result401 = ErrorDto.fromJS(resultData401);
+            result401 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
             return throwException("Unauthorized", status, _responseText, _headers, result401);
             });
         } else if (status === 403) {
             return response.text().then((_responseText) => {
             let result403: any = null;
-            let resultData403 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result403 = ErrorDto.fromJS(resultData403);
+            result403 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
             return throwException("Unauthorized", status, _responseText, _headers, result403);
             });
         } else if (status === 500) {
             return response.text().then((_responseText) => {
             let result500: any = null;
-            let resultData500 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result500 = ErrorDto.fromJS(resultData500);
+            result500 = _responseText === "" ? null : <ErrorDto>JSON.parse(_responseText, this.jsonParseReviver);
             return throwException("Internal Server Error", status, _responseText, _headers, result500);
             });
         } else if (status !== 200 && status !== 204) {
@@ -1541,15 +1420,7 @@ export class ReportServiceProxy {
         if (status === 200) {
             return response.text().then((_responseText) => {
             let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            if (Array.isArray(resultData200)) {
-                result200 = [] as any;
-                for (let item of resultData200)
-                    result200!.push(Anonymous3.fromJS(item));
-            }
-            else {
-                result200 = <any>null;
-            }
+            result200 = _responseText === "" ? null : <Anonymous3[]>JSON.parse(_responseText, this.jsonParseReviver);
             return result200;
             });
         } else if (status !== 200 && status !== 204) {
@@ -1621,15 +1492,7 @@ export class ReportServiceProxy {
         if (status === 200) {
             return response.text().then((_responseText) => {
             let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            if (Array.isArray(resultData200)) {
-                result200 = [] as any;
-                for (let item of resultData200)
-                    result200!.push(Anonymous4.fromJS(item));
-            }
-            else {
-                result200 = <any>null;
-            }
+            result200 = _responseText === "" ? null : <Anonymous4[]>JSON.parse(_responseText, this.jsonParseReviver);
             return result200;
             });
         } else if (status !== 200 && status !== 204) {
@@ -1691,15 +1554,7 @@ export class ReportServiceProxy {
         if (status === 200) {
             return response.text().then((_responseText) => {
             let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            if (Array.isArray(resultData200)) {
-                result200 = [] as any;
-                for (let item of resultData200)
-                    result200!.push(Anonymous5.fromJS(item));
-            }
-            else {
-                result200 = <any>null;
-            }
+            result200 = _responseText === "" ? null : <Anonymous5[]>JSON.parse(_responseText, this.jsonParseReviver);
             return result200;
             });
         } else if (status !== 200 && status !== 204) {
@@ -1752,15 +1607,7 @@ export class InquiryServiceProxy {
         if (status === 200) {
             return response.text().then((_responseText) => {
             let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            if (Array.isArray(resultData200)) {
-                result200 = [] as any;
-                for (let item of resultData200)
-                    result200!.push(Anonymous6.fromJS(item));
-            }
-            else {
-                result200 = <any>null;
-            }
+            result200 = _responseText === "" ? null : <Anonymous6[]>JSON.parse(_responseText, this.jsonParseReviver);
             return result200;
             });
         } else if (status !== 200 && status !== 204) {
@@ -1802,15 +1649,7 @@ export class InquiryServiceProxy {
         if (status === 200) {
             return response.text().then((_responseText) => {
             let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            if (Array.isArray(resultData200)) {
-                result200 = [] as any;
-                for (let item of resultData200)
-                    result200!.push(Anonymous7.fromJS(item));
-            }
-            else {
-                result200 = <any>null;
-            }
+            result200 = _responseText === "" ? null : <Anonymous7[]>JSON.parse(_responseText, this.jsonParseReviver);
             return result200;
             });
         } else if (status !== 200 && status !== 204) {
@@ -1863,8 +1702,7 @@ export class InqfdsServiceProxy {
         if (status === 200) {
             return response.text().then((_responseText) => {
             let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = Anonymous8.fromJS(resultData200);
+            result200 = _responseText === "" ? null : <Anonymous8>JSON.parse(_responseText, this.jsonParseReviver);
             return result200;
             });
         } else if (status !== 200 && status !== 204) {
@@ -1932,15 +1770,7 @@ export class ReportfdsServiceProxy {
         if (status === 200) {
             return response.text().then((_responseText) => {
             let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            if (Array.isArray(resultData200)) {
-                result200 = [] as any;
-                for (let item of resultData200)
-                    result200!.push(Anonymous9.fromJS(item));
-            }
-            else {
-                result200 = <any>null;
-            }
+            result200 = _responseText === "" ? null : <Anonymous9[]>JSON.parse(_responseText, this.jsonParseReviver);
             return result200;
             });
         } else if (status !== 200 && status !== 204) {
@@ -1997,15 +1827,7 @@ export class ReportfdsServiceProxy {
         if (status === 200) {
             return response.text().then((_responseText) => {
             let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            if (Array.isArray(resultData200)) {
-                result200 = [] as any;
-                for (let item of resultData200)
-                    result200!.push(Anonymous10.fromJS(item));
-            }
-            else {
-                result200 = <any>null;
-            }
+            result200 = _responseText === "" ? null : <Anonymous10[]>JSON.parse(_responseText, this.jsonParseReviver);
             return result200;
             });
         } else if (status !== 200 && status !== 204) {
@@ -2062,15 +1884,7 @@ export class ReportfdsServiceProxy {
         if (status === 200) {
             return response.text().then((_responseText) => {
             let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            if (Array.isArray(resultData200)) {
-                result200 = [] as any;
-                for (let item of resultData200)
-                    result200!.push(Anonymous11.fromJS(item));
-            }
-            else {
-                result200 = <any>null;
-            }
+            result200 = _responseText === "" ? null : <Anonymous11[]>JSON.parse(_responseText, this.jsonParseReviver);
             return result200;
             });
         } else if (status !== 200 && status !== 204) {
@@ -2127,15 +1941,7 @@ export class ReportfdsServiceProxy {
         if (status === 200) {
             return response.text().then((_responseText) => {
             let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            if (Array.isArray(resultData200)) {
-                result200 = [] as any;
-                for (let item of resultData200)
-                    result200!.push(Anonymous12.fromJS(item));
-            }
-            else {
-                result200 = <any>null;
-            }
+            result200 = _responseText === "" ? null : <Anonymous12[]>JSON.parse(_responseText, this.jsonParseReviver);
             return result200;
             });
         } else if (status !== 200 && status !== 204) {
@@ -2192,15 +1998,7 @@ export class ReportfdsServiceProxy {
         if (status === 200) {
             return response.text().then((_responseText) => {
             let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            if (Array.isArray(resultData200)) {
-                result200 = [] as any;
-                for (let item of resultData200)
-                    result200!.push(Anonymous13.fromJS(item));
-            }
-            else {
-                result200 = <any>null;
-            }
+            result200 = _responseText === "" ? null : <Anonymous13[]>JSON.parse(_responseText, this.jsonParseReviver);
             return result200;
             });
         } else if (status !== 200 && status !== 204) {
@@ -2262,15 +2060,7 @@ export class ReportfdsServiceProxy {
         if (status === 200) {
             return response.text().then((_responseText) => {
             let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            if (Array.isArray(resultData200)) {
-                result200 = [] as any;
-                for (let item of resultData200)
-                    result200!.push(Anonymous14.fromJS(item));
-            }
-            else {
-                result200 = <any>null;
-            }
+            result200 = _responseText === "" ? null : <Anonymous14[]>JSON.parse(_responseText, this.jsonParseReviver);
             return result200;
             });
         } else if (status !== 200 && status !== 204) {
@@ -2332,15 +2122,7 @@ export class ReportfdsServiceProxy {
         if (status === 200) {
             return response.text().then((_responseText) => {
             let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            if (Array.isArray(resultData200)) {
-                result200 = [] as any;
-                for (let item of resultData200)
-                    result200!.push(Anonymous15.fromJS(item));
-            }
-            else {
-                result200 = <any>null;
-            }
+            result200 = _responseText === "" ? null : <Anonymous15[]>JSON.parse(_responseText, this.jsonParseReviver);
             return result200;
             });
         } else if (status !== 200 && status !== 204) {
@@ -2352,48 +2134,7 @@ export class ReportfdsServiceProxy {
     }
 }
 
-export class FieldError implements IFieldError {
-    /** error code */
-    code!: string;
-    /** error message */
-    message!: string;
-    /** parameter name that is not correct */
-    param!: string;
-
-    constructor(data?: IFieldError) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.code = _data["code"];
-            this.message = _data["message"];
-            this.param = _data["param"];
-        }
-    }
-
-    static fromJS(data: any): FieldError {
-        data = typeof data === 'object' ? data : {};
-        let result = new FieldError();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["code"] = this.code;
-        data["message"] = this.message;
-        data["param"] = this.param;
-        return data; 
-    }
-}
-
-export interface IFieldError {
+export interface FieldError {
     /** error code */
     code: string;
     /** error message */
@@ -2402,56 +2143,7 @@ export interface IFieldError {
     param: string;
 }
 
-export class ErrorDto implements IErrorDto {
-    /** error code */
-    code!: string;
-    /** error message */
-    message!: string;
-    /** error message */
-    errors!: FieldError[];
-
-    constructor(data?: IErrorDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.code = _data["code"];
-            this.message = _data["message"];
-            if (Array.isArray(_data["errors"])) {
-                this.errors = [] as any;
-                for (let item of _data["errors"])
-                    this.errors!.push(FieldError.fromJS(item));
-            }
-        }
-    }
-
-    static fromJS(data: any): ErrorDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new ErrorDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["code"] = this.code;
-        data["message"] = this.message;
-        if (Array.isArray(this.errors)) {
-            data["errors"] = [];
-            for (let item of this.errors)
-                data["errors"].push(item.toJSON());
-        }
-        return data; 
-    }
-}
-
-export interface IErrorDto {
+export interface ErrorDto {
     /** error code */
     code: string;
     /** error message */
@@ -2460,136 +2152,18 @@ export interface IErrorDto {
     errors: FieldError[];
 }
 
-export class Address implements IAddress {
-    /** specific address include house number, road, floor of building */
-    address!: string;
-    /** sub-district */
-    subDistrict!: string;
-    /** district */
-    district!: string;
-    /** province */
-    province!: string;
-
-    constructor(data?: IAddress) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.address = _data["address"];
-            this.subDistrict = _data["sub-district"];
-            this.district = _data["district"];
-            this.province = _data["province"];
-        }
-    }
-
-    static fromJS(data: any): Address {
-        data = typeof data === 'object' ? data : {};
-        let result = new Address();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["address"] = this.address;
-        data["sub-district"] = this.subDistrict;
-        data["district"] = this.district;
-        data["province"] = this.province;
-        return data; 
-    }
-}
-
-export interface IAddress {
+export interface Address {
     /** specific address include house number, road, floor of building */
     address: string;
     /** sub-district */
-    subDistrict: string;
+    "sub-district": string;
     /** district */
     district: string;
     /** province */
     province: string;
 }
 
-export class UserInfo implements IUserInfo {
-    /** id card no */
-    idNo!: string;
-    /** type of id card */
-    idType!: UserInfoIdType;
-    /** phone number of user */
-    fullName!: string;
-    /** gender */
-    gender!: UserInfoGender;
-    /** que quan */
-    residence!: Address;
-    /** dia chi thuong tru */
-    contactAddress!: Address;
-    /** issue date of id card, format is ''yyyyMMdd' */
-    idCardIssueDate!: string;
-    /** issue place of id card */
-    idCardIssuePlace!: string;
-    /** issue place of id card */
-    idCardExpiredDate!: string;
-    /** the birthday of KBFINA user, format is 'yyyyMMdd' */
-    birthday!: string;
-    /** url link to avatar */
-    avatarUrl!: string;
-
-    constructor(data?: IUserInfo) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.idNo = _data["idNo"];
-            this.idType = _data["idType"];
-            this.fullName = _data["fullName"];
-            this.gender = _data["gender"];
-            this.residence = _data["residence"] ? Address.fromJS(_data["residence"]) : <any>undefined;
-            this.contactAddress = _data["contactAddress"] ? Address.fromJS(_data["contactAddress"]) : <any>undefined;
-            this.idCardIssueDate = _data["idCardIssueDate"];
-            this.idCardIssuePlace = _data["idCardIssuePlace"];
-            this.idCardExpiredDate = _data["idCardExpiredDate"];
-            this.birthday = _data["birthday"];
-            this.avatarUrl = _data["avatarUrl"];
-        }
-    }
-
-    static fromJS(data: any): UserInfo {
-        data = typeof data === 'object' ? data : {};
-        let result = new UserInfo();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["idNo"] = this.idNo;
-        data["idType"] = this.idType;
-        data["fullName"] = this.fullName;
-        data["gender"] = this.gender;
-        data["residence"] = this.residence ? this.residence.toJSON() : <any>undefined;
-        data["contactAddress"] = this.contactAddress ? this.contactAddress.toJSON() : <any>undefined;
-        data["idCardIssueDate"] = this.idCardIssueDate;
-        data["idCardIssuePlace"] = this.idCardIssuePlace;
-        data["idCardExpiredDate"] = this.idCardExpiredDate;
-        data["birthday"] = this.birthday;
-        data["avatarUrl"] = this.avatarUrl;
-        return data; 
-    }
-}
-
-export interface IUserInfo {
+export interface UserInfo {
     /** id card no */
     idNo: string;
     /** type of id card */
@@ -2614,80 +2188,7 @@ export interface IUserInfo {
     avatarUrl: string;
 }
 
-export class UserInfoUpdateRequest implements IUserInfoUpdateRequest {
-    /** id card no */
-    idNo!: string;
-    /** type of id card */
-    idType!: UserInfoUpdateRequestIdType;
-    /** phone number of user */
-    fullName!: string;
-    /** gender */
-    gender!: UserInfoUpdateRequestGender;
-    /** que quan */
-    residence!: Address;
-    /** dia chi thuong tru */
-    contactAddress!: Address;
-    /** issue date of id card, format is ''yyyyMMdd' */
-    idCardIssueDate!: string;
-    /** issue place of id card */
-    idCardIssuePlace!: string;
-    /** issue place of id card */
-    idCardExpiredDate!: string;
-    /** the birthday of KBFINA user, format is 'yyyyMMdd' */
-    birthday!: string;
-    /** url link to avatar */
-    avatarUrl!: string;
-
-    constructor(data?: IUserInfoUpdateRequest) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.idNo = _data["idNo"];
-            this.idType = _data["idType"];
-            this.fullName = _data["fullName"];
-            this.gender = _data["gender"];
-            this.residence = _data["residence"] ? Address.fromJS(_data["residence"]) : <any>undefined;
-            this.contactAddress = _data["contactAddress"] ? Address.fromJS(_data["contactAddress"]) : <any>undefined;
-            this.idCardIssueDate = _data["idCardIssueDate"];
-            this.idCardIssuePlace = _data["idCardIssuePlace"];
-            this.idCardExpiredDate = _data["idCardExpiredDate"];
-            this.birthday = _data["birthday"];
-            this.avatarUrl = _data["avatarUrl"];
-        }
-    }
-
-    static fromJS(data: any): UserInfoUpdateRequest {
-        data = typeof data === 'object' ? data : {};
-        let result = new UserInfoUpdateRequest();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["idNo"] = this.idNo;
-        data["idType"] = this.idType;
-        data["fullName"] = this.fullName;
-        data["gender"] = this.gender;
-        data["residence"] = this.residence ? this.residence.toJSON() : <any>undefined;
-        data["contactAddress"] = this.contactAddress ? this.contactAddress.toJSON() : <any>undefined;
-        data["idCardIssueDate"] = this.idCardIssueDate;
-        data["idCardIssuePlace"] = this.idCardIssuePlace;
-        data["idCardExpiredDate"] = this.idCardExpiredDate;
-        data["birthday"] = this.birthday;
-        data["avatarUrl"] = this.avatarUrl;
-        return data; 
-    }
-}
-
-export interface IUserInfoUpdateRequest {
+export interface UserInfoUpdateRequest {
     /** id card no */
     idNo: string;
     /** type of id card */
@@ -2712,76 +2213,7 @@ export interface IUserInfoUpdateRequest {
     avatarUrl: string;
 }
 
-export class UserRegistrationRequest implements IUserRegistrationRequest {
-    /** uniq username or mobile phone or email */
-    username!: string;
-    /** type of username */
-    usernameType!: UserRegistrationRequestUsernameType;
-    /** phone number of user */
-    phoneNo!: string;
-    /** phone number of user */
-    email!: string;
-    /** password */
-    password!: string;
-    /** surname */
-    surname!: string;
-    /** given name */
-    givenName!: string;
-    /** the birthday of KBFINA user, format is 'yyyyMMdd' */
-    birthday!: string;
-    /** link to avatar image. image can be uploaded to S3 by api presignedUrl */
-    avatarUrl!: string;
-    /** otp key receive when verify */
-    otpKey!: string;
-
-    constructor(data?: IUserRegistrationRequest) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.username = _data["username"];
-            this.usernameType = _data["usernameType"];
-            this.phoneNo = _data["phoneNo"];
-            this.email = _data["email"];
-            this.password = _data["password"];
-            this.surname = _data["surname"];
-            this.givenName = _data["givenName"];
-            this.birthday = _data["birthday"];
-            this.avatarUrl = _data["avatarUrl"];
-            this.otpKey = _data["otpKey"];
-        }
-    }
-
-    static fromJS(data: any): UserRegistrationRequest {
-        data = typeof data === 'object' ? data : {};
-        let result = new UserRegistrationRequest();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["username"] = this.username;
-        data["usernameType"] = this.usernameType;
-        data["phoneNo"] = this.phoneNo;
-        data["email"] = this.email;
-        data["password"] = this.password;
-        data["surname"] = this.surname;
-        data["givenName"] = this.givenName;
-        data["birthday"] = this.birthday;
-        data["avatarUrl"] = this.avatarUrl;
-        data["otpKey"] = this.otpKey;
-        return data; 
-    }
-}
-
-export interface IUserRegistrationRequest {
+export interface UserRegistrationRequest {
     /** uniq username or mobile phone or email */
     username: string;
     /** type of username */
@@ -2804,68 +2236,7 @@ export interface IUserRegistrationRequest {
     otpKey: string;
 }
 
-export class UserInfoResponse implements IUserInfoResponse {
-    /** the unique id of KBFINA user */
-    id!: number;
-    /** username that used for logging in KBFINA System */
-    username!: string;
-    /** surname */
-    surname!: string;
-    /** given name */
-    givenName!: string;
-    /** email used for contac */
-    email!: string;
-    /** phone number of KBFINA user */
-    phoneNumber!: string;
-    /** the birthday of KBFINA user, format is 'yyyyMMdd' */
-    birthday!: string;
-    /** link to avatar image */
-    avatarUrl!: string;
-
-    constructor(data?: IUserInfoResponse) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.id = _data["id"];
-            this.username = _data["username"];
-            this.surname = _data["surname"];
-            this.givenName = _data["givenName"];
-            this.email = _data["email"];
-            this.phoneNumber = _data["phoneNumber"];
-            this.birthday = _data["birthday"];
-            this.avatarUrl = _data["avatarUrl"];
-        }
-    }
-
-    static fromJS(data: any): UserInfoResponse {
-        data = typeof data === 'object' ? data : {};
-        let result = new UserInfoResponse();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id;
-        data["username"] = this.username;
-        data["surname"] = this.surname;
-        data["givenName"] = this.givenName;
-        data["email"] = this.email;
-        data["phoneNumber"] = this.phoneNumber;
-        data["birthday"] = this.birthday;
-        data["avatarUrl"] = this.avatarUrl;
-        return data; 
-    }
-}
-
-export interface IUserInfoResponse {
+export interface UserInfoResponse {
     /** the unique id of KBFINA user */
     id: number;
     /** username that used for logging in KBFINA System */
@@ -2884,47 +2255,7 @@ export interface IUserInfoResponse {
     avatarUrl: string;
 }
 
-export class LoginResponse implements ILoginResponse {
-    /** token to access all other APIs in system */
-    accessToken!: string;
-    /** token to renew access_token when it's expire */
-    refreshToken!: string;
-    userInfo!: UserInfoResponse;
-
-    constructor(data?: ILoginResponse) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.accessToken = _data["accessToken"];
-            this.refreshToken = _data["refreshToken"];
-            this.userInfo = _data["userInfo"] ? UserInfoResponse.fromJS(_data["userInfo"]) : <any>undefined;
-        }
-    }
-
-    static fromJS(data: any): LoginResponse {
-        data = typeof data === 'object' ? data : {};
-        let result = new LoginResponse();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["accessToken"] = this.accessToken;
-        data["refreshToken"] = this.refreshToken;
-        data["userInfo"] = this.userInfo ? this.userInfo.toJSON() : <any>undefined;
-        return data; 
-    }
-}
-
-export interface ILoginResponse {
+export interface LoginResponse {
     /** token to access all other APIs in system */
     accessToken: string;
     /** token to renew access_token when it's expire */
@@ -2932,134 +2263,20 @@ export interface ILoginResponse {
     userInfo: UserInfoResponse;
 }
 
-export class PresignedUrlRequest implements IPresignedUrlRequest {
-    /** type of upload files */
-    category!: PresignedUrlRequestCategory;
-    ekycImageType!: PresignedUrlRequestEkycImageType;
-
-    constructor(data?: IPresignedUrlRequest) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.category = _data["category"];
-            this.ekycImageType = _data["ekycImageType"];
-        }
-    }
-
-    static fromJS(data: any): PresignedUrlRequest {
-        data = typeof data === 'object' ? data : {};
-        let result = new PresignedUrlRequest();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["category"] = this.category;
-        data["ekycImageType"] = this.ekycImageType;
-        return data; 
-    }
-}
-
-export interface IPresignedUrlRequest {
+export interface PresignedUrlRequest {
     /** type of upload files */
     category: PresignedUrlRequestCategory;
     ekycImageType: PresignedUrlRequestEkycImageType;
 }
 
-export class PresignedUrlResponse implements IPresignedUrlResponse {
-    /** url for uploading */
-    url!: string;
-    /** file Id for using in another api like ekyc */
-    fileId!: string;
-
-    constructor(data?: IPresignedUrlResponse) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.url = _data["url"];
-            this.fileId = _data["fileId"];
-        }
-    }
-
-    static fromJS(data: any): PresignedUrlResponse {
-        data = typeof data === 'object' ? data : {};
-        let result = new PresignedUrlResponse();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["url"] = this.url;
-        data["fileId"] = this.fileId;
-        return data; 
-    }
-}
-
-export interface IPresignedUrlResponse {
+export interface PresignedUrlResponse {
     /** url for uploading */
     url: string;
     /** file Id for using in another api like ekyc */
     fileId: string;
 }
 
-export class EkycRequest implements IEkycRequest {
-    /** file id of front id card image that is uploaded via presigned url */
-    idCardFrontFileId!: string;
-    /** file id of back id card image that is uploaded via presigned url */
-    idCardBackFileId!: string;
-    /** type of id card */
-    type!: EkycRequestType;
-
-    constructor(data?: IEkycRequest) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.idCardFrontFileId = _data["idCardFrontFileId"];
-            this.idCardBackFileId = _data["idCardBackFileId"];
-            this.type = _data["type"];
-        }
-    }
-
-    static fromJS(data: any): EkycRequest {
-        data = typeof data === 'object' ? data : {};
-        let result = new EkycRequest();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["idCardFrontFileId"] = this.idCardFrontFileId;
-        data["idCardBackFileId"] = this.idCardBackFileId;
-        data["type"] = this.type;
-        return data; 
-    }
-}
-
-export interface IEkycRequest {
+export interface EkycRequest {
     /** file id of front id card image that is uploaded via presigned url */
     idCardFrontFileId: string;
     /** file id of back id card image that is uploaded via presigned url */
@@ -3068,84 +2285,7 @@ export interface IEkycRequest {
     type: EkycRequestType;
 }
 
-export class EkycResponse implements IEkycResponse {
-    /** ekyc id */
-    id!: string;
-    /** so the */
-    identity!: string;
-    /** ten day du */
-    fullName!: string;
-    /** so dien thoai */
-    phoneNo!: string;
-    /** gioi tinh */
-    gender!: string;
-    /** loai giay to */
-    type!: string;
-    /** ngay sinh, format is yyyyMMdd */
-    birthDay!: string;
-    /** so ho chieu */
-    passportId!: string;
-    /** ngay het han,  format is yyyyMMdd */
-    expiredDate!: string;
-    /** ngay cap,  format is yyyyMMdd */
-    issueDate!: string;
-    /** noi cap phat giay to */
-    issuePlace!: string;
-    /** noi cu tru */
-    residence!: Residence;
-
-    constructor(data?: IEkycResponse) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.id = _data["id"];
-            this.identity = _data["identity"];
-            this.fullName = _data["fullName"];
-            this.phoneNo = _data["phoneNo"];
-            this.gender = _data["gender"];
-            this.type = _data["type"];
-            this.birthDay = _data["birthDay"];
-            this.passportId = _data["passportId"];
-            this.expiredDate = _data["expiredDate"];
-            this.issueDate = _data["issueDate"];
-            this.issuePlace = _data["issuePlace"];
-            this.residence = _data["residence"] ? Residence.fromJS(_data["residence"]) : <any>undefined;
-        }
-    }
-
-    static fromJS(data: any): EkycResponse {
-        data = typeof data === 'object' ? data : {};
-        let result = new EkycResponse();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id;
-        data["identity"] = this.identity;
-        data["fullName"] = this.fullName;
-        data["phoneNo"] = this.phoneNo;
-        data["gender"] = this.gender;
-        data["type"] = this.type;
-        data["birthDay"] = this.birthDay;
-        data["passportId"] = this.passportId;
-        data["expiredDate"] = this.expiredDate;
-        data["issueDate"] = this.issueDate;
-        data["issuePlace"] = this.issuePlace;
-        data["residence"] = this.residence ? this.residence.toJSON() : <any>undefined;
-        return data; 
-    }
-}
-
-export interface IEkycResponse {
+export interface EkycResponse {
     /** ekyc id */
     id: string;
     /** so the */
@@ -3172,85 +2312,12 @@ export interface IEkycResponse {
     residence: Residence;
 }
 
-export class RefreshTokenResponse implements IRefreshTokenResponse {
-    /** new access token to call API */
-    accessToken!: string;
-
-    constructor(data?: IRefreshTokenResponse) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.accessToken = _data["accessToken"];
-        }
-    }
-
-    static fromJS(data: any): RefreshTokenResponse {
-        data = typeof data === 'object' ? data : {};
-        let result = new RefreshTokenResponse();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["accessToken"] = this.accessToken;
-        return data; 
-    }
-}
-
-export interface IRefreshTokenResponse {
+export interface RefreshTokenResponse {
     /** new access token to call API */
     accessToken: string;
 }
 
-export class LinkAccountRequest implements ILinkAccountRequest {
-    type!: LinkAccountRequestType;
-    /** account Id of the linked account */
-    accountId!: string;
-    /** token to access to institution api or password to login to insitution */
-    credential!: string;
-
-    constructor(data?: ILinkAccountRequest) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.type = _data["type"];
-            this.accountId = _data["accountId"];
-            this.credential = _data["credential"];
-        }
-    }
-
-    static fromJS(data: any): LinkAccountRequest {
-        data = typeof data === 'object' ? data : {};
-        let result = new LinkAccountRequest();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["type"] = this.type;
-        data["accountId"] = this.accountId;
-        data["credential"] = this.credential;
-        return data; 
-    }
-}
-
-export interface ILinkAccountRequest {
+export interface LinkAccountRequest {
     type: LinkAccountRequestType;
     /** account Id of the linked account */
     accountId: string;
@@ -3258,47 +2325,7 @@ export interface ILinkAccountRequest {
     credential: string;
 }
 
-export class LinkAccountResponse implements ILinkAccountResponse {
-    /** uniq id of linked account */
-    id!: number;
-    type!: LinkAccountResponseType;
-    /** account Id of the linked account */
-    accountId!: string;
-
-    constructor(data?: ILinkAccountResponse) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.id = _data["id"];
-            this.type = _data["type"];
-            this.accountId = _data["accountId"];
-        }
-    }
-
-    static fromJS(data: any): LinkAccountResponse {
-        data = typeof data === 'object' ? data : {};
-        let result = new LinkAccountResponse();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id;
-        data["type"] = this.type;
-        data["accountId"] = this.accountId;
-        return data; 
-    }
-}
-
-export interface ILinkAccountResponse {
+export interface LinkAccountResponse {
     /** uniq id of linked account */
     id: number;
     type: LinkAccountResponseType;
@@ -3306,48 +2333,7 @@ export interface ILinkAccountResponse {
     accountId: string;
 }
 
-export class LinkedAccountTransferRequest implements ILinkedAccountTransferRequest {
-    /** transfer from */
-    fromLinkedAccountId!: number;
-    /** transfer to */
-    toLinkedAccountId!: number;
-    /** transfer amount in VND */
-    amount!: number;
-
-    constructor(data?: ILinkedAccountTransferRequest) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.fromLinkedAccountId = _data["fromLinkedAccountId"];
-            this.toLinkedAccountId = _data["toLinkedAccountId"];
-            this.amount = _data["amount"];
-        }
-    }
-
-    static fromJS(data: any): LinkedAccountTransferRequest {
-        data = typeof data === 'object' ? data : {};
-        let result = new LinkedAccountTransferRequest();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["fromLinkedAccountId"] = this.fromLinkedAccountId;
-        data["toLinkedAccountId"] = this.toLinkedAccountId;
-        data["amount"] = this.amount;
-        return data; 
-    }
-}
-
-export interface ILinkedAccountTransferRequest {
+export interface LinkedAccountTransferRequest {
     /** transfer from */
     fromLinkedAccountId: number;
     /** transfer to */
@@ -3356,48 +2342,7 @@ export interface ILinkedAccountTransferRequest {
     amount: number;
 }
 
-export class LinkedAccountTransferResponse implements ILinkedAccountTransferResponse {
-    /** transaction id */
-    txId!: string;
-    /** transaction status, PENDI */
-    status!: LinkedAccountTransferResponseStatus;
-    /** more exaplain about fail reason */
-    failReason!: string;
-
-    constructor(data?: ILinkedAccountTransferResponse) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.txId = _data["txId"];
-            this.status = _data["status"];
-            this.failReason = _data["failReason"];
-        }
-    }
-
-    static fromJS(data: any): LinkedAccountTransferResponse {
-        data = typeof data === 'object' ? data : {};
-        let result = new LinkedAccountTransferResponse();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["txId"] = this.txId;
-        data["status"] = this.status;
-        data["failReason"] = this.failReason;
-        return data; 
-    }
-}
-
-export interface ILinkedAccountTransferResponse {
+export interface LinkedAccountTransferResponse {
     /** transaction id */
     txId: string;
     /** transaction status, PENDI */
@@ -3406,47 +2351,7 @@ export interface ILinkedAccountTransferResponse {
     failReason: string;
 }
 
-export class SendOtpRequest implements ISendOtpRequest {
-    /** id can be email or phone number */
-    id!: string;
-    idType!: SendOtpRequestIdType;
-    /** pupose of otp */
-    txType!: SendOtpRequestTxType;
-
-    constructor(data?: ISendOtpRequest) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.id = _data["id"];
-            this.idType = _data["idType"];
-            this.txType = _data["txType"];
-        }
-    }
-
-    static fromJS(data: any): SendOtpRequest {
-        data = typeof data === 'object' ? data : {};
-        let result = new SendOtpRequest();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id;
-        data["idType"] = this.idType;
-        data["txType"] = this.txType;
-        return data; 
-    }
-}
-
-export interface ISendOtpRequest {
+export interface SendOtpRequest {
     /** id can be email or phone number */
     id: string;
     idType: SendOtpRequestIdType;
@@ -3454,180 +2359,28 @@ export interface ISendOtpRequest {
     txType: SendOtpRequestTxType;
 }
 
-export class SendOtpResponse implements ISendOtpResponse {
-    /** id can be email or phone number */
-    otpId!: string;
-    /** expired time in format yyyMMddhhmmss */
-    expiredTime!: string;
-
-    constructor(data?: ISendOtpResponse) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.otpId = _data["otpId"];
-            this.expiredTime = _data["expiredTime"];
-        }
-    }
-
-    static fromJS(data: any): SendOtpResponse {
-        data = typeof data === 'object' ? data : {};
-        let result = new SendOtpResponse();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["otpId"] = this.otpId;
-        data["expiredTime"] = this.expiredTime;
-        return data; 
-    }
-}
-
-export interface ISendOtpResponse {
+export interface SendOtpResponse {
     /** id can be email or phone number */
     otpId: string;
     /** expired time in format yyyMMddhhmmss */
     expiredTime: string;
 }
 
-export class VerifyOtpRequest implements IVerifyOtpRequest {
-    /** id that you receive when sendOtp */
-    otpId!: string;
-    /** otp value user enter */
-    otpValue!: string;
-
-    constructor(data?: IVerifyOtpRequest) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.otpId = _data["otpId"];
-            this.otpValue = _data["otpValue"];
-        }
-    }
-
-    static fromJS(data: any): VerifyOtpRequest {
-        data = typeof data === 'object' ? data : {};
-        let result = new VerifyOtpRequest();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["otpId"] = this.otpId;
-        data["otpValue"] = this.otpValue;
-        return data; 
-    }
-}
-
-export interface IVerifyOtpRequest {
+export interface VerifyOtpRequest {
     /** id that you receive when sendOtp */
     otpId: string;
     /** otp value user enter */
     otpValue: string;
 }
 
-export class VerifyOtpResponse implements IVerifyOtpResponse {
-    /** otp verify success key */
-    otpKey!: string;
-    /** expired time in format yyyMMddhhmmss */
-    expiredTime!: string;
-
-    constructor(data?: IVerifyOtpResponse) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.otpKey = _data["otpKey"];
-            this.expiredTime = _data["expiredTime"];
-        }
-    }
-
-    static fromJS(data: any): VerifyOtpResponse {
-        data = typeof data === 'object' ? data : {};
-        let result = new VerifyOtpResponse();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["otpKey"] = this.otpKey;
-        data["expiredTime"] = this.expiredTime;
-        return data; 
-    }
-}
-
-export interface IVerifyOtpResponse {
+export interface VerifyOtpResponse {
     /** otp verify success key */
     otpKey: string;
     /** expired time in format yyyMMddhhmmss */
     expiredTime: string;
 }
 
-export class ResetPasswordRequest implements IResetPasswordRequest {
-    /** username that you want to reset password */
-    username!: string;
-    /** id can be email or phone number */
-    newPassword!: string;
-    /** otp key when verify success enter */
-    otpKey!: string;
-
-    constructor(data?: IResetPasswordRequest) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.username = _data["username"];
-            this.newPassword = _data["newPassword"];
-            this.otpKey = _data["otpKey"];
-        }
-    }
-
-    static fromJS(data: any): ResetPasswordRequest {
-        data = typeof data === 'object' ? data : {};
-        let result = new ResetPasswordRequest();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["username"] = this.username;
-        data["newPassword"] = this.newPassword;
-        data["otpKey"] = this.otpKey;
-        return data; 
-    }
-}
-
-export interface IResetPasswordRequest {
+export interface ResetPasswordRequest {
     /** username that you want to reset password */
     username: string;
     /** id can be email or phone number */
@@ -3636,160 +2389,20 @@ export interface IResetPasswordRequest {
     otpKey: string;
 }
 
-export class ResetPasswordResponse implements IResetPasswordResponse {
-
-    constructor(data?: IResetPasswordResponse) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-    }
-
-    static fromJS(data: any): ResetPasswordResponse {
-        data = typeof data === 'object' ? data : {};
-        let result = new ResetPasswordResponse();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        return data; 
-    }
+export interface ResetPasswordResponse {
 }
 
-export interface IResetPasswordResponse {
-}
-
-export class ChangePasswordRequest implements IChangePasswordRequest {
-    /** old password */
-    oldPassword!: string;
-    /** new password */
-    newPassword!: string;
-
-    constructor(data?: IChangePasswordRequest) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.oldPassword = _data["oldPassword"];
-            this.newPassword = _data["newPassword"];
-        }
-    }
-
-    static fromJS(data: any): ChangePasswordRequest {
-        data = typeof data === 'object' ? data : {};
-        let result = new ChangePasswordRequest();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["oldPassword"] = this.oldPassword;
-        data["newPassword"] = this.newPassword;
-        return data; 
-    }
-}
-
-export interface IChangePasswordRequest {
+export interface ChangePasswordRequest {
     /** old password */
     oldPassword: string;
     /** new password */
     newPassword: string;
 }
 
-export class ChangePasswordResponse implements IChangePasswordResponse {
-
-    constructor(data?: IChangePasswordResponse) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-    }
-
-    static fromJS(data: any): ChangePasswordResponse {
-        data = typeof data === 'object' ? data : {};
-        let result = new ChangePasswordResponse();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        return data; 
-    }
+export interface ChangePasswordResponse {
 }
 
-export interface IChangePasswordResponse {
-}
-
-export class Body implements IBody {
-    /** type of login */
-    grant_type!: BodyGrant_type;
-    /** id of app */
-    client_id!: string;
-    /** A secret for id */
-    client_secret!: string;
-    /** username or id of token receive from social network or username of kb */
-    username!: string;
-    /** user password or access_token receive from google, facebook */
-    password!: string;
-
-    constructor(data?: IBody) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.grant_type = _data["grant_type"];
-            this.client_id = _data["client_id"];
-            this.client_secret = _data["client_secret"];
-            this.username = _data["username"];
-            this.password = _data["password"];
-        }
-    }
-
-    static fromJS(data: any): Body {
-        data = typeof data === 'object' ? data : {};
-        let result = new Body();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["grant_type"] = this.grant_type;
-        data["client_id"] = this.client_id;
-        data["client_secret"] = this.client_secret;
-        data["username"] = this.username;
-        data["password"] = this.password;
-        return data; 
-    }
-}
-
-export interface IBody {
+export interface Body {
     /** type of login */
     grant_type: BodyGrant_type;
     /** id of app */
@@ -3802,52 +2415,7 @@ export interface IBody {
     password: string;
 }
 
-export class Body2 implements IBody2 {
-    /** the specific grant type to renew access token */
-    grant_type!: Body2Grant_type;
-    /** this value is unique, linking with MTS and only provide for access MTS API system */
-    client_id!: string;
-    /** this value is unique, linking with MTS, only provide for access MTS API system and pair with **client_id** */
-    client_secret!: string;
-    /** token to renew access_token when it's expired */
-    refresh_token!: string;
-
-    constructor(data?: IBody2) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.grant_type = _data["grant_type"];
-            this.client_id = _data["client_id"];
-            this.client_secret = _data["client_secret"];
-            this.refresh_token = _data["refresh_token"];
-        }
-    }
-
-    static fromJS(data: any): Body2 {
-        data = typeof data === 'object' ? data : {};
-        let result = new Body2();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["grant_type"] = this.grant_type;
-        data["client_id"] = this.client_id;
-        data["client_secret"] = this.client_secret;
-        data["refresh_token"] = this.refresh_token;
-        return data; 
-    }
-}
-
-export interface IBody2 {
+export interface Body2 {
     /** the specific grant type to renew access token */
     grant_type: Body2Grant_type;
     /** this value is unique, linking with MTS and only provide for access MTS API system */
@@ -3858,86 +2426,12 @@ export interface IBody2 {
     refresh_token: string;
 }
 
-export class Body3 implements IBody3 {
-    /** the refresh token need to be invalidated */
-    refresh_token!: string;
-
-    constructor(data?: IBody3) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.refresh_token = _data["refresh_token"];
-        }
-    }
-
-    static fromJS(data: any): Body3 {
-        data = typeof data === 'object' ? data : {};
-        let result = new Body3();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["refresh_token"] = this.refresh_token;
-        return data; 
-    }
-}
-
-export interface IBody3 {
+export interface Body3 {
     /** the refresh token need to be invalidated */
     refresh_token: string;
 }
 
-export class Body4 implements IBody4 {
-    /** mật khẩu tài khoản */
-    password!: string;
-    /** public key gen từ device đăng kí */
-    publicKey!: string;
-    /** loại biometri (FINGER/FACE) */
-    biometricType!: string;
-
-    constructor(data?: IBody4) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.password = _data["password"];
-            this.publicKey = _data["publicKey"];
-            this.biometricType = _data["biometricType"];
-        }
-    }
-
-    static fromJS(data: any): Body4 {
-        data = typeof data === 'object' ? data : {};
-        let result = new Body4();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["password"] = this.password;
-        data["publicKey"] = this.publicKey;
-        data["biometricType"] = this.biometricType;
-        return data; 
-    }
-}
-
-export interface IBody4 {
+export interface Body4 {
     /** mật khẩu tài khoản */
     password: string;
     /** public key gen từ device đăng kí */
@@ -3946,170 +2440,19 @@ export interface IBody4 {
     biometricType: string;
 }
 
-export class Anonymous implements IAnonymous {
-    /** biometric có tồn tạ hay không . */
-    isEnable!: boolean;
-
-    constructor(data?: IAnonymous) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.isEnable = _data["isEnable"];
-        }
-    }
-
-    static fromJS(data: any): Anonymous {
-        data = typeof data === 'object' ? data : {};
-        let result = new Anonymous();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["isEnable"] = this.isEnable;
-        return data; 
-    }
-}
-
-export interface IAnonymous {
+export interface Anonymous {
     /** biometric có tồn tạ hay không . */
     isEnable: boolean;
 }
 
-export class Anonymous2 implements IAnonymous2 {
-    /** số otp */
-    index!: number;
-    /** biometric id */
-    biometricId!: number;
-
-    constructor(data?: IAnonymous2) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.index = _data["index"];
-            this.biometricId = _data["biometricId"];
-        }
-    }
-
-    static fromJS(data: any): Anonymous2 {
-        data = typeof data === 'object' ? data : {};
-        let result = new Anonymous2();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["index"] = this.index;
-        data["biometricId"] = this.biometricId;
-        return data; 
-    }
-}
-
-export interface IAnonymous2 {
+export interface Anonymous2 {
     /** số otp */
     index: number;
     /** biometric id */
     biometricId: number;
 }
 
-export class Anonymous3 implements IAnonymous3 {
-    /** Lãi/Lỗ. */
-    pnl!: number;
-    /** Phí Mua/Bán CK. */
-    feeAmt!: number;
-    /** Mã chứng khoán. */
-    symbol!: string;
-    /** Ngày Giao Dịch. */
-    txDate!: string;
-    /** tỉ lệ lãi lỗ. */
-    pnlRate!: number;
-    /** loại thực hiệ(BUY/SELL)). */
-    execType!: string;
-    /** số lượng đặt. */
-    quantity!: number;
-    /** số tiểu khoản. */
-    accountID!: string;
-    /** Giá Vốn TB. */
-    costPrice!: number;
-    /** Giá Thực Hiện. */
-    execPrice!: number;
-    /** Phí/Thuế Khác. */
-    taxSellAmt!: number;
-    /** Giá Trị Vốn. */
-    costPriceValue!: number;
-    /** Giá Trị Thực Hiện. */
-    execPriceValue!: number;
-
-    constructor(data?: IAnonymous3) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.pnl = _data["pnl"];
-            this.feeAmt = _data["feeAmt"];
-            this.symbol = _data["symbol"];
-            this.txDate = _data["txDate"];
-            this.pnlRate = _data["pnlRate"];
-            this.execType = _data["execType"];
-            this.quantity = _data["quantity"];
-            this.accountID = _data["accountID"];
-            this.costPrice = _data["costPrice"];
-            this.execPrice = _data["execPrice"];
-            this.taxSellAmt = _data["taxSellAmt"];
-            this.costPriceValue = _data["costPriceValue"];
-            this.execPriceValue = _data["execPriceValue"];
-        }
-    }
-
-    static fromJS(data: any): Anonymous3 {
-        data = typeof data === 'object' ? data : {};
-        let result = new Anonymous3();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["pnl"] = this.pnl;
-        data["feeAmt"] = this.feeAmt;
-        data["symbol"] = this.symbol;
-        data["txDate"] = this.txDate;
-        data["pnlRate"] = this.pnlRate;
-        data["execType"] = this.execType;
-        data["quantity"] = this.quantity;
-        data["accountID"] = this.accountID;
-        data["costPrice"] = this.costPrice;
-        data["execPrice"] = this.execPrice;
-        data["taxSellAmt"] = this.taxSellAmt;
-        data["costPriceValue"] = this.costPriceValue;
-        data["execPriceValue"] = this.execPriceValue;
-        return data; 
-    }
-}
-
-export interface IAnonymous3 {
+export interface Anonymous3 {
     /** Lãi/Lỗ. */
     pnl: number;
     /** Phí Mua/Bán CK. */
@@ -4138,100 +2481,7 @@ export interface IAnonymous3 {
     execPriceValue: number;
 }
 
-export class Anonymous4 implements IAnonymous4 {
-    /** thuế. */
-    tax!: number;
-    /** price. */
-    price!: number;
-    /** trạng thái. */
-    status!: string;
-    /** Mã chứng khoán. */
-    symbol!: string;
-    /** số hiệu lệnh. */
-    orderId!: string;
-    /** sô lượng đặt. */
-    quantity!: number;
-    /** số tài khoản. */
-    accountId!: string;
-    /** ngày thanh toán. */
-    clearDate!: string;
-    /** loại thực hiện(SELL/BUY). */
-    sellBuyType!: string;
-    /** giá khớp. */
-    matchedPrice!: number;
-    /** giá trị khớp. */
-    matchedValue!: number;
-    /** khối lượng khớp. */
-    matchedAmount!: number;
-    /** kênh giao dịch. */
-    orderingPlace!: string;
-    /** phí giao dịch. */
-    transactionFee!: number;
-    /** ngày giao dịch. */
-    transactionDate!: string;
-    /** tỉ lệ phí giao dịch. */
-    transactionFeeRate!: number;
-
-    constructor(data?: IAnonymous4) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.tax = _data["tax"];
-            this.price = _data["price"];
-            this.status = _data["status"];
-            this.symbol = _data["symbol"];
-            this.orderId = _data["orderId"];
-            this.quantity = _data["quantity"];
-            this.accountId = _data["accountId"];
-            this.clearDate = _data["clearDate"];
-            this.sellBuyType = _data["sellBuyType"];
-            this.matchedPrice = _data["matchedPrice"];
-            this.matchedValue = _data["matchedValue"];
-            this.matchedAmount = _data["matchedAmount"];
-            this.orderingPlace = _data["orderingPlace"];
-            this.transactionFee = _data["transactionFee"];
-            this.transactionDate = _data["transactionDate"];
-            this.transactionFeeRate = _data["transactionFeeRate"];
-        }
-    }
-
-    static fromJS(data: any): Anonymous4 {
-        data = typeof data === 'object' ? data : {};
-        let result = new Anonymous4();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["tax"] = this.tax;
-        data["price"] = this.price;
-        data["status"] = this.status;
-        data["symbol"] = this.symbol;
-        data["orderId"] = this.orderId;
-        data["quantity"] = this.quantity;
-        data["accountId"] = this.accountId;
-        data["clearDate"] = this.clearDate;
-        data["sellBuyType"] = this.sellBuyType;
-        data["matchedPrice"] = this.matchedPrice;
-        data["matchedValue"] = this.matchedValue;
-        data["matchedAmount"] = this.matchedAmount;
-        data["orderingPlace"] = this.orderingPlace;
-        data["transactionFee"] = this.transactionFee;
-        data["transactionDate"] = this.transactionDate;
-        data["transactionFeeRate"] = this.transactionFeeRate;
-        return data; 
-    }
-}
-
-export interface IAnonymous4 {
+export interface Anonymous4 {
     /** thuế. */
     tax: number;
     /** price. */
@@ -4266,92 +2516,7 @@ export interface IAnonymous4 {
     transactionFeeRate: number;
 }
 
-export class Anonymous5 implements IAnonymous5 {
-    /** số tiền giao dịch. */
-    amt!: number;
-    /** trạng thái. */
-    status!: string;
-    /** ngày giao dịch. */
-    txDate!: string;
-    /** Ngày Hiệu Lực. */
-    busDate!: string;
-    /** mã trạng thái. */
-    statusCode!: string;
-    /** nội dung chuuyền tiền. */
-    description!: string;
-    /** ngân hàng nhận. */
-    receiverBank!: string;
-    /** tên người nhận . */
-    receiverName!: number;
-    /** loại chuyển tiền. */
-    transferType!: string;
-    /** kênh giao dịch. */
-    transferPlace!: string;
-    /** số  chứng từ. */
-    transactionNum!: string;
-    /** tiểu khoản nhận. */
-    receiverAccount!: string;
-    /** Số lưu ký nhận. */
-    receiverCustodycd!: string;
-    /** Số lưu ký chuyển. */
-    transferCustodycd!: string;
-
-    constructor(data?: IAnonymous5) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.amt = _data["amt"];
-            this.status = _data["status"];
-            this.txDate = _data["txDate"];
-            this.busDate = _data["busDate"];
-            this.statusCode = _data["statusCode"];
-            this.description = _data["description"];
-            this.receiverBank = _data["receiverBank"];
-            this.receiverName = _data["receiverName"];
-            this.transferType = _data["transferType"];
-            this.transferPlace = _data["transferPlace"];
-            this.transactionNum = _data["transactionNum"];
-            this.receiverAccount = _data["receiverAccount"];
-            this.receiverCustodycd = _data["receiverCustodycd"];
-            this.transferCustodycd = _data["transferCustodycd"];
-        }
-    }
-
-    static fromJS(data: any): Anonymous5 {
-        data = typeof data === 'object' ? data : {};
-        let result = new Anonymous5();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["amt"] = this.amt;
-        data["status"] = this.status;
-        data["txDate"] = this.txDate;
-        data["busDate"] = this.busDate;
-        data["statusCode"] = this.statusCode;
-        data["description"] = this.description;
-        data["receiverBank"] = this.receiverBank;
-        data["receiverName"] = this.receiverName;
-        data["transferType"] = this.transferType;
-        data["transferPlace"] = this.transferPlace;
-        data["transactionNum"] = this.transactionNum;
-        data["receiverAccount"] = this.receiverAccount;
-        data["receiverCustodycd"] = this.receiverCustodycd;
-        data["transferCustodycd"] = this.transferCustodycd;
-        return data; 
-    }
-}
-
-export interface IAnonymous5 {
+export interface Anonymous5 {
     /** số tiền giao dịch. */
     amt: number;
     /** trạng thái. */
@@ -4382,116 +2547,7 @@ export interface IAnonymous5 {
     transferCustodycd: string;
 }
 
-export class Anonymous6 implements IAnonymous6 {
-    /** Tổng KLCK. */
-    total!: number;
-    /** Số Dư Khả Dụng. */
-    trade!: number;
-    /** Lãi/Lỗ Chưa Thực Hiện. */
-    pnlAmt!: number;
-    /** mã chứng khoán. */
-    symbol!: string;
-    /** Khối lượng bị phong tỏa. */
-    blocked!: number;
-    /** Tỉ lện lãi lỗ chưa thực hiện. */
-    pnlRate!: number;
-    /** Cầm cố . */
-    mortgage!: number;
-    /** số tiểu khoản. */
-    accountId!: string;
-    /** Giá TB. */
-    costPrice!: number;
-    /** bán T0. */
-    sendingT0!: number;
-    /** bán T1. */
-    sendingT1!: number;
-    /** bán T2. */
-    sendingT2!: number;
-    /** Giá Hiện Tại. */
-    basicPrice!: number;
-    /** mua T0. */
-    receivingT0!: number;
-    /** mua T1. */
-    receivingT1!: number;
-    /** mua T2. */
-    receivingT2!: number;
-    /** Giá Trị. */
-    costPriceAmt!: number;
-    /** Giá Trị Thị Trường. */
-    basicPriceAmt!: number;
-    /** Quyền Chờ Về. */
-    receivingRight!: number;
-    /** Chờ Khớp. */
-    remainQtty!: number;
-
-    constructor(data?: IAnonymous6) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.total = _data["total"];
-            this.trade = _data["trade"];
-            this.pnlAmt = _data["pnlAmt"];
-            this.symbol = _data["symbol"];
-            this.blocked = _data["blocked"];
-            this.pnlRate = _data["pnlRate"];
-            this.mortgage = _data["mortgage"];
-            this.accountId = _data["accountId"];
-            this.costPrice = _data["costPrice"];
-            this.sendingT0 = _data["sendingT0"];
-            this.sendingT1 = _data["sendingT1"];
-            this.sendingT2 = _data["sendingT2"];
-            this.basicPrice = _data["basicPrice"];
-            this.receivingT0 = _data["receivingT0"];
-            this.receivingT1 = _data["receivingT1"];
-            this.receivingT2 = _data["receivingT2"];
-            this.costPriceAmt = _data["costPriceAmt"];
-            this.basicPriceAmt = _data["basicPriceAmt"];
-            this.receivingRight = _data["receivingRight"];
-            this.remainQtty = _data["remainQtty"];
-        }
-    }
-
-    static fromJS(data: any): Anonymous6 {
-        data = typeof data === 'object' ? data : {};
-        let result = new Anonymous6();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["total"] = this.total;
-        data["trade"] = this.trade;
-        data["pnlAmt"] = this.pnlAmt;
-        data["symbol"] = this.symbol;
-        data["blocked"] = this.blocked;
-        data["pnlRate"] = this.pnlRate;
-        data["mortgage"] = this.mortgage;
-        data["accountId"] = this.accountId;
-        data["costPrice"] = this.costPrice;
-        data["sendingT0"] = this.sendingT0;
-        data["sendingT1"] = this.sendingT1;
-        data["sendingT2"] = this.sendingT2;
-        data["basicPrice"] = this.basicPrice;
-        data["receivingT0"] = this.receivingT0;
-        data["receivingT1"] = this.receivingT1;
-        data["receivingT2"] = this.receivingT2;
-        data["costPriceAmt"] = this.costPriceAmt;
-        data["basicPriceAmt"] = this.basicPriceAmt;
-        data["receivingRight"] = this.receivingRight;
-        data["remainQtty"] = this.remainQtty;
-        return data; 
-    }
-}
-
-export interface IAnonymous6 {
+export interface Anonymous6 {
     /** Tổng KLCK. */
     total: number;
     /** Số Dư Khả Dụng. */
@@ -4534,96 +2590,7 @@ export interface IAnonymous6 {
     remainQtty: number;
 }
 
-export class Anonymous7 implements IAnonymous7 {
-    /** Tiền Đưa Về Duy Trì. */
-    addVnd!: number;
-    /** Tiền Đặt Lệnh. */
-    buyAmt!: number;
-    /** số dư. */
-    balance!: number;
-    /** số tiểu khoản. */
-    accountId!: string;
-    /** tiền bán T0. */
-    sendingT0!: number;
-    /** Tiền Ứng Bán CK Tối Đa. */
-    avladvance!: number;
-    /** Tỷ Lệ Ký Quỹ. */
-    marginRate!: number;
-    /** Tiền Rút Khả Dụng. */
-    avlwithdraw!: number;
-    /** Cổ Tức Chờ Về. */
-    caReceiving!: number;
-    /** tiền mua T0. */
-    receivingT0!: number;
-    /** tiền mua T1. */
-    receivingT1!: number;
-    /** tiền mua T2. */
-    receivingT2!: number;
-    /** Tổng Nợ. */
-    totalDebtAmt!: number;
-    /** Tiền Mua Chưa Khớp. */
-    buyRemainValue!: number;
-    /** sức mua. */
-    basicPurchasingPower!: number;
-
-    constructor(data?: IAnonymous7) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.addVnd = _data["addVnd"];
-            this.buyAmt = _data["buyAmt"];
-            this.balance = _data["balance"];
-            this.accountId = _data["accountId"];
-            this.sendingT0 = _data["sendingT0"];
-            this.avladvance = _data["avladvance"];
-            this.marginRate = _data["marginRate"];
-            this.avlwithdraw = _data["avlwithdraw"];
-            this.caReceiving = _data["caReceiving"];
-            this.receivingT0 = _data["receivingT0"];
-            this.receivingT1 = _data["receivingT1"];
-            this.receivingT2 = _data["receivingT2"];
-            this.totalDebtAmt = _data["totalDebtAmt"];
-            this.buyRemainValue = _data["buyRemainValue"];
-            this.basicPurchasingPower = _data["basicPurchasingPower"];
-        }
-    }
-
-    static fromJS(data: any): Anonymous7 {
-        data = typeof data === 'object' ? data : {};
-        let result = new Anonymous7();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["addVnd"] = this.addVnd;
-        data["buyAmt"] = this.buyAmt;
-        data["balance"] = this.balance;
-        data["accountId"] = this.accountId;
-        data["sendingT0"] = this.sendingT0;
-        data["avladvance"] = this.avladvance;
-        data["marginRate"] = this.marginRate;
-        data["avlwithdraw"] = this.avlwithdraw;
-        data["caReceiving"] = this.caReceiving;
-        data["receivingT0"] = this.receivingT0;
-        data["receivingT1"] = this.receivingT1;
-        data["receivingT2"] = this.receivingT2;
-        data["totalDebtAmt"] = this.totalDebtAmt;
-        data["buyRemainValue"] = this.buyRemainValue;
-        data["basicPurchasingPower"] = this.basicPurchasingPower;
-        return data; 
-    }
-}
-
-export interface IAnonymous7 {
+export interface Anonymous7 {
     /** Tiền Đưa Về Duy Trì. */
     addVnd: number;
     /** Tiền Đặt Lệnh. */
@@ -4656,104 +2623,7 @@ export interface IAnonymous7 {
     basicPurchasingPower: number;
 }
 
-export class Anonymous8 implements IAnonymous8 {
-    /** Sức Mua/Bán. */
-    pp!: number;
-    /** vm. */
-    vm!: number;
-    /** tài khoản giao dịch. */
-    acctNo!: string;
-    /** Tiền Mua. */
-    buyAmt!: number;
-    /** grName. */
-    grName!: string;
-    /** Giá Trị Mua/Bán. */
-    bsValue!: number;
-    /** Tiền Bán. */
-    sellAmt!: number;
-    /** Tiền Tại CCP. */
-    vimCash!: number;
-    /** VM Trong Ngày. */
-    vrvmAmt!: number;
-    /** Tiền Chờ Ký Quỹ. */
-    wSecured!: number;
-    /** Tỷ Lệ Sử Dụng TS Ký Quỹ. */
-    acctRatio!: number;
-    /** Tổng nợ. */
-    totalDebt!: number;
-    /** Tiền Ký Quỹ Chờ Rút. */
-    wTransfer!: number;
-    /** Giá Trị Tài Sản. */
-    assetValue!: number;
-    /** Tiền mặt. */
-    vCashOnHand!: number;
-    /** VM Phải Giao. */
-    vrDebtvmAmt!: number;
-    /** Số Tiền Cần Nộp Bổ Sung. */
-    reqAddSecured!: number;
-
-    constructor(data?: IAnonymous8) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.pp = _data["pp"];
-            this.vm = _data["vm"];
-            this.acctNo = _data["acctNo"];
-            this.buyAmt = _data["buyAmt"];
-            this.grName = _data["grName"];
-            this.bsValue = _data["bsValue"];
-            this.sellAmt = _data["sellAmt"];
-            this.vimCash = _data["vimCash"];
-            this.vrvmAmt = _data["vrvmAmt"];
-            this.wSecured = _data["wSecured"];
-            this.acctRatio = _data["acctRatio"];
-            this.totalDebt = _data["totalDebt"];
-            this.wTransfer = _data["wTransfer"];
-            this.assetValue = _data["assetValue"];
-            this.vCashOnHand = _data["vCashOnHand"];
-            this.vrDebtvmAmt = _data["vrDebtvmAmt"];
-            this.reqAddSecured = _data["reqAddSecured"];
-        }
-    }
-
-    static fromJS(data: any): Anonymous8 {
-        data = typeof data === 'object' ? data : {};
-        let result = new Anonymous8();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["pp"] = this.pp;
-        data["vm"] = this.vm;
-        data["acctNo"] = this.acctNo;
-        data["buyAmt"] = this.buyAmt;
-        data["grName"] = this.grName;
-        data["bsValue"] = this.bsValue;
-        data["sellAmt"] = this.sellAmt;
-        data["vimCash"] = this.vimCash;
-        data["vrvmAmt"] = this.vrvmAmt;
-        data["wSecured"] = this.wSecured;
-        data["acctRatio"] = this.acctRatio;
-        data["totalDebt"] = this.totalDebt;
-        data["wTransfer"] = this.wTransfer;
-        data["assetValue"] = this.assetValue;
-        data["vCashOnHand"] = this.vCashOnHand;
-        data["vrDebtvmAmt"] = this.vrDebtvmAmt;
-        data["reqAddSecured"] = this.reqAddSecured;
-        return data; 
-    }
-}
-
-export interface IAnonymous8 {
+export interface Anonymous8 {
     /** Sức Mua/Bán. */
     pp: number;
     /** vm. */
@@ -4790,112 +2660,7 @@ export interface IAnonymous8 {
     reqAddSecured: number;
 }
 
-export class Anonymous9 implements IAnonymous9 {
-    /** Giá DSP. */
-    dsp!: number;
-    /** khối lượng long. */
-    lQtty!: number;
-    /** Giá Long. */
-    lVwap!: number;
-    /** khối lượng shot. */
-    sQtty!: number;
-    /** giá short. */
-    sVwap!: number;
-    /** mã phái sinh. */
-    codeId!: string;
-    /** mã chứng khoán phái sinh. */
-    symbol!: string;
-    /** ngày thực hiện. */
-    txDate!: string;
-    /** tỉ lệ Lãi/Lỗ Đã Thực Hiện. */
-    reliPnl!: number;
-    /** Giá Trị Lãi/Lỗ Đã Thực Hiện. */
-    vrplAmt!: number;
-    /** Tổng Giá Trị Vốn. */
-    vwapAmt!: number;
-    /** giá trị khớp lệnh / giá trị net. */
-    matchAmt!: number;
-    /** giá trị Lãi/Lỗ Chưa Thực Hiện. */
-    nonRplAmt!: number;
-    /** khối lượng đóng. */
-    closedQtty!: number;
-    /** Giá trị lãi lỗ. */
-    nonVwapAmt!: number;
-    /** Lãi Lỗ Hàng Ngày. */
-    dailyProfit!: number;
-    /** Tổng Giá Trị Đóng. */
-    nonClosedAmt!: number;
-    /** tỉ lệ Lãi/Lỗ Chưa Thực Hiện. */
-    pecentNonRplAmt!: number;
-    /** Phí Đáo Hạn. */
-    dueFeeAmt!: number;
-
-    constructor(data?: IAnonymous9) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.dsp = _data["dsp"];
-            this.lQtty = _data["lQtty"];
-            this.lVwap = _data["lVwap"];
-            this.sQtty = _data["sQtty"];
-            this.sVwap = _data["sVwap"];
-            this.codeId = _data["codeId"];
-            this.symbol = _data["symbol"];
-            this.txDate = _data["txDate"];
-            this.reliPnl = _data["reliPnl"];
-            this.vrplAmt = _data["vrplAmt"];
-            this.vwapAmt = _data["vwapAmt"];
-            this.matchAmt = _data["matchAmt"];
-            this.nonRplAmt = _data["nonRplAmt"];
-            this.closedQtty = _data["closedQtty"];
-            this.nonVwapAmt = _data["nonVwapAmt"];
-            this.dailyProfit = _data["dailyProfit"];
-            this.nonClosedAmt = _data["nonClosedAmt"];
-            this.pecentNonRplAmt = _data["pecentNonRplAmt"];
-            this.dueFeeAmt = _data["dueFeeAmt"];
-        }
-    }
-
-    static fromJS(data: any): Anonymous9 {
-        data = typeof data === 'object' ? data : {};
-        let result = new Anonymous9();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["dsp"] = this.dsp;
-        data["lQtty"] = this.lQtty;
-        data["lVwap"] = this.lVwap;
-        data["sQtty"] = this.sQtty;
-        data["sVwap"] = this.sVwap;
-        data["codeId"] = this.codeId;
-        data["symbol"] = this.symbol;
-        data["txDate"] = this.txDate;
-        data["reliPnl"] = this.reliPnl;
-        data["vrplAmt"] = this.vrplAmt;
-        data["vwapAmt"] = this.vwapAmt;
-        data["matchAmt"] = this.matchAmt;
-        data["nonRplAmt"] = this.nonRplAmt;
-        data["closedQtty"] = this.closedQtty;
-        data["nonVwapAmt"] = this.nonVwapAmt;
-        data["dailyProfit"] = this.dailyProfit;
-        data["nonClosedAmt"] = this.nonClosedAmt;
-        data["pecentNonRplAmt"] = this.pecentNonRplAmt;
-        data["dueFeeAmt"] = this.dueFeeAmt;
-        return data; 
-    }
-}
-
-export interface IAnonymous9 {
+export interface Anonymous9 {
     /** Giá DSP. */
     dsp: number;
     /** khối lượng long. */
@@ -4936,64 +2701,7 @@ export interface IAnonymous9 {
     dueFeeAmt: number;
 }
 
-export class Anonymous10 implements IAnonymous10 {
-    /** số chứng từ. */
-    txNum!: string;
-    /** Số Tiền Nộp. */
-    msgAmt!: number;
-    /** trạng thái. */
-    status!: string;
-    /** ngày yêu cầu. */
-    txDate!: string;
-    /** nội dung. */
-    txDesc!: string;
-    /** ngày hiệu lực. */
-    busDate!: string;
-    /** tiểu khoản giao dịch. */
-    msgAcct!: number;
-
-    constructor(data?: IAnonymous10) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.txNum = _data["txNum"];
-            this.msgAmt = _data["msgAmt"];
-            this.status = _data["status"];
-            this.txDate = _data["txDate"];
-            this.txDesc = _data["txDesc"];
-            this.busDate = _data["busDate"];
-            this.msgAcct = _data["msgAcct"];
-        }
-    }
-
-    static fromJS(data: any): Anonymous10 {
-        data = typeof data === 'object' ? data : {};
-        let result = new Anonymous10();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["txNum"] = this.txNum;
-        data["msgAmt"] = this.msgAmt;
-        data["status"] = this.status;
-        data["txDate"] = this.txDate;
-        data["txDesc"] = this.txDesc;
-        data["busDate"] = this.busDate;
-        data["msgAcct"] = this.msgAcct;
-        return data; 
-    }
-}
-
-export interface IAnonymous10 {
+export interface Anonymous10 {
     /** số chứng từ. */
     txNum: string;
     /** Số Tiền Nộp. */
@@ -5010,64 +2718,7 @@ export interface IAnonymous10 {
     msgAcct: number;
 }
 
-export class Anonymous11 implements IAnonymous11 {
-    /** số thứng từ . */
-    txNum!: string;
-    /** số tiền rút. */
-    msgAmt!: string;
-    /** trạng thái. */
-    status!: string;
-    /** ngày giao dịch. */
-    txDate!: string;
-    /** nội dung. */
-    txDesc!: string;
-    /** ngày thực hiện . */
-    busDate!: string;
-    /** số tiểu khoản. */
-    msgAcct!: number;
-
-    constructor(data?: IAnonymous11) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.txNum = _data["txNum"];
-            this.msgAmt = _data["msgAmt"];
-            this.status = _data["status"];
-            this.txDate = _data["txDate"];
-            this.txDesc = _data["txDesc"];
-            this.busDate = _data["busDate"];
-            this.msgAcct = _data["msgAcct"];
-        }
-    }
-
-    static fromJS(data: any): Anonymous11 {
-        data = typeof data === 'object' ? data : {};
-        let result = new Anonymous11();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["txNum"] = this.txNum;
-        data["msgAmt"] = this.msgAmt;
-        data["status"] = this.status;
-        data["txDate"] = this.txDate;
-        data["txDesc"] = this.txDesc;
-        data["busDate"] = this.busDate;
-        data["msgAcct"] = this.msgAcct;
-        return data; 
-    }
-}
-
-export interface IAnonymous11 {
+export interface Anonymous11 {
     /** số thứng từ . */
     txNum: string;
     /** số tiền rút. */
@@ -5084,64 +2735,7 @@ export interface IAnonymous11 {
     msgAcct: number;
 }
 
-export class Anonymous12 implements IAnonymous12 {
-    /** số chứng từ . */
-    txNum!: string;
-    /** số tiền rút. */
-    msgAmt!: string;
-    /** trạng thái. */
-    status!: string;
-    /** ngày thực hiện. */
-    txDate!: string;
-    /** nội dung. */
-    txDesc!: string;
-    /** ngày hiệu lực. */
-    busDate!: string;
-    /** số tk. */
-    msgAcct!: number;
-
-    constructor(data?: IAnonymous12) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.txNum = _data["txNum"];
-            this.msgAmt = _data["msgAmt"];
-            this.status = _data["status"];
-            this.txDate = _data["txDate"];
-            this.txDesc = _data["txDesc"];
-            this.busDate = _data["busDate"];
-            this.msgAcct = _data["msgAcct"];
-        }
-    }
-
-    static fromJS(data: any): Anonymous12 {
-        data = typeof data === 'object' ? data : {};
-        let result = new Anonymous12();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["txNum"] = this.txNum;
-        data["msgAmt"] = this.msgAmt;
-        data["status"] = this.status;
-        data["txDate"] = this.txDate;
-        data["txDesc"] = this.txDesc;
-        data["busDate"] = this.busDate;
-        data["msgAcct"] = this.msgAcct;
-        return data; 
-    }
-}
-
-export interface IAnonymous12 {
+export interface Anonymous12 {
     /** số chứng từ . */
     txNum: string;
     /** số tiền rút. */
@@ -5158,64 +2752,7 @@ export interface IAnonymous12 {
     msgAcct: number;
 }
 
-export class Anonymous13 implements IAnonymous13 {
-    /** số chứng từ . */
-    txNum!: string;
-    /** số tiền nộp. */
-    msgAmt!: string;
-    /** trạng thái. */
-    status!: string;
-    /** ngày yêu cầu. */
-    txDate!: string;
-    /** nội dung. */
-    txDesc!: string;
-    /** ngày hiệu lực. */
-    busDate!: string;
-    /** stk . */
-    msgAcct!: number;
-
-    constructor(data?: IAnonymous13) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.txNum = _data["txNum"];
-            this.msgAmt = _data["msgAmt"];
-            this.status = _data["status"];
-            this.txDate = _data["txDate"];
-            this.txDesc = _data["txDesc"];
-            this.busDate = _data["busDate"];
-            this.msgAcct = _data["msgAcct"];
-        }
-    }
-
-    static fromJS(data: any): Anonymous13 {
-        data = typeof data === 'object' ? data : {};
-        let result = new Anonymous13();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["txNum"] = this.txNum;
-        data["msgAmt"] = this.msgAmt;
-        data["status"] = this.status;
-        data["txDate"] = this.txDate;
-        data["txDesc"] = this.txDesc;
-        data["busDate"] = this.busDate;
-        data["msgAcct"] = this.msgAcct;
-        return data; 
-    }
-}
-
-export interface IAnonymous13 {
+export interface Anonymous13 {
     /** số chứng từ . */
     txNum: string;
     /** số tiền nộp. */
@@ -5232,96 +2769,7 @@ export interface IAnonymous13 {
     msgAcct: number;
 }
 
-export class Anonymous14 implements IAnonymous14 {
-    /** Phải Trả/Thực Nhận. */
-    amt!: number;
-    /** Thường/Thỏa Thuận. */
-    norp!: string;
-    /** Mua/Bán. */
-    side!: string;
-    /** số tiểu khoản. */
-    acctNo!: string;
-    /** aofirm. */
-    aofirm!: string;
-    /** Phí Giao Dịch Tại KBSV. */
-    feeAmt!: number;
-    /** Mã phái sinh. */
-    symbol!: string;
-    /** Thuế. */
-    taxAmt!: number;
-    /** ngày giao dịch. */
-    txDate!: string;
-    /** Số Hiệu Lệnh. */
-    orderId!: string;
-    /** Giá Trị Khớp. */
-    matchAmt!: number;
-    /** số lưu ký. */
-    custodycd!: string;
-    /** số lượng khớp. */
-    matchQtty!: number;
-    /** loại giá. */
-    subTypeCd!: string;
-    /** Giá Khớp Trung Bình. */
-    matchPrice!: number;
-
-    constructor(data?: IAnonymous14) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.amt = _data["amt"];
-            this.norp = _data["norp"];
-            this.side = _data["side"];
-            this.acctNo = _data["acctNo"];
-            this.aofirm = _data["aofirm"];
-            this.feeAmt = _data["feeAmt"];
-            this.symbol = _data["symbol"];
-            this.taxAmt = _data["taxAmt"];
-            this.txDate = _data["txDate"];
-            this.orderId = _data["orderId"];
-            this.matchAmt = _data["matchAmt"];
-            this.custodycd = _data["custodycd"];
-            this.matchQtty = _data["matchQtty"];
-            this.subTypeCd = _data["subTypeCd"];
-            this.matchPrice = _data["matchPrice"];
-        }
-    }
-
-    static fromJS(data: any): Anonymous14 {
-        data = typeof data === 'object' ? data : {};
-        let result = new Anonymous14();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["amt"] = this.amt;
-        data["norp"] = this.norp;
-        data["side"] = this.side;
-        data["acctNo"] = this.acctNo;
-        data["aofirm"] = this.aofirm;
-        data["feeAmt"] = this.feeAmt;
-        data["symbol"] = this.symbol;
-        data["taxAmt"] = this.taxAmt;
-        data["txDate"] = this.txDate;
-        data["orderId"] = this.orderId;
-        data["matchAmt"] = this.matchAmt;
-        data["custodycd"] = this.custodycd;
-        data["matchQtty"] = this.matchQtty;
-        data["subTypeCd"] = this.subTypeCd;
-        data["matchPrice"] = this.matchPrice;
-        return data; 
-    }
-}
-
-export interface IAnonymous14 {
+export interface Anonymous14 {
     /** Phải Trả/Thực Nhận. */
     amt: number;
     /** Thường/Thỏa Thuận. */
@@ -5354,152 +2802,7 @@ export interface IAnonymous14 {
     matchPrice: number;
 }
 
-export class Anonymous15 implements IAnonymous15 {
-    /** số lưu ký. */
-    custodycd!: string;
-    /** số tiểu khoản. */
-    accountNo!: string;
-    /** Số Hiệu Lệnh. */
-    orderNumber!: string;
-    /** mã phái sinh. */
-    code!: string;
-    /** thời gian. */
-    lastChange!: string;
-    /** Mua/Bán. */
-    sellBuyType!: string;
-    /** diễn giải loại lệnh. */
-    sideDesc!: string;
-    /** loại giá. */
-    orderType!: string;
-    /** diễn giải loại giá. */
-    orderTypeDesc!: string;
-    /** . */
-    validity!: string;
-    /** . */
-    dataval!: string;
-    /** Trạng Thái Lệnh. */
-    status!: string;
-    /** Khối Lượng Đặt. */
-    orderQuantity!: string;
-    /** Giá Đặt. */
-    orderPrice!: string;
-    /** Giá Khớp Trung Bình. */
-    matchPrice!: string;
-    /** SL Khớp. */
-    matchQtty!: string;
-    /** thời gian đặt. */
-    odsent!: string;
-    /** Giá Trị Khớp. */
-    execAmt!: string;
-    /** số lượng chưa khớp. */
-    unmatchedQuantity!: string;
-    /** số lượng huỷ. */
-    cancelQtty!: string;
-    /** số lượng sửa. */
-    admEndQtty!: string;
-    /** số hiệu lệ(shl) sở confirm. */
-    confirmId!: string;
-    /** shl gốc. */
-    originOrderId!: string;
-    /** ngày giao dịch. */
-    txDate!: string;
-    /** GT Phí. */
-    feeAmt!: string;
-    /** Thuế. */
-    tax!: string;
-    /** Mức Phí. */
-    tradingFee!: string;
-    /** Kênh Thực Hiện. */
-    via!: string;
-    /** Thường/Thỏa Thuận. */
-    norp!: string;
-
-    constructor(data?: IAnonymous15) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.custodycd = _data["custodycd"];
-            this.accountNo = _data["accountNo"];
-            this.orderNumber = _data["orderNumber"];
-            this.code = _data["code"];
-            this.lastChange = _data["lastChange"];
-            this.sellBuyType = _data["sellBuyType"];
-            this.sideDesc = _data["sideDesc"];
-            this.orderType = _data["orderType"];
-            this.orderTypeDesc = _data["orderTypeDesc"];
-            this.validity = _data["validity"];
-            this.dataval = _data["dataval"];
-            this.status = _data["status"];
-            this.orderQuantity = _data["orderQuantity"];
-            this.orderPrice = _data["orderPrice"];
-            this.matchPrice = _data["matchPrice"];
-            this.matchQtty = _data["matchQtty"];
-            this.odsent = _data["odsent"];
-            this.execAmt = _data["execAmt"];
-            this.unmatchedQuantity = _data["unmatchedQuantity"];
-            this.cancelQtty = _data["cancelQtty"];
-            this.admEndQtty = _data["admEndQtty"];
-            this.confirmId = _data["confirmId"];
-            this.originOrderId = _data["originOrderId"];
-            this.txDate = _data["txDate"];
-            this.feeAmt = _data["feeAmt"];
-            this.tax = _data["tax"];
-            this.tradingFee = _data["tradingFee"];
-            this.via = _data["via"];
-            this.norp = _data["norp"];
-        }
-    }
-
-    static fromJS(data: any): Anonymous15 {
-        data = typeof data === 'object' ? data : {};
-        let result = new Anonymous15();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["custodycd"] = this.custodycd;
-        data["accountNo"] = this.accountNo;
-        data["orderNumber"] = this.orderNumber;
-        data["code"] = this.code;
-        data["lastChange"] = this.lastChange;
-        data["sellBuyType"] = this.sellBuyType;
-        data["sideDesc"] = this.sideDesc;
-        data["orderType"] = this.orderType;
-        data["orderTypeDesc"] = this.orderTypeDesc;
-        data["validity"] = this.validity;
-        data["dataval"] = this.dataval;
-        data["status"] = this.status;
-        data["orderQuantity"] = this.orderQuantity;
-        data["orderPrice"] = this.orderPrice;
-        data["matchPrice"] = this.matchPrice;
-        data["matchQtty"] = this.matchQtty;
-        data["odsent"] = this.odsent;
-        data["execAmt"] = this.execAmt;
-        data["unmatchedQuantity"] = this.unmatchedQuantity;
-        data["cancelQtty"] = this.cancelQtty;
-        data["admEndQtty"] = this.admEndQtty;
-        data["confirmId"] = this.confirmId;
-        data["originOrderId"] = this.originOrderId;
-        data["txDate"] = this.txDate;
-        data["feeAmt"] = this.feeAmt;
-        data["tax"] = this.tax;
-        data["tradingFee"] = this.tradingFee;
-        data["via"] = this.via;
-        data["norp"] = this.norp;
-        return data; 
-    }
-}
-
-export interface IAnonymous15 {
+export interface Anonymous15 {
     /** số lưu ký. */
     custodycd: string;
     /** số tiểu khoản. */
@@ -5610,48 +2913,7 @@ export enum EkycRequestType {
     PASSPORT = "PASSPORT",
 }
 
-export class Residence implements IResidence {
-    /** dia chi */
-    address!: string;
-    /** quan huyen */
-    district!: string;
-    /** tinh/ thanh pho */
-    province!: string;
-
-    constructor(data?: IResidence) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.address = _data["address"];
-            this.district = _data["district"];
-            this.province = _data["province"];
-        }
-    }
-
-    static fromJS(data: any): Residence {
-        data = typeof data === 'object' ? data : {};
-        let result = new Residence();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["address"] = this.address;
-        data["district"] = this.district;
-        data["province"] = this.province;
-        return data; 
-    }
-}
-
-export interface IResidence {
+export interface Residence {
     /** dia chi */
     address: string;
     /** quan huyen */

@@ -70,7 +70,7 @@ export class Api {
       const resultUsers: Types.User[] = rawUsers.map(convertUser)
       return { kind: "ok", users: resultUsers }
     } catch {
-      return { kind: "bad-data" }
+      return { kind: "bad-data" }                          
     }
   }
 
