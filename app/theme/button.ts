@@ -1,3 +1,4 @@
 export const button = {
-  primary: '#3080EA',  
+  primary: "#3080EA",
+  disabled: "#E9EAEC",
 }

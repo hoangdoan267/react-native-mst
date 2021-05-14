@@ -16,11 +16,13 @@ export const color = {
    */
   palette,
 
+  transparent: "rgba(0,0,0,0)",
+
   /*
-  * Button colors
-  */
+   * Button colors
+   */
   button: button,
-  
+
   /**
    * A helper for making something see-thru. Use sparingly as many layers of transparency
    * can cause older Android devices to slow down due to the excessive compositing required
@@ -28,19 +30,23 @@ export const color = {
    */
   content: {
     primary: "#2F3136",
-    secondarty: "#888B96",
+    secondary: "#888B96",
     tertiary: "#C8CACF",
     inversePrimary: "#DEDFE2",
   },
   background: {
     primary: "#2F3136",
-    secondarty: "#888B96",
+    secondary: "#888B96",
     tertiary: "#C8CACF",
     inversePrimary: "#DEDFE2",
   },
+  border: {
+    primary: "#DEDFE2",
+    error: " #E94040",
+  },
   line: {
     primary: "#2F3136",
-    secondarty: "#888B96",
+    secondary: "#888B96",
     tertiary: "#C8CACF",
   },
   function: {

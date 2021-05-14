@@ -1,7 +1,7 @@
 import React from "react"
 import { observer } from "mobx-react-lite"
 import { Image, TouchableOpacity, View, ViewStyle } from "react-native"
-import { Button, Screen, Text, TextField } from "../../components"
+import { Button, Screen, SelectButton, Text, TextField } from "../../components"
 import { styles } from "./styles"
 import { Formik } from "formik"
 import * as yup from "yup"

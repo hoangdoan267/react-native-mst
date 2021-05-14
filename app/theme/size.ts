@@ -14,12 +14,13 @@
  * 7 = huge    - ?
  * 8 = massive - an uncomfortable amount of whitespace
  */
- export const size = {
-   button: {
-     height: {
+export const size = {
+  button: {
+    height: {
       small: 36,
+      medium: 40,
       normal: 48,
-      big: 56,     
-     } 
-   }
- }
+      big: 56,
+    },
+  },
+}
