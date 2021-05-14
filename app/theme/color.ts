@@ -35,9 +35,9 @@ export const color = {
     inversePrimary: "#DEDFE2",
   },
   background: {
-    primary: "#2F3136",
-    secondary: "#888B96",
-    tertiary: "#C8CACF",
+    primary: "#FFFFFF",
+    secondary: "rgba(20, 33, 65, 0.06)",
+    tertiary: "#F1F2F4",
     inversePrimary: "#DEDFE2",
   },
   border: {
@@ -45,9 +45,9 @@ export const color = {
     error: " #E94040",
   },
   line: {
-    primary: "#2F3136",
-    secondary: "#888B96",
-    tertiary: "#C8CACF",
+    primary: "#DEDFE2",
+    secondary: "#C8CACF",
+    tertiary: "#E9EAEC",
   },
   function: {
     accentPrimary: "#3080EA",
@@ -55,7 +55,7 @@ export const color = {
     brandPrimary: "#FCAF16",
     linkPrimary: "#096DD9",
     scimPrimary: "rgba(0, 0, 0, 0.6)",
-    alwaysLightPrimary: "#DEDFE2",
+    alwaysLightPrimary: "#ffffff",
     alwaysDarkPrimary: "#131416",
     negativePrimary: "#E94040",
     negativeSecondary: "rgba(233, 64, 64, 0.12)",

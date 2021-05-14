@@ -76,20 +76,13 @@ export const LoginScreen = observer(function LoginScreen() {
                 <Text preset="darkSubtile" text="Forgot Password?" style={{ textAlign: "right" }} />
               </TouchableOpacity>
             </View>
-            <Button
-              text={"Login"}
-              preset="primary"
-              style={styles.submitButton}
-              onPress={handleSubmit}
-            />
-            <View style={{ flexDirection: "row", justifyContent: "center" }}>
-              <Text preset="darkSubtile" text="Don't have an account?" style={{ marginRight: 5 }} />
-              <TouchableOpacity>
-                <Text preset="link" text="Signup" />
-              </TouchableOpacity>
-            </View>
-            <Text preset="link" text={JSON.stringify(loading)} />
-            <Text preset="link" text={user.email} />
+            <Button text={"Primay"} preset="primary" size="sm" onPress={handleSubmit} />
+            <Button text={"Secondary"} preset="secondary" size="sm" onPress={handleSubmit} />
+            <Button text={"Brand"} preset="brand" size="sm" onPress={handleSubmit} />
+            <Button text={"Tertiary"} preset="tertiary" size="sm" onPress={handleSubmit} />
+            <Button text={"Negative"} preset="negative" size="sm" onPress={handleSubmit} />
+            <Button text={"Disabled"} disabled size="sm" onPress={handleSubmit} />
+            <Button text={"Loading"} loading size="sm" onPress={handleSubmit} />
           </View>
         )}
       </Formik>

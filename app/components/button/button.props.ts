@@ -27,7 +27,8 @@ export interface ButtonProps extends TouchableOpacityProps {
    * One of the different types of text presets.
    */
   preset?: ButtonPresetNames
-
+  size: "sm" | "md" | "lg"
+  loading?: boolean
   /**
    * One of the different types of text presets.
    */
