@@ -12,7 +12,7 @@ const buttonTextStyleArray: TextStyle[] = [{ fontSize: 20 }, { color: "#a511dc" 
 
 storiesOf("Button", module)
   .addDecorator((fn) => <StoryScreen>{fn()}</StoryScreen>)
-  .add("Style Presets", () => (
+  .add("Sizes", () => (
     <Story>
       <UseCase text="Small" usage="The small button.">
         <Button
@@ -38,7 +38,10 @@ storiesOf("Button", module)
           onPress={() => Alert.alert("pressed disabled")}
         />
       </UseCase>
-
+    </Story>
+  ))
+  .add("Preset", () => (
+    <Story>
       <UseCase text="Primary" usage="The Primary button.">
         <Button text="Primary" preset="primary" onPress={() => Alert.alert("pressed disabled")} />
       </UseCase>
