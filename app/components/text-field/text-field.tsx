@@ -12,38 +12,30 @@ import {
 import { observer } from "mobx-react-lite"
 import { color, typography } from "../../theme"
 import { Text } from "../"
-import { flatten } from "ramda"
+import { flatten, set } from "ramda"
 import { TextInput } from "react-native-gesture-handler"
 
 const CONTAINER: ViewStyle = {
-  justifyContent: "center",
-
-  marginBottom: 20,
-  marginTop: 10,
+  marginBottom: 12,
 }
 
 const TEXT: TextStyle = {
   fontFamily: typography.primary,
-  fontSize: 18,
-  color: color.text,
+  fontSize: 16,
+  // color: color.text,
   flex: 1,
 }
 
 const LABEL: TextStyle = {
-  // marginBottom: 12,
+  marginBottom: 4,
 }
 
 const INPUT: ViewStyle = {
-  flexDirection: "row",
-  borderBottomColor: color.dim,
-  borderBottomWidth: 1,
-  paddingVertical: 12,
-}
-
-const IconStyle: ImageStyle = {
-  width: 19.93,
-  height: 18.92,
-  marginLeft: 10,
+  // backgroundColor: "black",
+  height: 48,
+  borderRadius: 8,
+  borderWidth: 1,
+  paddingHorizontal: 16,
 }
 
 export interface TextFieldProps {
@@ -51,45 +43,66 @@ export interface TextFieldProps {
    * An optional style override useful for padding & margin.
    */
   style?: StyleProp<ViewStyle>
-  type?: "text" | "textarea" | "password"
   label: string
   inputProps?: TextInputProps
-  errorText: string
+  errorText?: string
+  helperText?: string
+  disabled?: boolean
+  leftIcon?: () => JSX.Element
+  rightIcon?: () => JSX.Element
 }
 
 /**
  * Describe your component here
  */
 export const TextField = observer(function TextField(props: TextFieldProps) {
-  const { style, label, inputProps, type = "text", errorText } = props
+  const { style, label, inputProps, errorText, helperText, disabled } = props
+
   const styles = flatten([CONTAINER, style])
 
-  const [showPassword, setShowPassword] = useState<boolean>(false)
+  const [isFocus, setIsFocus] = useState<boolean>(false)
 
-  const renderShowPasswordButton = (): JSX.Element => {
-    if (type === "password") {
-      return (
-        <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
-          <Image source={require("../../../assets/showpassword.png")} style={IconStyle} />
-        </TouchableOpacity>
-      )
-    }
+  const borderStyle = () => {
+    if (!!errorText) return color.border.error
+    if (!!isFocus) return color.palette.primary
+
+    if (disabled) return "transparent"
+
+    return color.border.primary
   }
+
+  const inputStyles = flatten([
+    INPUT,
+    {
+      borderColor: borderStyle(),
+      backgroundColor: disabled ? color.background.tertiary : color.background.primary,
+    },
+  ])
+
+  const renderLeftIcon = () => {}
+
+  const renderRightIcon = () => {}
 
   return (
     <View style={styles}>
       <Text style={LABEL} preset="fieldLabel" text={label} />
-      <View style={INPUT}>
+      <View style={inputStyles}>
         <TextInput
           autoCorrect={false}
           autoCapitalize={"none"}
+          placeholder={label}
           {...inputProps}
+          onBlur={() => setIsFocus(false)}
+          onFocus={() => setIsFocus(true)}
           style={TEXT}
-          secureTextEntry={type === "password" && !showPassword}
+          editable={!disabled}
         />
-        {renderShowPasswordButton()}
       </View>
-      {errorText && <Text preset="errorText" text={errorText} />}
+      {!errorText && helperText && (
+        <Text numberOfLines={2} preset="inputHelper" text={helperText} />
+      )}
+
+      {errorText && <Text numberOfLines={2} preset="inputError" text={errorText} />}
     </View>
   )
 })

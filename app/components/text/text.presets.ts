@@ -6,7 +6,7 @@ import { color, typography } from "../../theme"
  */
 const BASE: TextStyle = {
   fontFamily: typography.primary,
-  color: color.text,
+  color: color.content.primary,
   fontSize: 15,
 }
 
@@ -34,7 +34,12 @@ export const presets = {
   /**
    * Field labels that appear on forms above the inputs.
    */
-  fieldLabel: { ...BASE, fontSize: 15, color: color.dim } as TextStyle,
+  fieldLabel: {
+    ...BASE,
+    fontSize: 14,
+    fontWeight: "500",
+    color: color.content.primary,
+  } as TextStyle,
 
   /**
    * A smaller piece of secondard information.
@@ -45,7 +50,22 @@ export const presets = {
 
   link: { ...BASE, fontSize: 14, color: color.palette.green, fontWeight: "600" },
 
-  errorText: { ...BASE, fontSize: 12, color: color.error, marginVertical: 5 },
+  errorText: { ...BASE, fontSize: 12, color: color.border.error },
+
+  inputError: {
+    ...BASE,
+    fontSize: 14,
+    color: color.border.error,
+    marginTop: 4,
+    lineHeight: 20,
+  },
+  inputHelper: {
+    ...BASE,
+    fontSize: 14,
+    color: color.content.secondary,
+    marginTop: 4,
+    lineHeight: 20,
+  },
 }
 
 /**

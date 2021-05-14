@@ -42,7 +42,7 @@ export const color = {
   },
   border: {
     primary: "#DEDFE2",
-    error: " #E94040",
+    error: "#E94040",
   },
   line: {
     primary: "#DEDFE2",

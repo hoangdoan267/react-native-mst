@@ -19,14 +19,12 @@ const loginValidationSchema = yup.object().shape({
 })
 
 const ROOT: ViewStyle = {
-  // backgroundColor: color.palette.black,
+  backgroundColor: "#ffffff",
   flex: 1,
 }
 
 export const LoginScreen = observer(function LoginScreen() {
   const { userStore } = useStores()
-
-  const { user, loading } = userStore
 
   const onSubmit = (values: { email: string; password: string }) => {
     console.tron.log(values)
@@ -58,24 +56,34 @@ export const LoginScreen = observer(function LoginScreen() {
                   value: values.email,
                   onChangeText: handleChange("email"),
                 }}
+                helperText={"This is a helper"}
+                errorText={errors.email}
+              />
+              <TextField
+                label="Email"
+                inputProps={{
+                  value: values.email,
+                  onChangeText: handleChange("email"),
+                }}
+                helperText={
+                  "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy"
+                }
                 errorText={errors.email}
               />
               <TextField
                 label="Password"
-                type="password"
                 inputProps={{
                   value: values.password,
                   onChangeText: handleChange("password"),
                 }}
+                helperText={
+                  "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy"
+                }
                 errorText={errors.password}
               />
+              <TextField label="Disabled" disabled />
             </View>
-            <View style={{ flexDirection: "row" }}>
-              <View style={{ flex: 1 }}></View>
-              <TouchableOpacity>
-                <Text preset="darkSubtile" text="Forgot Password?" style={{ textAlign: "right" }} />
-              </TouchableOpacity>
-            </View>
+
             <Button text={"Primay"} preset="primary" size="sm" onPress={handleSubmit} />
             <Button text={"Secondary"} preset="secondary" size="sm" onPress={handleSubmit} />
             <Button text={"Brand"} preset="brand" size="sm" onPress={handleSubmit} />
