@@ -33,7 +33,7 @@ export const viewPresets: Record<string, ViewStyle> = {
 }
 
 export const textPresets: Record<ButtonPresetNames, TextStyle> = {
-  primary: { ...BASE_TEXT, color: color.content.inversePrimary } as TextStyle,
+  primary: { ...BASE_TEXT, color: color.function.alwaysLightPrimary } as TextStyle,
   secondary: { ...BASE_TEXT, color: color.function.accentPrimary } as TextStyle,
   brand: { ...BASE_TEXT, color: color.function.alwaysLightPrimary } as TextStyle,
   tertiary: { ...BASE_TEXT, color: color.content.primary } as TextStyle,

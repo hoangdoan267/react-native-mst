@@ -16,7 +16,7 @@ export function Button(props: ButtonProps) {
   // grab the props
   const {
     preset = "primary",
-    size = "lg",
+    size = "md",
     tx,
     text,
     style: styleOverride,
@@ -33,7 +33,7 @@ export function Button(props: ButtonProps) {
   const viewStyles = flatten([viewStyle, viewHeight, styleOverride])
 
   const textSize = fontSizePreset[size] || fontSizePreset["md"]
-  const textStyle = textPresets[preset] || textPresets.primary
+  const textStyle = disabled ? textPresets["disabled"] : textPresets[preset] || textPresets.primary
   const textStyles = flatten([textStyle, textSize, textStyleOverride])
 
   const loadingSize = size === "lg" || size === "md" ? 21 : 18
