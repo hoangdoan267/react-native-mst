@@ -1,19 +1,17 @@
 import { ViewStyle, TextStyle } from "react-native"
-import { color, spacing, size } from "../../theme"
+import { color } from "../../theme"
 
 /**
  * All text will start off looking like this.
  */
 const BASE_VIEW: ViewStyle = {
-  paddingVertical: spacing[2],
-  paddingHorizontal: spacing[2],
   borderRadius: 8,
   justifyContent: "center",
   alignItems: "center",
 }
 
 const BASE_TEXT: TextStyle = {
-  paddingHorizontal: spacing[3],
+  fontWeight: "500",
 }
 
 /**
@@ -22,39 +20,37 @@ const BASE_TEXT: TextStyle = {
  * You want to customize these to whatever you need in your app.
  */
 export const viewPresets: Record<string, ViewStyle> = {
-  /**
-   * A smaller piece of secondard information.
-   */
-  primary: {
-    ...BASE_VIEW,
-    backgroundColor: color.button.primary,
-    height: size.button.height.normal,
-  } as ViewStyle,
+  primary: { ...BASE_VIEW, backgroundColor: color.function.accentPrimary } as ViewStyle,
+  secondary: { ...BASE_VIEW, backgroundColor: color.function.accentSecondary } as ViewStyle,
+  brand: { ...BASE_VIEW, backgroundColor: color.function.brandPrimary } as ViewStyle,
+  tertiary: { ...BASE_VIEW, backgroundColor: color.background.secondary } as ViewStyle,
+  negative: { ...BASE_VIEW, backgroundColor: color.function.negativeSecondary } as ViewStyle,
+  disabled: { ...BASE_VIEW, backgroundColor: color.background.tertiary } as ViewStyle,
 
   /**
    * A button without extras.
    */
-  link: {
-    ...BASE_VIEW,
-    paddingHorizontal: 0,
-    paddingVertical: 0,
-    alignItems: "flex-start",
-  } as ViewStyle,
 }
 
 export const textPresets: Record<ButtonPresetNames, TextStyle> = {
-  primary: {
-    ...BASE_TEXT,
-    fontSize: 16,
-    color: color.palette.white,
-    fontWeight: "500",
-  } as TextStyle,
-  link: {
-    ...BASE_TEXT,
-    color: color.palette.black,
-    paddingHorizontal: 0,
-    paddingVertical: 0,
-  } as TextStyle,
+  primary: { ...BASE_TEXT, color: color.function.alwaysLightPrimary } as TextStyle,
+  secondary: { ...BASE_TEXT, color: color.function.accentPrimary } as TextStyle,
+  brand: { ...BASE_TEXT, color: color.function.alwaysLightPrimary } as TextStyle,
+  tertiary: { ...BASE_TEXT, color: color.content.primary } as TextStyle,
+  negative: { ...BASE_TEXT, color: color.function.negativePrimary } as TextStyle,
+  disabled: { ...BASE_TEXT, color: color.content.tertiary } as TextStyle,
+}
+
+export const buttonSizePreset: Record<string, ViewStyle> = {
+  lg: { height: 48 } as ViewStyle,
+  md: { height: 40 } as ViewStyle,
+  sm: { height: 32 } as ViewStyle,
+}
+
+export const fontSizePreset: Record<string, TextStyle> = {
+  lg: { fontSize: 16 } as TextStyle,
+  md: { fontSize: 16 } as TextStyle,
+  sm: { fontSize: 14 } as TextStyle,
 }
 
 /**
