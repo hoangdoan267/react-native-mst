@@ -44,7 +44,7 @@ export const presets = {
   /**
    * A smaller piece of secondard information.
    */
-  secondary: { ...BASE, fontSize: 15, color: color.dim } as TextStyle,
+  secondary: { ...BASE, fontSize: 15, color: color.content.secondary } as TextStyle,
 
   darkSubtile: { ...BASE, fontSize: 14, color: color.palette.black },
 

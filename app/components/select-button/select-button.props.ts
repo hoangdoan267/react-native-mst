@@ -7,6 +7,8 @@ export interface SelectButtonProps extends TouchableOpacityProps {
   disabled?: boolean
   error?: boolean
   tx?: TxKeyPath
+  label?: string
+  labelTx?: TxKeyPath
   text?: string
   textStyle?: StyleProp<TextStyle>
 }

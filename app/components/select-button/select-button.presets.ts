@@ -1,5 +1,5 @@
 import { ViewStyle, TextStyle } from "react-native"
-import { color, spacing, size } from "../../theme"
+import { color, spacing, size, typography } from "../../theme"
 
 /**
  * All text will start off looking like this.
@@ -17,6 +17,7 @@ const BASE_VIEW: ViewStyle = {
 const BASE_TEXT: TextStyle = {
   fontWeight: "400",
   fontSize: 16,
+  fontFamily: typography.primary,
 }
 
 /**
