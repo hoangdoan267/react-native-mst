@@ -38,7 +38,6 @@ export function SelectButton(props: SelectButtonProps) {
     text,
     style: styleOverride,
     textStyle: textStyleOverride,
-    onPress,
     ...rest
   } = props
 
@@ -48,10 +47,11 @@ export function SelectButton(props: SelectButtonProps) {
   const textStyle = textPresets[preset] || textPresets.enabled
   const textStyles = flatten([textStyle, textStyleOverride])
   const rightIconStyles = disabled ? { ...ARROW_ICON, ...DISABLED_ICON } : ARROW_ICON
-  const onPressHandler = disabled ? () => void 0 : onPress
+
+  console.log("views ", JSON.stringify(viewStyles))
 
   return (
-    <TouchableOpacity style={viewStyles} {...rest} onPress={onPressHandler}>
+    <TouchableOpacity style={viewStyles} {...rest} disabled={disabled}>
       <View style={LEFT_VIEW}>
         {leftIcon ? <Icon icon={leftIcon} style={ICON} /> : null}
         <Text tx={tx} text={text} style={textStyles} />

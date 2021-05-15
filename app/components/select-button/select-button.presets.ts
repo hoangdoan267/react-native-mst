@@ -48,8 +48,8 @@ export const viewPresets: Record<string, ViewStyle> = {
    */
   error: {
     ...BASE_VIEW,
+    borderColor: color.function.negativePrimary,
     backgroundColor: color.palette.white,
-    borderColor: color.border.error,
   },
 }
 
