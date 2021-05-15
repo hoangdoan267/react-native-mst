@@ -22,5 +22,9 @@ export const size = {
       normal: 48,
       big: 56,
     },
+    navigation: {
+      with: 40,
+      height: 40,
+    },
   },
 }

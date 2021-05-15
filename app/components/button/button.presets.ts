@@ -14,6 +14,13 @@ const BASE_TEXT: TextStyle = {
   fontWeight: "500",
 }
 
+const NAVIGATION: ViewStyle = {
+  width: 40,
+  height: 40,
+  alignItems: "center",
+  justifyContent: "center",
+}
+
 /**
  * All the variations of text styling within the app.
  *
@@ -26,6 +33,7 @@ export const viewPresets: Record<string, ViewStyle> = {
   tertiary: { ...BASE_VIEW, backgroundColor: color.background.secondary } as ViewStyle,
   negative: { ...BASE_VIEW, backgroundColor: color.function.negativeSecondary } as ViewStyle,
   disabled: { ...BASE_VIEW, backgroundColor: color.background.tertiary } as ViewStyle,
+  navigation: { ...BASE_VIEW, backgroundColor: color.transparent, ...NAVIGATION } as ViewStyle,
 
   /**
    * A button without extras.

@@ -1,5 +1,6 @@
 export const icons = {
-  back: require("./arrow-left.png"),
+  search: require("./ic-search.png"),
+  back: require("./ic-back.png"),
   bullet: require("./bullet.png"),
   arrowDown: require("./ic24-fill-chevron-down.png"),
 }
