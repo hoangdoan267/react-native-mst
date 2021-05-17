@@ -71,6 +71,12 @@ export const presets = {
     marginTop: 4,
     lineHeight: 20,
   },
+  headingLarge: {
+    fontWeight: "600",
+    fontSize: 18,
+    lineHeight: 28,
+    textAlign: "center",
+  } as TextStyle,
 }
 
 /**

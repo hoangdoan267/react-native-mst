@@ -70,4 +70,7 @@ export const color = {
     statePressPrimary: "rgba(38, 40, 44, 0.24)",
     statePressSecondary: "rgba(255, 255, 255, 0.2)",
   },
+  pastel: {
+    orange: "#FEF7E4",
+  },
 }

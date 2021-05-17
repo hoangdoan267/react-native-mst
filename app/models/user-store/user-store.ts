@@ -22,19 +22,21 @@ export const UserStoreModel = types
   })
   .views((self) => ({})) // eslint-disable-line @typescript-eslint/no-unused-vars
   .actions((self) => ({
-    login: async ({ email }: { name: string; email: string }) => {
-      await timeout(1000)
-      // self.endLogin()
+    login: async ({ email, password }: { email: string; password: string }) => {
+      console.log("haha")
+      self.loading = true
+      // await timeout(5000)
+      // // self.endLogin()
       const ret = await userService.login({
-        username: "hoang",
+        username: email,
         grant_type: BodyGrant_type.Password,
         client_secret: "11111",
         client_id: "1111",
-        password: "11111",
+        password,
       })
-      console.tron.log(ret)
+      // console.tron.log(ret)
       // await getParent<typeof RootStoreModel>(self).characterStore.getCharacters()
-      // RootNavigation.navigate("welcome")
+      // RootNavigation.navigate("ho")/
     },
     endLogin: () => {
       self.loading = false

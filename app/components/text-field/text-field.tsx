@@ -1,6 +1,5 @@
 import React, { useState } from "react"
 import {
-  Image,
   ImageStyle,
   StyleProp,
   TextInputProps,
@@ -10,15 +9,16 @@ import {
   ViewStyle,
 } from "react-native"
 import { observer } from "mobx-react-lite"
-import { color, typography } from "../../theme"
+import { color, spacing, typography } from "../../theme"
 import { Text } from "../"
 import { flatten, set } from "ramda"
 import { TextInput } from "react-native-gesture-handler"
 import { IconTypes } from "../icon/icons"
 import { Icon } from "../icon/icon"
+import { placeholder } from "i18n-js"
 
 const CONTAINER: ViewStyle = {
-  marginBottom: 12,
+  marginBottom: spacing[3],
 }
 
 const TEXT: TextStyle = {
@@ -48,7 +48,7 @@ export interface TextFieldProps {
    * An optional style override useful for padding & margin.
    */
   style?: StyleProp<ViewStyle>
-  label: string
+  label?: string
   inputProps?: TextInputProps
   errorText?: string
   helperText?: string
@@ -57,6 +57,7 @@ export interface TextFieldProps {
   rightIcon?: IconTypes
   type?: "text" | "password"
   onPressRightIcon?: () => void
+  placeholder: string
 }
 
 /**
@@ -74,6 +75,7 @@ export const TextField = observer(function TextField(props: TextFieldProps) {
     leftIcon,
     rightIcon,
     onPressRightIcon,
+    placeholder,
   } = props
 
   const styles = flatten([CONTAINER, style])
@@ -134,19 +136,21 @@ export const TextField = observer(function TextField(props: TextFieldProps) {
 
   return (
     <View style={styles}>
-      <Text style={LABEL} preset="fieldLabel" text={label} />
+      {label && <Text style={LABEL} preset="fieldLabel" text={label} />}
+
       <View style={inputStyles}>
         {leftIcon && <Icon icon={leftIcon} style={leftIconStyle} />}
         <TextInput
           autoCorrect={false}
           autoCapitalize={"none"}
-          placeholder={label}
+          placeholder={placeholder}
           {...inputProps}
           onBlur={() => setIsFocus(false)}
           onFocus={() => setIsFocus(true)}
           style={TEXT}
           editable={!disabled}
           secureTextEntry={secureTextEntry}
+          placeholderTextColor={color.content.secondary}
         />
         {renderRightIcon()}
       </View>

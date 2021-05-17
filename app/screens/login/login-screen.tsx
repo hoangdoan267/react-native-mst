@@ -35,7 +35,7 @@ export const LoginScreen = observer(function LoginScreen() {
   return (
     <Screen style={ROOT} preset="scroll">
       <View style={styles.brandSection}>
-        <Image source={require("../../../assets/logo.png")} style={styles.logo} />
+        {/* <Image source={require("../../../assets/logo.png")} style={styles.logo} /> */}
       </View>
       <Formik
         validationSchema={loginValidationSchema}
