@@ -8,6 +8,7 @@ const BASE_VIEW: ViewStyle = {
   borderRadius: 8,
   justifyContent: "center",
   alignItems: "center",
+  flexDirection: "row",
 }
 
 const BASE_TEXT: TextStyle = {

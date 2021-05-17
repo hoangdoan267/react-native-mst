@@ -70,3 +70,50 @@ storiesOf("Button", module)
       </UseCase>
     </Story>
   ))
+  .add("With Icon", () => (
+    <Story>
+      <UseCase text="Left Icon" usage="Left Icon">
+        <Button
+          leftIcon="search"
+          text="Icon"
+          preset="primary"
+          onPress={() => Alert.alert("pressed disabled")}
+        />
+      </UseCase>
+      <UseCase text="Right Icon" usage="Right Icon">
+        <Button
+          rightIcon="search"
+          text="Icon"
+          preset="primary"
+          onPress={() => Alert.alert("pressed disabled")}
+        />
+      </UseCase>
+      <UseCase text="2 Icons" usage="2 Icons">
+        <Button
+          leftIcon="search"
+          rightIcon="search"
+          text="Icon"
+          preset="primary"
+          onPress={() => Alert.alert("pressed disabled")}
+        />
+      </UseCase>
+      <UseCase text="Icon match styles" usage="With Icon">
+        <Button
+          leftIcon="search"
+          text="Icon"
+          preset="negative"
+          onPress={() => Alert.alert("pressed disabled")}
+        />
+      </UseCase>
+
+      <UseCase text="With Disabled Icon" usage="With Icon">
+        <Button
+          leftIcon="search"
+          disabled
+          text="Icon"
+          preset="primary"
+          onPress={() => Alert.alert("pressed disabled")}
+        />
+      </UseCase>
+    </Story>
+  ))

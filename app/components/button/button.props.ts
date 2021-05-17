@@ -1,6 +1,7 @@
 import { StyleProp, TextStyle, TouchableOpacityProps, ViewStyle } from "react-native"
 import { ButtonPresetNames } from "./button.presets"
 import { TxKeyPath } from "../../i18n"
+import { IconTypes } from "../icon/icons"
 
 export interface ButtonProps extends TouchableOpacityProps {
   /**
@@ -29,6 +30,8 @@ export interface ButtonProps extends TouchableOpacityProps {
   preset?: ButtonPresetNames
   size?: "sm" | "md" | "lg"
   loading?: boolean
+  leftIcon?: IconTypes
+  rightIcon?: IconTypes
   /**
    * One of the different types of text presets.
    */

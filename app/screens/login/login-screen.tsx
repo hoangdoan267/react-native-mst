@@ -91,6 +91,7 @@ export const LoginScreen = observer(function LoginScreen() {
             <Button text={"Negative"} preset="negative" size="sm" onPress={handleSubmit} />
             <Button text={"Disabled"} disabled size="sm" onPress={handleSubmit} />
             <Button text={"Loading"} loading size="sm" onPress={handleSubmit} />
+            <Button leftIcon="search" text={"With Icon"} size="sm" onPress={handleSubmit} />
           </View>
         )}
       </Formik>
