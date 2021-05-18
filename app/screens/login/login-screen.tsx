@@ -1,7 +1,7 @@
 import React from "react"
 import { observer } from "mobx-react-lite"
-import { Image, TouchableOpacity, View, ViewStyle } from "react-native"
-import { Button, Screen, SelectButton, Text, TextField } from "../../components"
+import { Image, View, ViewStyle } from "react-native"
+import { Button, Screen, Text, TextField } from "../../components"
 import { styles } from "./styles"
 import { Formik } from "formik"
 import * as yup from "yup"
@@ -79,6 +79,7 @@ export const LoginScreen = observer(function LoginScreen() {
                   value: values.password,
                   onChangeText: handleChange("password"),
                 }}
+                type={"password"}
                 helperText={
                   "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy"
                 }
@@ -94,6 +95,7 @@ export const LoginScreen = observer(function LoginScreen() {
             <Button text={"Negative"} preset="negative" size="sm" onPress={handleSubmit} />
             <Button text={"Disabled"} disabled size="sm" onPress={handleSubmit} />
             <Button text={"Loading"} loading size="sm" onPress={handleSubmit} />
+            <Button leftIcon="search" text={"With Icon"} size="sm" onPress={handleSubmit} />
           </View>
         )}
       </Formik>

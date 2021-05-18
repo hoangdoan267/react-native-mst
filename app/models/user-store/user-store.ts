@@ -1,6 +1,11 @@
 import { getParent, Instance, SnapshotOut, types } from "mobx-state-tree"
 import { RootNavigation } from "../../navigators"
-import { BodyGrant_type, UserServiceProxy } from "../../services/service-proxies/service-proxies"
+import {
+  BodyGrant_type,
+  SendOtpRequestIdType,
+  SendOtpRequestTxType,
+  UserServiceProxy,
+} from "../../services/service-proxies/service-proxies"
 
 import { RootStoreModel } from "../root-store/root-store"
 import { UserModel } from "../user/user"
@@ -19,8 +24,10 @@ export const UserStoreModel = types
   .props({
     user: types.optional(types.maybe(UserModel), { name: "", email: "" }),
     loading: types.optional(types.boolean, false),
+    txType: types.optional(types.string, ""),
+    otpError: types.optional(types.string, ""),
   })
-  .views((self) => ({})) // eslint-disable-line @typescript-eslint/no-unused-vars
+  .views((self) => ({}))
   .actions((self) => ({
     login: async ({ email }: { name: string; email: string }) => {
       await timeout(1000)
@@ -44,11 +51,17 @@ export const UserStoreModel = types
       try {
         const response = await userService.verifyOtp({ otpId, otpValue })
         console.tron.log(response)
-      } catch (e) {}
+      } catch (e) {
+        self.otpError = e
+      }
     },
-    resendOTP: async ({ otpId, otpValue }: { otpId: string; otpValue: string }) => {
+    resendOTP: async ({ type, username }: { type: SendOtpRequestIdType; username: string }) => {
       try {
-        const response = await userService.sendOtp()
+        const response = await userService.sendOtp({
+          id: username,
+          idType: type,
+          txType: SendOtpRequestTxType(self.txType),
+        })
         console.tron.log(response)
       } catch (e) {}
     },

@@ -14,6 +14,8 @@ import { color, typography } from "../../theme"
 import { Text } from "../"
 import { flatten, set } from "ramda"
 import { TextInput } from "react-native-gesture-handler"
+import { IconTypes } from "../icon/icons"
+import { Icon } from "../icon/icon"
 
 const CONTAINER: ViewStyle = {
   marginBottom: 12,
@@ -24,6 +26,7 @@ const TEXT: TextStyle = {
   fontSize: 16,
   // color: color.text,
   flex: 1,
+  marginRight: 17,
 }
 
 const LABEL: TextStyle = {
@@ -35,7 +38,9 @@ const INPUT: ViewStyle = {
   height: 48,
   borderRadius: 8,
   borderWidth: 1,
-  paddingHorizontal: 16,
+  paddingLeft: 16,
+  flexDirection: "row",
+  alignItems: "center",
 }
 
 export interface TextFieldProps {
@@ -48,19 +53,33 @@ export interface TextFieldProps {
   errorText?: string
   helperText?: string
   disabled?: boolean
-  leftIcon?: () => JSX.Element
-  rightIcon?: () => JSX.Element
+  leftIcon?: IconTypes
+  rightIcon?: IconTypes
+  type?: "text" | "password"
+  onPressRightIcon?: () => void
 }
 
 /**
  * Describe your component here
  */
 export const TextField = observer(function TextField(props: TextFieldProps) {
-  const { style, label, inputProps, errorText, helperText, disabled } = props
+  const {
+    style,
+    label,
+    inputProps,
+    errorText,
+    helperText,
+    disabled,
+    type = "text",
+    leftIcon,
+    rightIcon,
+    onPressRightIcon,
+  } = props
 
   const styles = flatten([CONTAINER, style])
 
   const [isFocus, setIsFocus] = useState<boolean>(false)
+  const [showPassword, setshowPassword] = useState<boolean>(false)
 
   const borderStyle = () => {
     if (!!errorText) return color.border.error
@@ -79,14 +98,45 @@ export const TextField = observer(function TextField(props: TextFieldProps) {
     },
   ])
 
-  const renderLeftIcon = () => {}
+  const iconDefaultStyle: ImageStyle = {
+    width: 22,
+    height: 22,
+  }
 
-  const renderRightIcon = () => {}
+  const rightIconStyle = flatten([
+    iconDefaultStyle,
+    { tintColor: disabled ? color.content.secondary : color.content.primary },
+  ])
+  const leftIconStyle = flatten([
+    iconDefaultStyle,
+    { marginRight: 17, tintColor: color.content.secondary },
+  ])
+  const secureTextEntry = type !== "password" ? false : !showPassword
+
+  const renderRightIcon = () => {
+    if (type === "password") {
+      return (
+        <TouchableOpacity
+          style={{ marginRight: 17 }}
+          onPress={() => setshowPassword(!showPassword)}
+        >
+          <Icon icon={showPassword ? "hidePassword" : "showPasswod"} style={rightIconStyle} />
+        </TouchableOpacity>
+      )
+    } else if (!!rightIcon) {
+      return (
+        <TouchableOpacity style={{ marginRight: 17 }} onPress={onPressRightIcon}>
+          <Icon icon={rightIcon} style={rightIconStyle} />
+        </TouchableOpacity>
+      )
+    }
+  }
 
   return (
     <View style={styles}>
       <Text style={LABEL} preset="fieldLabel" text={label} />
       <View style={inputStyles}>
+        {leftIcon && <Icon icon={leftIcon} style={leftIconStyle} />}
         <TextInput
           autoCorrect={false}
           autoCapitalize={"none"}
@@ -96,7 +146,9 @@ export const TextField = observer(function TextField(props: TextFieldProps) {
           onFocus={() => setIsFocus(true)}
           style={TEXT}
           editable={!disabled}
+          secureTextEntry={secureTextEntry}
         />
+        {renderRightIcon()}
       </View>
       {!errorText && helperText && (
         <Text numberOfLines={2} preset="inputHelper" text={helperText} />

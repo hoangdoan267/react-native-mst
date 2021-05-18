@@ -5,6 +5,7 @@ import { TextField } from "./text-field"
 
 import { Formik } from "formik"
 import * as yup from "yup"
+import { Alert } from "react-native"
 
 const loginValidationSchema = yup.object().shape({
   email: yup.string().email("Please enter valid email").required("Email Address is Required"),
@@ -56,6 +57,40 @@ storiesOf("TextField", module)
             />
           )}
         </Formik>
+      </UseCase>
+    </Story>
+  ))
+  .add("Input with icons", () => (
+    <Story>
+      <UseCase text="With Left Icon" usage="Normal">
+        <TextField label="With Left Icon" leftIcon="arrowDown" />
+      </UseCase>
+      <UseCase text="With Right Icon" usage="Normal">
+        <TextField
+          label="With Right Icon"
+          rightIcon="arrowDown"
+          onPressRightIcon={() => Alert.alert("Text field with Right Icon")}
+        />
+      </UseCase>
+      <UseCase text="With Both Icons" usage="Normal">
+        <TextField
+          label="With 2 Icon"
+          leftIcon="arrowDown"
+          rightIcon="arrowDown"
+          onPressRightIcon={() => Alert.alert("Text field with Right Icon")}
+        />
+      </UseCase>
+      <UseCase text="Disabled Icon" usage="Normal">
+        <TextField
+          label="With 2 Icon"
+          leftIcon="arrowDown"
+          rightIcon="arrowDown"
+          disabled
+          onPressRightIcon={() => Alert.alert("Text field with Right Icon")}
+        />
+      </UseCase>
+      <UseCase text="Password field" usage="Normal">
+        <TextField label="Password" type="password" />
       </UseCase>
     </Story>
   ))
