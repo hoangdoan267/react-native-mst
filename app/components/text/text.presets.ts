@@ -71,6 +71,13 @@ export const presets = {
     marginTop: 4,
     lineHeight: 20,
   },
+
+  touchAction: {
+    ...BASE,
+    fontSize: 14,
+    fontWeight: "500",
+    color: color.function.accentPrimary,
+  },
 }
 
 /**

@@ -6,6 +6,7 @@ import { styles } from "./styles"
 import { Formik } from "formik"
 import * as yup from "yup"
 import { useStores } from "../../models"
+import { useNavigation } from "@react-navigation/native"
 
 // import { useNavigation } from "@react-navigation/native"
 // import { useStores } from "../../models"
@@ -25,10 +26,12 @@ const ROOT: ViewStyle = {
 
 export const LoginScreen = observer(function LoginScreen() {
   const { userStore } = useStores()
+  const navigation = useNavigation()
 
   const onSubmit = (values: { email: string; password: string }) => {
     console.tron.log(values)
     userStore.login({ email: values.email, name: "Hoang" })
+    navigation.navigate("otpScreen", { type: "email", username: "abc@gmail.com", otpId: "" })
   }
   console.tron.log(userStore)
 

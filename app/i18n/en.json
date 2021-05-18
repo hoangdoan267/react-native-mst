@@ -30,5 +30,16 @@
   "storybook": {
     "placeholder": "Placeholder",
     "field": "Field"
+  },
+  "otp": {
+    "verifyAccount": "Verify your account",
+    "verifyOTP": "Verify OTP",
+    "inputEmailOTP": "Please input the OTP that is sent to your email",
+    "inputSMSOTP": "Please input the OTP that is sent to your phone number",
+    "resend": "Resend OTP",
+    "getOTPViaPhone": "Get OTP via SMS",
+    "getOTPViaEmail": "Get OTP via Email",
+    "wrongOTP": "Your OTP is not correct",
+    "registerSuccessful": "You registered successful. Now you can experience KB Fina"
   }
 }

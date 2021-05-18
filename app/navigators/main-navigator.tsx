@@ -5,8 +5,8 @@
  * You'll likely spend most of your time in this file.
  */
 import React from "react"
-import { createStackNavigator } from "@react-navigation/stack"
-import { WelcomeScreen, DemoScreen, DemoListScreen, LoginScreen } from "../screens"
+import { createStackNavigator, StackScreenProps } from "@react-navigation/stack"
+import { WelcomeScreen, DemoScreen, DemoListScreen, LoginScreen, OTPScreen } from "../screens"
 
 /**
  * This type allows TypeScript to know what routes are defined in this navigator
@@ -25,7 +25,14 @@ export type PrimaryParamList = {
   demo: undefined
   demoList: undefined
   login: undefined
+  otpScreen: {
+    type: "email" | "phone"
+    username: string
+    otpId: string
+  }
 }
+
+export type OTPScreenProps = StackScreenProps<PrimaryParamList, "otpScreen">
 
 // Documentation: https://reactnavigation.org/docs/stack-navigator/
 const Stack = createStackNavigator<PrimaryParamList>()
@@ -41,6 +48,7 @@ export function MainNavigator() {
       <Stack.Screen name="welcome" component={WelcomeScreen} />
       <Stack.Screen name="demo" component={DemoScreen} />
       <Stack.Screen name="demoList" component={DemoListScreen} />
+      <Stack.Screen name="otpScreen" component={OTPScreen} />
     </Stack.Navigator>
   )
 }

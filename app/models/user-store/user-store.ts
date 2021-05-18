@@ -39,6 +39,19 @@ export const UserStoreModel = types
     endLogin: () => {
       self.loading = false
     },
+
+    verifyOTP: async ({ otpId, otpValue }: { otpId: string; otpValue: string }) => {
+      try {
+        const response = await userService.verifyOtp({ otpId, otpValue })
+        console.tron.log(response)
+      } catch (e) {}
+    },
+    resendOTP: async ({ otpId, otpValue }: { otpId: string; otpValue: string }) => {
+      try {
+        const response = await userService.sendOtp()
+        console.tron.log(response)
+      } catch (e) {}
+    },
   })) // eslint-disable-line @typescript-eslint/no-unused-vars
 
 /**
